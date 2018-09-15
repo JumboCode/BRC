@@ -12,7 +12,7 @@ To visitors of the website, we provide a web application that displays a compreh
 ## Technology Stack 
 Client-Side: React <br />
 Server-Side: Next.js <br />
-Database: MongoDB <br />
+Back-end REST API: Express + MongoDB <br />
 
 ## Installation Guide
 $ git clone https://github.com/JumboCode/BRC.git
@@ -23,7 +23,43 @@ $ git checkout release/dev
 
 $ npm install
 
+$ npm run build
+
 $ npm run dev
 
 Navigate to http://localhost:3000 for entry page
+
+## Architecture Flowchart
+        
+        Client
+      _______________________________________________________________________________________________
+      |                                                                                             |
+      |      Web UI                                                                                 |
+      |    _____________________________                                                            |
+      |    |      (1)                  |                                                            |
+      |    |      Map-view Module      |        _________________________                           |                         
+      |    |      ---------------      |        |                       |      ___________________  |
+      |    |      | Event Label |      |        |  (2)                  |      |   (3)           |  |
+      |    |      ---------------      |  <---  |  Search/Control Tools | ---> |   Alternative   |  |       
+      |    |   ----------------------  |        | (Org tab + Events tab)|      |   data display  |  |
+      |    |   | Organization Label |  |        |_______________________|      |_________________|  |
+      |    |   ----------------------  |                                                            |
+      |    |___________________________|                                                            |
+      |                                                                                             |
+      |_____________________________________________________________________________________________|
+
+        ^               ^                              
+        |               |                              ___________________
+        | Initial Props | Routing                     (                   )
+        |               |                         ==> ( Express + MongoDB )
+        |               |                         |   (     REST API      )
+      ____________________________                |   (___________________)              
+      |                          |   Data Fetch   |                 
+      |                          |  --------------|     Trending topics/posts Stream
+      |                          |                |    __________________________
+      |     Next.js Framework    |                ==>  | |                    | | 
+      |                          |                     | | Social Media API's | |   (Optional)
+      |__________________________|                     |_|____________________|_|
+      
+        Server
 

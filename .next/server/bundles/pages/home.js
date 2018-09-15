@@ -67,83 +67,53 @@ module.exports =
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
-/******/ ({
-
-/***/ "./components/TitleBar.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__("react");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-var _jsxFileName = "/Users/stephxu/Documents/BRC/components/TitleBar.js";
-
-
-var TitleBar = function TitleBar() {
-  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 4
-    }
-  }, "Welcome to React");
-};
-
-/* harmony default export */ __webpack_exports__["a"] = (TitleBar);
-
-/***/ }),
-
-/***/ "./components/index.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__TitleBar__ = __webpack_require__("./components/TitleBar.js");
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__TitleBar__["a"]; });
-
-
-
-/***/ }),
-
-/***/ "./pages/home.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__("react");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components__ = __webpack_require__("./components/index.js");
-var _jsxFileName = "/Users/stephxu/Documents/BRC/pages/home.js";
-
-
-
-var Home = function Home() {
-  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components__["a" /* TitleBar */], {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 4
-    }
-  });
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (Home);
-
-/***/ }),
-
-/***/ 3:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__("./pages/home.js");
-
-
-/***/ }),
-
-/***/ "react":
+/******/ ([
+/* 0 */
 /***/ (function(module, exports) {
 
 module.exports = require("react");
 
-/***/ })
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
 
-/******/ });
-//# sourceMappingURL=home.js.map
+module.exports = __webpack_require__(2);
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+// EXTERNAL MODULE: external "react"
+var external__react_ = __webpack_require__(0);
+var external__react__default = /*#__PURE__*/__webpack_require__.n(external__react_);
+
+// CONCATENATED MODULE: ./components/TitleBar.js
+
+
+var TitleBar_TitleBar = function TitleBar() {
+  return external__react__default.a.createElement("div", null, "Welcome to React");
+};
+
+/* harmony default export */ var components_TitleBar = (TitleBar_TitleBar);
+// CONCATENATED MODULE: ./components/index.js
+
+
+// CONCATENATED MODULE: ./pages/home.js
+
+
+
+var home_Home = function Home() {
+  return external__react__default.a.createElement(components_TitleBar, null);
+};
+
+/* harmony default export */ var home = __webpack_exports__["default"] = (home_Home);
+
+/***/ })
+/******/ ]);
