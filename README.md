@@ -10,11 +10,9 @@ To visitors of the website, we provide a web application that displays a compreh
 ## Team Members
 
 ## Technology Stack 
-Client-Side: React 
-
-Server-Side: Next.js
-
-Database: MongoDB
+Client-Side: React <br />
+Server-Side: Next.js <br />
+Database: MongoDB <br />
 
 ## Installation Guide
 $ git clone https://github.com/JumboCode/BRC.git
