@@ -1,14 +1,14 @@
 {
 	"name": "next-app",
-    "version": "1.0.0",
+	"version": "1.0.0",
 	"scripts": {
 		"dev": "next",
 		"build": "next build",
 		"start": "next start",
-        "test": "echo \"Error: no test specified\" && exit 1"
+		"test": "echo \"Error: no test specified\" && exit 1"
 	},
-    "keywords": [],
-    "author": "",
+	"keywords": [],
+	"author": "",
 	"dependencies": {
 		"next": "^6.1.2",
 		"react": "^16.5.1",
