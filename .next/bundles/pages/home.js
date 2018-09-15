@@ -1,1 +1,0 @@
-module.exports=__NEXT_REGISTER_PAGE("/home",function(){return{page:webpackJsonp([3],{190:function(e,t,n){e.exports=n(191)},191:function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var u=n(7),o=n.n(u),r=function(){return o.a.createElement("div",null,"Welcome to React")};t.default=function(){return o.a.createElement(r,null)}}},[190]).default}});
