@@ -11,14 +11,21 @@ To visitors of the website, we provide a web application that displays a compreh
 
 ## Technology Stack 
 Client-Side: React 
+
 Server-Side: Next.js
+
 Database: MongoDB
 
 ## Installation Guide
 $ git clone https://github.com/JumboCode/BRC.git
+
 $ cd BRC
+
 $ git checkout release/dev
+
 $ npm install
+
 $ npm run dev
+
 Navigate to http://localhost:3000 for entry page
 
