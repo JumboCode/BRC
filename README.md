@@ -23,8 +23,6 @@ $ git clone https://github.com/JumboCode/BRC.git
 
 $ cd BRC
 
-$ git checkout release/dev
-
 $ npm install
 
 $ npm run build
