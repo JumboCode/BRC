@@ -14,7 +14,7 @@ const Index = () => (
       <title>BiSpot: Find a Bi Group Around Me</title>
       <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDgWHnpI85MKsUaiBM8ARltw_POLBiZvZA&libraries=places"></script>
     </Head>
-    <div style={titleStyle}>Love is love</div>
+    <div style={titleStyle}>BiSpot: Find a Bi Group Around Me</div>
     <SearchBar />
   </>
 );
