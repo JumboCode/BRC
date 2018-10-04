@@ -1,5 +1,11 @@
-const Index = () => (
-    <div>Hello Next.js</div>
-);
+import { NavBar } from "../components";
+
+const Index = () => {
+  return (
+    <>
+      <NavBar />
+    </>
+  )
+}
 
 export default Index;
