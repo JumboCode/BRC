@@ -12,8 +12,8 @@ const centerdBox = {
 };
 
 const images = {
-	textAlign: 'center',
-	margin: '0px 50px 0px 50px'
+	display: "flex",
+	justifyContent: "space-around",
 };
 
 const PopUp = () => (
