@@ -7,22 +7,13 @@ const styles = {
         backgroundColor: "grey",
         padding: "20px",
     },
-    navBarMargin: {
-        marginBottom: "40px",
-    }
 }
 
 const NavBar = () => (
     <>
         <div style={styles.navBarContainer} /> 
-        <div style={styles.navBarMargin} />
+        <div style={{ marginBottom: "40px" }} />
     </>
 );
-
-/* No one deletes besides Erica */
-// const NavBar = () => (
-//     <div style="background-color:grey; padding:20px;"> 
-//     </div>
-// );
 
 export default NavBar;
