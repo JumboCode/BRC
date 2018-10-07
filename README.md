@@ -14,12 +14,14 @@ Client-Side: React <br />
 Server-Side: Next.js <br />
 Back-end REST API: Express + MongoDB <br />
 
+## Pre-installation Guide
+Set up Git: https://git-scm.com/book/en/v2/Getting-Started-Installing-Git <br />
+Download Node.js: https://nodejs.org/en/download/
+
 ## Installation Guide
 $ git clone https://github.com/JumboCode/BRC.git
 
 $ cd BRC
-
-$ git checkout release/dev
 
 $ npm install
 
