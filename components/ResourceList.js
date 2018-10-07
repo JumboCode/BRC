@@ -3,10 +3,10 @@ import React from "react";
 // An individual accordian thing
 class AccordianSection extends React.Component {
     // Contain the state row, and its resources are 
-    constructor(){
+    constructor(props){
         super(props);
         this.state = {
-            title = "Title"
+            title: "Title"
         }
     }
 
@@ -21,17 +21,23 @@ class AccordianSection extends React.Component {
 
 // A resource within some accordian
 class AccordianContents extends React.Component {
-    constructor(){
+    constructor(props){
         super(props);
         this.state = {
-            url = "url",
-            linkName = "link",
-            summary = "link info",
+            url :"url",
+            linkName : "link",
+            summary : "link info",
         }
     }
 
     render(){
-
+        return(
+            <div>
+                <a href={this.props.url}>{this.props.linkName}</a>
+                <p>{this.props.summary}</p>
+                <div>{this.props.children}</div>
+            </div>
+        )
     }
 }
 
@@ -40,8 +46,8 @@ class AccordianContents extends React.Component {
 // Takes a list of objects, with a state string and
 // a list of resources
 // [{"State": [Resource1, Resource2, Resource3]}]
-class Accordian extends React.Component{
-    constructor() {
+class Accordion extends React.Component{
+    constructor(props) {
         super(props);
         // set initial state
         this.state = {
@@ -60,8 +66,8 @@ class Accordian extends React.Component{
     // have a list of states and a list of resources
     render() {
         return (
-        <div classNAme = "accordian">
-            {this.renderChildren()};
+        <div className = "accordian">
+            {this.renderChildren()}
         </div>
         )
     }
@@ -69,4 +75,4 @@ class Accordian extends React.Component{
 }
 
 
-export default TitleBar;
+export default Accordion;
