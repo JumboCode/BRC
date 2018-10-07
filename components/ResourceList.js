@@ -1,14 +1,38 @@
 import React from "react";
 
 // An individual accordian thing
-class AccordianTitle extends React.Component {
-    // Contain the state row, and its resources are children
+class AccordianSection extends React.Component {
+    // Contain the state row, and its resources are 
+    constructor(){
+        super(props);
+        this.state = {
+            title = "Title"
+        }
+    }
 
+    render(){
+        return(
+        <div className = "title">
+            <h1> {this.props.title}</h1>
+            {this.props.children};
+        </div>
+        )}
 }
 
 // A resource within some accordian
 class AccordianContents extends React.Component {
+    constructor(){
+        super(props);
+        this.state = {
+            url = "url",
+            linkName = "link",
+            summary = "link info",
+        }
+    }
 
+    render(){
+
+    }
 }
 
 // pass the styles in using some prop type thing
@@ -27,7 +51,9 @@ class Accordian extends React.Component{
     }
 
     renderChildren(){
-        //return React.Children.map(this.props.children, 
+        return React.Children.map(this.props.children, child => {
+            return React.cloneElement(child);
+        });
     }
 
 
@@ -35,7 +61,7 @@ class Accordian extends React.Component{
     render() {
         return (
         <div classNAme = "accordian">
-        {}
+            {this.renderChildren()};
         </div>
         )
     }
