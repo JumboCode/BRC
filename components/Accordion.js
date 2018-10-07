@@ -5,6 +5,11 @@ import React from "react";
 // Takes a list of objects, with a state string and
 // a list of resources
 // [{"State": [Resource1, Resource2, Resource3]}]
+
+const divStyle = {
+    borderRradius: '5px',
+    border: '1px solid #d9d9d9'
+}
 class Accordion extends React.Component{
     constructor(props) {
         super(props);
@@ -25,7 +30,7 @@ class Accordion extends React.Component{
     // have a list of states and a list of resources
     render() {
         return (
-        <div className = "accordian">
+        <div className = "accordian" style = {divStyle}>
             {this.renderChildren()}
         </div>
         )

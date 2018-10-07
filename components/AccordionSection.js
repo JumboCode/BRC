@@ -1,5 +1,10 @@
 import React from "react";
 
+const divStyle = {
+    borderRradius: '5px',
+    border: '1px solid #d9d9d9'
+}
+
 // An individual accordian thing
 class AccordionSection extends React.Component {
     // Contain the state row, and its resources are 
@@ -27,7 +32,7 @@ class AccordionSection extends React.Component {
 
     render(){
         return(
-        <div className = "title" onClick={this.closeOpen}>
+        <div className = "title" onClick={this.closeOpen} style = {divStyle}>
             <h1> {this.props.title}</h1>
             {this.state.open && this.props.children}
         </div>

@@ -7,7 +7,10 @@ const Test = () => (
     <TitleBar />
     <Accordion>
         <AccordionSection title = "test">
-            <ResourceInfo url = "localhost:3000/index" linkName = "Home" summary = "Here we are" />
+            <ResourceInfo url = "localhost:3000/index" linkName = "link1" summary = "Here we are" />
+        </AccordionSection>
+        <AccordionSection title = "test2">
+            <ResourceInfo url = "localhost:3000/index" linkName = "link2" summary = "Here we are again" />
         </AccordionSection>
     </Accordion>
     </div>
