@@ -3,11 +3,14 @@ class ResourceInfo extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            url :"url",
-            linkName : "link",
-            summary : "link info",
         }
     }
+
+    static defaultProps = {
+        url :"url",
+        linkName : "link",
+        summary : "link info",
+    };
 
     render(){
         return(

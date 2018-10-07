@@ -6,15 +6,30 @@ class AccordionSection extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            title: "Title"
+            open: false
         }
     }
 
+    static propTypes = {
+        title: PropTypes.string.isRequired,
+        onClick: PropTypes.func.isRequired
+    }
+
+    static defaultProps = {
+        title: 'TITLE'
+      };
+
+      
+    closeOpen = () => {
+        this.setState({ open: !this.state.open})
+    }
+    
+
     render(){
         return(
-        <div className = "title">
+        <div className = "title" onClick={this.closeOpen}>
             <h1> {this.props.title}</h1>
-            {this.props.children}
+            {this.state.open && this.props.children}
         </div>
         )}
 }
