@@ -1,7 +1,7 @@
 import React from "react";
 
 // An individual accordian thing
-class AccordianSection extends React.Component {
+class AccordionSection extends React.Component {
     // Contain the state row, and its resources are 
     constructor(props){
         super(props);
@@ -20,7 +20,7 @@ class AccordianSection extends React.Component {
 }
 
 // A resource within some accordian
-class AccordianContents extends React.Component {
+class AccordionContents extends React.Component {
     constructor(props){
         super(props);
         this.state = {
