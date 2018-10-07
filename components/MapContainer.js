@@ -1,13 +1,12 @@
 import React from "react";
 import { compose, withProps } from "recompose"
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
-//require("dotenv").config();
-//process.env.GOOGLE_MAP_KEY
-
+import getConfig from 'next/config'
+const {serverRuntimeConfig, publicRuntimeConfig} = getConfig()
 
 const MyMapComponent = compose(
     withProps({
-      googleMapURL: ("https://maps.googleapis.com/maps/api/js?key="),
+      googleMapURL: ("https://maps.googleapis.com/maps/api/js?key=" + publicRuntimeConfig.secret),
       loadingElement: <div style={{ height: `100%` }} />,
       containerElement: <div style={{ height: `400px` }} />,
       mapElement: <div style={{ height: `100%` }} />,
@@ -19,6 +18,7 @@ const MyMapComponent = compose(
       defaultZoom={8}
       defaultCenter={{ lat: 42.4075, lng: -71.1190}}
     >
+    {console.log(props.googleMapURL)}
       {props.isMarkerShown && <Marker position={{  lat: 42.4075, lng: -71.1190 }} onClick={props.onMarkerClick} />}
     </GoogleMap>
   )
