@@ -11,7 +11,7 @@ const titleStyle = {
 const Index = () => (
   <>
     <Head>
-      <title>BiSpot: Find a Bi Group Around Me</title>
+      <title>BiSpot: Find a group near you.</title>
       <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDgWHnpI85MKsUaiBM8ARltw_POLBiZvZA&libraries=places"></script>
     </Head>
     <NavBar />
