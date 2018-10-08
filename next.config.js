@@ -9,8 +9,7 @@ module.exports = {
         mySecret: 'secret',
     },
     publicRuntimeConfig: { // Will be available on both server and client
-        staticFolder: '/static',
-        secret: process.env.GOOGLE_MAP_KEY
+        MAP_KEY: process.env.GOOGLE_MAP_KEY
 
     }
 };
