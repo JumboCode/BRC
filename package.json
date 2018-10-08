@@ -17,6 +17,7 @@
 		"next": "^6.1.2",
 		"react": "^16.5.1",
 		"react-dom": "^16.5.1",
-		"react-places-autocomplete": "^7.2.0"
+		"react-places-autocomplete": "^7.2.0",
+		"simple-flexbox": "^1.2.0"
 	}
 }
