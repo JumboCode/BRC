@@ -7,9 +7,12 @@ import React from "react";
 // [{"State": [Resource1, Resource2, Resource3]}]
 
 const divStyle = {
-    borderRradius: '5px',
+    borderRadius: '5px',
     border: '1px solid #d9d9d9'
 }
+
+
+
 class Accordion extends React.Component{
     constructor(props) {
         super(props);

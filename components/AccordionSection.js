@@ -1,9 +1,12 @@
 import React from "react";
 
 const divStyle = {
-    borderRradius: '5px',
-    border: '1px solid #d9d9d9'
+    borderRadius: '5px',
+    border: '1px solid #d9d9d9',
+    //backgroundColor: 'gray'
 }
+
+
 
 // An individual accordian thing
 class AccordionSection extends React.Component {
@@ -32,9 +35,12 @@ class AccordionSection extends React.Component {
 
     render(){
         return(
-        <div className = "title" onClick={this.closeOpen} style = {divStyle}>
+            <div style = {divStyle}>
+        <div className = "title" onClick={this.closeOpen}>
             <h1> {this.props.title}</h1>
-            {this.state.open && this.props.children}
+        </div>
+        {this.state.open && this.props.children}
+
         </div>
         )}
 }

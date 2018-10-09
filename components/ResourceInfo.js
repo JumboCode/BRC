@@ -9,7 +9,7 @@ class ResourceInfo extends React.Component {
     static defaultProps = {
         url :"url",
         linkName : "link",
-        summary : "link info",
+        summary : "",
     };
 
     render(){
