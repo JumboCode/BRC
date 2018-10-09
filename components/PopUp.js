@@ -20,34 +20,28 @@ function findArrayElementByTitle(array, title) {
   return array.title;
 }
 
+//prop is an object of keys and values. See test data in PopUp.js
 class PopUp extends React.Component{
 	constructor(props) {
     super(props);
-    console.log("props: " + this.props.info);
     this.state = ({
-    	
+    
     });
-    console.log("reached here");
   }
   render(){
   	return(
 		<div style={backGround}>
 			<div style={centerdBox}>
-				//title
-				<h1>Hello</h1>
+				<h1>
+					{this.props.info.heading}
+				</h1>
 
-				//address
 				<p>
-					<script type="text/javascript">
-        			//document.write(address)
-      				</script>
+					{this.props.info.address}
 				</p>
 
-				//description
 				<p>
-					<script type="text/javascript">
-        			//document.write(description)
-      				</script>
+					{this.props.info.description}
 				</p>
 
 				<a href="https://engineering.tufts.edu/ece/about/contact.htm">Visit our website</a>
