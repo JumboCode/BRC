@@ -15,31 +15,23 @@
 */
 
 import React, { Component } from 'react'
+import fetch from 'isomorphic-fetch'
 
 class MapView extends Component {
 
-    //initialize props
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            locations: [],
-        }
-    }
-
-    //fetch list of locations with GET request
-    componentDidMount() {
-        fetch('/locations.json')
-            .then(response => response.json())
-            .then(data => this.setState({ locations: data }))
+    // get list of locations as prop
+    static async getInitialProps({ req }) {
+        //hard coded url for now... need to change later
+        const res = await fetch('http://localhost:3000/locations.json')
+        const locations = await res.json()
+        return { locations }
     }
 
     //render as unordered list
     render() {
-        const { locations } = this.state
         return (
             <ul>
-                {locations.map(location =>
+                {this.props.locations.map(location =>
                     <li key={location.name}>{location.name}</li>
                 )}
             </ul>
