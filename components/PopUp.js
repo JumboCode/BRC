@@ -24,6 +24,7 @@ function findArrayElementByTitle(array, title) {
 class PopUp extends React.Component{
 	constructor(props) {
     super(props);
+    <?php $link1 = props.info.img1 ?>
     this.state = ({
     
     });
@@ -51,7 +52,7 @@ class PopUp extends React.Component{
 				<br/>
 				<br/>
 				<div style={images}>
-					<img src="./static/images/mendelsohn.jpg" alt="Noah" width="200" height="250"/>
+					<img src="{this.props.info.img1}" alt="Noah" width="200" height="250"/>
 					<img src="./static/images/ramsey.jpg" alt="Norman" width="200" height="250"/>
 					<img src="./static/images/monroe.png" alt="Megan" width="200" height="250"/>
 				</div>
