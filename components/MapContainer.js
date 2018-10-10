@@ -1,8 +1,8 @@
 import React from "react";
-import { compose, withProps } from "recompose"
-import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
-import getConfig from 'next/config'
-const {serverRuntimeConfig, publicRuntimeConfig} = getConfig()
+import { compose, withProps } from "recompose";
+import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps";
+import getConfig from "next/config";
+const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 
 const MyMapComponent = compose(
     withProps({
@@ -28,18 +28,18 @@ const MyMapComponent = compose(
     }
   
     componentDidMount() {
-      this.delayedShowMarker()
+      this.delayedShowMarker();
     }
   
     delayedShowMarker = () => {
       setTimeout(() => {
-        this.setState({ isMarkerShown: true })
-      }, 3000)
+        this.setState({ isMarkerShown: true });
+      }, 3000);
     }
   
     handleMarkerClick = () => {
-      this.setState({ isMarkerShown: false })
-      this.delayedShowMarker()
+      this.setState({ isMarkerShown: false });
+      this.delayedShowMarker();
     }
   
     render() {
@@ -48,7 +48,7 @@ const MyMapComponent = compose(
           isMarkerShown={this.state.isMarkerShown}
           onMarkerClick={this.handleMarkerClick}
         />
-      )
+      );
     }
   }
 
