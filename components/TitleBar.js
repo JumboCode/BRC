@@ -1,7 +1,7 @@
 import React from "react";
 
 const TitleBar = () => (
-    <div>Welcome to React</div>
+    <div></div>
 );
 
 export default TitleBar;
