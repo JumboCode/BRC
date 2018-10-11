@@ -20,14 +20,23 @@ function findArrayElementByTitle(array, title) {
   return array.title;
 }
 
-//prop is an object of keys and values. See test data in PopUp.js
+//prop is an object named info which holds keys and values. 
+//Example:
+	/*
+	var info = { 
+	
+	heading: 'some heading',
+	address: 'some address',
+	description: 'some description',
+	img1: 'path',
+	img2: 'path',
+	img2: 'path'			 	 
+	};
+	*/
 class PopUp extends React.Component{
 	constructor(props) {
     super(props);
-    <?php $link1 = props.info.img1 ?>
-    this.state = ({
-    
-    });
+    this.state = ({});
   }
   render(){
   	return(
@@ -52,9 +61,9 @@ class PopUp extends React.Component{
 				<br/>
 				<br/>
 				<div style={images}>
-					<img src="{this.props.info.img1}" alt="Noah" width="200" height="250"/>
-					<img src="./static/images/ramsey.jpg" alt="Norman" width="200" height="250"/>
-					<img src="./static/images/monroe.png" alt="Megan" width="200" height="250"/>
+					<img src={this.props.info.img1} alt="Noah" width="200" height="250"/>
+					<img src={this.props.info.img2} alt="Norman" width="200" height="250"/>
+					<img src={this.props.info.img3} alt="Megan" width="200" height="250"/>
 				</div>
 			</div>
 		</div>
