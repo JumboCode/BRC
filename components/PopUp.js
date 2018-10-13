@@ -1,65 +1,72 @@
 import React from "react";
 
 const backGround = {
-	backgroundColor: '#eaeaea'
+	/* display: "flex",
+	flexDirection: "row",
+	alignItems: "center", maybe should be center or flex-start */
+	backgroundColor: "#eaeaea"
 };
 
+const foreGround = {
+	display: "flex",
+	flexDirection: "row",
+	alignItems: "center", /* maybe should be center or flex-start */
+	justifyContent: "center"
+}
+
 const centerdBox = {
-	color: '#515151',
-	backgroundColor: 'white',
-	margin: '25px 200px 25px 200px',
-	padding: '50px'
+	display: "inline",
+	color: "#515151",
+	backgroundColor: "white",
+	width: "500px",
+	/* flexDirection: "row", */
+	/* alignItems: "flex-start", maybe should be center */
+	/* margin: "25px 200px 25px 200px",  /* replaced with flexbox */
+	padding: "50px",
+	justifyContent: "center"
 };
 
 const images = {
 	display: "flex",
+	flexDirection: "row",
+	alignItems: "flex-start",
 	justifyContent: "space-around",
 };
 
-function findArrayElementByTitle(array, title) {
-  return array.title;
-}
-
-//prop is an object of keys and values. See test data in PopUp.js
-class PopUp extends React.Component{
-	constructor(props) {
-    super(props);
-    <?php $link1 = props.info.img1 ?>
-    this.state = ({
-    
-    });
-  }
-  render(){
-  	return(
-		<div style={backGround}>
-			<div style={centerdBox}>
-				<h1>
-					{this.props.info.heading}
-				</h1>
-
-				<p>
-					{this.props.info.address}
-				</p>
-
-				<p>
-					{this.props.info.description}
-				</p>
-
-				<a href="https://engineering.tufts.edu/ece/about/contact.htm">Visit our website</a>
-				<br/>
-				<br/>
-				<a href="https://www.cs.tufts.edu/~nr/">View events</a>
-				<br/>
-				<br/>
-				<div style={images}>
-					<img src="{this.props.info.img1}" alt="Noah" width="200" height="250"/>
-					<img src="./static/images/ramsey.jpg" alt="Norman" width="200" height="250"/>
-					<img src="./static/images/monroe.png" alt="Megan" width="200" height="250"/>
-				</div>
+const PopUp = () => (
+	<div style={backGround}>
+	<div style={foreGround}>
+		<div style={centerdBox}>
+			<h1>Halligan Resouce Center</h1>
+			<p>161 College Ave, Medford, MA 021555</p>
+			<p>
+			We are open 24/7! You can drop by any time with any questions. Some of our physicians stay until very late in the labs. 
+			There are also a lot of people who have gone through a lot of stress, so they can be great resources as well!
+			</p>
+			<a href="https://engineering.tufts.edu/ece/about/contact.htm">Visit our website</a>
+						<br/>
+			<br/>
+			<a href="https://www.cs.tufts.edu/~nr/">View events</a>
+			<br/>
+			<br/>
+			<div style={images}>
+				<img src="./static/images/mendelsohn.jpg" alt="Noah" width="120" height="150"/>
+				<img src="./static/images/ramsey.jpg" alt="Norman" width="120" height="150"/>
+				<img src="./static/images/monroe.png" alt="Megan" width="120" height="150"/>
 			</div>
 		</div>
-	);
-  }
-}
+	</div>
+	</div>
+);
 
 export default PopUp;
+
+
+/* "X" for the close button */
+
+
+/*******************************************************************************
+ * 																																						 *
+ *		Original Image Sizes Pre James Modification: width="200" height="250"    *
+ * 																																						 *
+ ******************************************************************************/
