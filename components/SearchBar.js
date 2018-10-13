@@ -48,10 +48,13 @@ class SearchBar extends React.Component {
                     className: 'location-search-input',
                   })}
                 />
-                <input type="submit" value="search"></input>
-                <Link href="/home">
-                  <a>Search</a>
-                </Link>
+                <form>
+                  <div>
+                    <Link href={{ pathname: '/home', query: { search: this.state.address } }}>
+                      <button>Search</button>
+                    </Link>
+                  </div>
+                </form>
               </div>
               <div className="autocomplete-dropdown-container">
                 {loading && <div>Loading...</div>}
