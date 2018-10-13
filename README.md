@@ -20,9 +20,9 @@ Naoki Okada<br />
 Sabrina Wen<br />
 Jingqi Yang<br />
 Zhitong Zhang<br />
-
-Designer:
-Eragon Ma
+<br />
+Designer:<br />
+Eragon Ma<br />
 
 ## Technology Stack 
 Client-Side: React <br />
