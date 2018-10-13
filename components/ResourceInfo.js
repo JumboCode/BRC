@@ -3,6 +3,7 @@
 const divStyle = {
     backgroundColor: '#F0F0F0',
     paddingLeft: '7px',
+    paddingTop: '5px'
 }
 
 const ResourcesSpacing = {
@@ -40,7 +41,7 @@ class Resource extends React.Component {
         }
 }
 
-// Accept a list of tuples [{urlString: linkName}]
+// Accept a list [[urlString, linkName], [urlString2, linkName2]]
 class ResourceInfo extends React.Component {
     constructor(props){
         super(props);
@@ -57,8 +58,6 @@ class ResourceInfo extends React.Component {
             <div style = {ResourcesSpacing}>
             {
                 this.props.list.map(function(object, i){
-                    console.log(object[0]);
-                    console.log(object[1]);
                     return <Resource url={object[0]} linkName = {object[1]} key = {i}/>
                 })
             }

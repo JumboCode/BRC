@@ -8,7 +8,6 @@ class Accordion extends React.Component{
         this.state = {
             open: false
         };
-        // no methods to bind        
     }
 
     renderChildren(){

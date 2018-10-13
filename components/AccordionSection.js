@@ -4,13 +4,30 @@ const titleStyle = {
     border: '1px solid #CCCCCC',
     backgroundColor: '#CCCCCC',
     color: '#757575',
-    marginBottom: '1px',
+    marginBottom: '5px',
     paddingLeft: '7px'
 }
 
 const sectionStyle = {
     backgroundColor: '#F0F0F0',
     color: '#757575',
+}
+
+const arrowHead = {
+   // display: 'block',
+    width: '5%',
+    float: 'right',
+    height: '100%'
+}
+
+const titleText = {
+   // display: 'block',
+    float: 'foat',
+    width: '95%',
+    height: '100%'
+    //float: 'right'
+    // Can't float or the text won't be there, 
+    // might be time to use flexbox
 }
 
 // An individual accordian thing
@@ -42,7 +59,10 @@ class AccordionSection extends React.Component {
         return(
         <div style = {sectionStyle}>
             <div className = "title" onClick={this.closeOpen} style = {titleStyle}>
-                <h1> {this.props.title}</h1>
+                <div style = {titleText}> <h1> {this.props.title}</h1> </div>
+                <div style= {arrowHead}>
+                    <img alt="Arrow head" src="./static/images/listArrow.png" width="12" height="12"/>
+                </div> 
             </div>
             <div> 
                 {this.state.open && this.props.children}
