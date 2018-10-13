@@ -1,12 +1,18 @@
 // A resource within some accordian
 
 const divStyle = {
-    //borderRadius: '5px',
-    //border: '1px solid #d9d9d9',
     backgroundColor: '#F0F0F0',
-    color: '#757575',
     paddingLeft: '7px',
-    margin: '5px'
+}
+
+const ResourcesSpacing = {
+    minHeight: '200px'
+}
+
+const linkStyle = {
+    textDecoration: 'none',
+    color: '#757575', 
+
 }
 
 class Resource extends React.Component {
@@ -26,7 +32,7 @@ class Resource extends React.Component {
     render(){
         return(
             <div style = {divStyle}>
-                <a href={this.props.url}>{this.props.linkName}</a>
+                <a href={this.props.url} style = {linkStyle}>{this.props.linkName}</a>
                 <p>{this.props.summary}</p>
                 <div>{this.props.children}</div>
             </div>
@@ -46,13 +52,9 @@ class ResourceInfo extends React.Component {
         list: []
     };
 
-    addResources(){
-
-    }
-
     render(){
         return( 
-            <div>
+            <div style = {ResourcesSpacing}>
             {
                 this.props.list.map(function(object, i){
                     console.log(object[0]);

@@ -1,21 +1,16 @@
 import React from "react";
 
-const divStyle = {
-    //borderRadius: '5px',
-    border: '1px solid #d9d9d9',
+const titleStyle = {
+    border: '1px solid #CCCCCC',
     backgroundColor: '#CCCCCC',
     color: '#757575',
-    marginBottom: '5px',
+    marginBottom: '1px',
     paddingLeft: '7px'
 }
 
-const backgroundStyle = {
+const sectionStyle = {
     backgroundColor: '#F0F0F0',
     color: '#757575',
-}
-
-const contentStyle = {
-    //minHeight: '200px'
 }
 
 // An individual accordian thing
@@ -45,11 +40,11 @@ class AccordionSection extends React.Component {
 
     render(){
         return(
-        <div style = {backgroundStyle}>
-            <div className = "title" onClick={this.closeOpen} style = {divStyle}>
+        <div style = {sectionStyle}>
+            <div className = "title" onClick={this.closeOpen} style = {titleStyle}>
                 <h1> {this.props.title}</h1>
             </div>
-            <div style = {contentStyle}> 
+            <div> 
                 {this.state.open && this.props.children}
             </div>
         </div>

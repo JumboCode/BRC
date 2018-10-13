@@ -24,7 +24,6 @@ const Test = () => (
     </Accordion>
         */ }
 
-        <TitleBar />
         <Accordion>
             <AccordionSection title = "Arizona">
                 <ResourceInfo list = {[["https://www.facebook.com/fluidarizona/","Fluid arizona"], ["http://bimetrophx.wix.com/bimetrophx", "Bisexuals in Metro Phoenix"]]} />
