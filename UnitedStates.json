@@ -12,9 +12,7 @@
 			"Meetup": "",
 			"Email": "fluidarizona@gmail.com"
 		}
-	}
-
-
+	},
 	"California":{
 		"AMBI Los Angeles": {
 			"Website": "https://www.meetup.com/ambiLA/?_cookie-check=m3SzE0ysrWR25ZR8", 
@@ -34,32 +32,28 @@
 			"Telephone": "(323)860-5837 (Message only)",
 			"Email": "labtaskforce@gmail.com"
 		}
-	}
-
-
+	},
 	"Colorado":{
 		"Denver Metro Bisexuals' Social Club": {
 			"Website": "https://www.meetup.com/Denver-Metro-Bisexuals-Social-Club/"
 		}
-	}
-
-	
+	},
 	"District Of Columbia":{
 		"CenterBiPlus": {
 			"Website": "https://www.meetup.com/CenterBiPlus/"
 		}
-	}
+	},
 	"Florida":{
 		"South Florida Bisexual+ Network (SFBN+)": {
 			"Website": "https://www.facebook.com/groups/soflbicommunity/"			
 		}
-	}
+	},
 	"Illinois":{
 		"Bisexual Queer Alliance Chicago": {
 			"Website": "http://www.bqachicago.org/",
 			"Facebook": "https://www.facebook.com/BQAChicago"
 		}
-	}
+	},
 	"Massachusetts":{
 		"Bisexual Women of Color (BIWOC) (Boston)": {
 			"Website": "http://www.biwoc.org/about",
@@ -74,14 +68,14 @@
 			"Email": "biwomeneditor@gmail.com",
 			"Meetup": ""
 		}
-	}
+	},
 	"Minnesota": {
 		"Bisexual Organizing Project (BOP) (Minneapolis)": {
 			"Website": "http://www.bisexualorganizingproject.org/",
 			"Email": "BOP@BisexualOrganizingProject.org",
 			"Facebook": "https://www.facebook.com/BiOrgProject"
 		}
-	}
+	},
 	"New York": {
 		"New York Area Bisexual Network": {
 			"Website": "http://www.nyabn.org/",
@@ -89,25 +83,25 @@
 			"Email": "info@nyabn.org",
 			"Facebook": "https://www.facebook.com/NYAreaBiNet/"
 		}
-	}
+	},
 	"Ohio": {
 		"BiLocal (Columbus)": {
 			"Website":"http://bilocal614.org/",
 			"Email":"bilocal614@gmail.com",
 			"Facebook":"https://www.facebook.com/ColumbusBiLocal"			
 		}
-	}
+	},
 	"Pennsylvania": {
 		"Bi-Pan_Fluid of Philadelphia": {
 			"Website": "https://www.meetup.com/Bisexuals-and-Pansexuals-of-Greater-Philadelphia/"
 		}
-	}
+	},
 	"Texas": {
 		"Dallas/Fort Worth Bi Net": {
 			"Website": "http://www.dfwbi.net/",
 			"Email": "info@dfwbi.com"
 		}
-	}
+	},
 	"Virginia": {
 		"Richmond Bisexual Network (ROBIN)": {
 			"Website": "http://bisexuality.wikia.com/wiki/Richmond_Bisexual_Network_%28ROBIN%29",
@@ -116,7 +110,7 @@
 		"Richmond -- The 'B' is Not Silent: Bisexual+ Support Group": {
 			"Website": "https://www.facebook.com/bisnotsilent/"
 		}
-	}
+	},
 	"Washington":{
 		"BiNet Seattle": {
 			"Website": "https://www.binetseattle.org/",
