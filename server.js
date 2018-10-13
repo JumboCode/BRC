@@ -23,26 +23,36 @@ app.prepare()
             return {};
         });
 
-        //fetch locations data from database as list
-        server.get('/locations.json', function(req, res) {
-            MongoClient.connect(mongoURI, { useNewUrlParser: true }, function(err, client) {
+        //list locations at /locations
+        server.get('/locations', function(req, res) {
+            res.set('Content-Type', 'text/html');
+            //make mongodb connection
+            MongoClient.connect(mongoURI, { useNewUrlParser: true }, function (err, client) {
                 if (err) throw err;
                 var db = client.db('brc2018');    //database name
 
                 //equivalent to 'db.locations' in MongoDB client shell
-                db.collection('locations', function(er, collection) {
+                db.collection('locations', function(err, collection) {
+                    if (err) {
+                        res.send({});
+                    }
+                    else {
+                        //equivalent to 'db.locations.find()' in MongoDB client shell
+                        collection.find().toArray(function(err, results) {
 
-                    //equivalent to 'db.locations.find()' in MongoDB client shell
-                    collection.find().toArray(function(err, results) {
-
-                        if (!err)   //don't send anything if error for now
-                        {
-                            res.send(results);
-                        }
-                    });
+                            //all results of db.locations.find() will go into...
+                            //'results' will be an array (or list)
+                            if (!err) {
+                                res.send(results);
+                            } else {
+                                res.send({});
+                            }
+                        });
+                    }
                 });
             });
         });
+
 
         server.get("*", (req, res) => {
             return handle(req, res);

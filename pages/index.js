@@ -1,6 +1,7 @@
 import { SearchBar, NavBar } from "../components";
 import Head from "next/head";
 import Link from "next/link";
+
 import getConfig from "next/config";
 const { publicRuntimeConfig } = getConfig()
 

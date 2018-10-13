@@ -32,7 +32,7 @@ class Home extends Component  {
     // get list of locations as prop
     static async getInitialProps({ req }) {
         //hard coded url for now... need to change later
-        const res = await fetch('http://localhost:3000/locations.json')
+        const res = await fetch('http://localhost:3000/locations')
         const locations = await res.json()
         return { locations }
     }

@@ -15,7 +15,7 @@ const TitleBar = (props) => (
     <div style = {title}>  Bi Spot: Find a group near you.</div>
     <ul>
             {props.locationData.map(location =>
-                <li key={location.name}>{location.name}</li>
+                <li key={location["_id"]}>locations n</li>
             )}
     </ul>
   </div>
