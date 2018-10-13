@@ -17,6 +17,16 @@ import fetch from 'isomorphic-fetch'
         etc...
     ]
 */
+const mainContainer = {
+  display: 'flex',
+  flexFlow: 'row wrap',
+  alignContent: 'space between',
+  margin: 10
+};
+
+const map = {
+  flex: 1
+}
 
 class Home extends Component  {
     // get list of locations as prop
@@ -35,13 +45,12 @@ class Home extends Component  {
     render () {
             return (
             <div className = "Home">
-                <TitleBar />
-                < MapContainer />
-                <ul>
-                        {this.props.locations.map(location =>
-                            <li key={location.name}>{location.name}</li>
-                        )}
-                </ul>
+              <div style = {mainContainer}>
+                <TitleBar locationData = {this.props.locations}/>
+                <div style = {map}>
+                  < MapContainer />
+                </div>
+              </div>
             </div>
         );
     }
