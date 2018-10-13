@@ -21,7 +21,7 @@ const centerdBox = {
 	justifyContent: "center"
 };
 
-const images = {
+const images = { /* Original Sizes Pre James Flex: width="200" height="250" */
 	display: "flex",
 	flexDirection: "row",
 	alignItems: "flex-start",
@@ -33,12 +33,16 @@ const exitX = {
 	left: "485px"
 }
 
-class PopUp extends React.Component {
-        constructor(props) {
-        	super(props);
-        	this.state = { };
-        }
-
+class PopUp extends React.Component {  // prop is an object named info which holds keys and values.
+        constructor(props) {	       // Example:
+        	super(props);	       //   var info = {
+        	this.state = { };      //     heading: 'some heading',
+        }			       //     address: 'some address',
+				       //     description: 'some description',
+				       //     img1: 'path',
+				       //     img2: 'path',
+				       //     img2: 'path'
+				       //   };
         closePopUp = () => {
         	/* this doesn't do anyting. */
         	return;
@@ -57,7 +61,7 @@ class PopUp extends React.Component {
 						There are also a lot of people who have gone through a lot of stress, so they can be great resources as well!
 						</p>
 						<a href="https://engineering.tufts.edu/ece/about/contact.htm">Visit our website</a>
-									<br/>
+						<br/>
 						<br/>
 						<a href="https://www.cs.tufts.edu/~nr/">View events</a>
 						<br/>
@@ -75,13 +79,3 @@ class PopUp extends React.Component {
 }
 
 export default PopUp;
-
-
-/* "X" for the close button */
-
-
-/*******************************************************************************
- * 																																						 *
- *		Original Image Sizes Pre James Modification: width="200" height="250"    *
- * 																																						 *
- ******************************************************************************/
