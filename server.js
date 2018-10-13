@@ -8,9 +8,7 @@ var mongodb = require('mongodb');
 var MongoClient = require('mongodb').MongoClient;
 var mongoURI = process.env.MONGODB_URI || 
                process.env.MONGOLAB_URI || 
-               process.env.MONGOHQ_URL || 
-               'mongodb://brcjumbocode:BRC2018@ds123971.mlab.com:23971/brc2018';
-
+               process.env.MONGOHQ_URL;
 
 const port = parseInt(process.env.PORT, 10) || 3000
 const app = next(process.env.NODE_ENV !== "production");
