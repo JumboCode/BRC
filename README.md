@@ -8,6 +8,21 @@ Bisexual Resource Center is an educational organization headquartered in Boston,
 To visitors of the website, we provide a web application that displays a comprehensive map view of Bi+ organizations and events based on geographical locations, along with basic contact/sign-up guides. The app will enhance the experience of exploring local groups and events for anyone in need. An interactive search tool connected to the map view will provide easy access of the information.
 
 ## Team Members
+Project Manager:<br />
+Steph Xu<br />
+<br />
+Developers:<br />
+Claire Boals<br />
+Sam Chung<br />
+Erica DeBarge<br />
+James Garijo-Garde<br />
+Naoki Okada<br />
+Sabrina Wen<br />
+Jingqi Yang<br />
+Zhitong Zhang<br />
+<br />
+Designer:<br />
+Eragon Ma<br />
 
 ## Technology Stack 
 Client-Side: React <br />
