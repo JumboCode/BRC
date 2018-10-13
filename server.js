@@ -23,13 +23,9 @@ app.prepare()
             return {};
         });
 
-        //list locations at /locations
-        server.get('/locations', function(req, res) {
-            res.set('Content-Type', 'text/html');
-            var indexPage = '';
-
-            //make mongodb connection
-            MongoClient.connect(mongoURI, { useNewUrlParser: true }, function (err, client) {
+        //fetch locations data from database as list
+        server.get('/locations.json', function(req, res) {
+            MongoClient.connect(mongoURI, { useNewUrlParser: true }, function(err, client) {
                 if (err) throw err;
                 var db = client.db('brc2018');    //database name
 
@@ -39,23 +35,14 @@ app.prepare()
                     //equivalent to 'db.locations.find()' in MongoDB client shell
                     collection.find().toArray(function(err, results) {
 
-                        //all results of db.locations.find() will go into...
-                        //'results' will be an array (or list)
-                        if (!err) {
-                            indexPage += "<!DOCTYPE HTML><html><head><title>Locations</title></head><body><h1>Locations:</h1>";
-                            for (var count = 0; count < results.length; count++) {
-                                indexPage += "<p>Location " + count + ": " + results[count].loc + "</p>";
-                            }
-                            indexPage += "</body></html>"
-                            res.send(indexPage);
-                        } else {
-                            res.send('<!DOCTYPE HTML><html><head><title>Locations</title></head><body><h1>Whoops, something went terribly wrong!</h1></body></html>');
+                        if (!err)   //don't send anything if error for now
+                        {
+                            res.send(results);
                         }
                     });
                 });
             });
         });
-
 
         server.get("*", (req, res) => {
             return handle(req, res);
