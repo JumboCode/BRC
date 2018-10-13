@@ -1,25 +1,35 @@
-import { Column, Row } from 'simple-flexbox';
+const mainContainer = {
+  display: 'flex',
+  flexFlow: 'row wrap',
+  margin: 10
+};
 
-var titleStyle = {
+const leftColumn = {
+  display: 'flex',
+  flexFlow: 'column wrap',
+  margin: 10
+};
+
+const title = {
   fontWeight: 'bold',
   fontSize: 50,
-  fontFamily: 'BlinkMacSystemFont'
+  fontFamily: 'BlinkMacSystemFont',
+  alignSelf: 'flex-start',
+  flex: 1
+};
+
+const resources = {
+  flex: 2
 };
 
 const TitleBar = () => (
-  <Row horizontal = 'center' style = {{margin: 10}}>
-    <Column flexGrow = {1}>
-      <Row>
-        <div style = {titleStyle}>Bi Spot: Find a group near you.</div>
-      </Row>
-      <Row>
-        <span> table text </span>
-      </Row>
-    </Column>
-    <Column flexGrow={1} horizontal='center'>
-      insert map here
-    </Column>
-  </Row>
+  <div style = {mainContainer}>
+    <div style = {leftColumn}>
+      <div style = {title}>  Bi Spot: Find a group near you.</div>
+      <div style = {resources}>body</div>
+    </div>
+    insert map here
+  </div>
 );
 
 export default TitleBar;
