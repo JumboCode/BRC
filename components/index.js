@@ -1,4 +1,4 @@
-import InfoBar from "./TitleBar";
+import InfoBar from "./InfoBar";
 import PopUp from "./PopUp";
 import NavBar from "./NavBar";
 import SearchBar from "./SearchBar";
