@@ -44,10 +44,12 @@ const MyMapComponent = compose(
   
     render() {
       return (
-        <MyMapComponent
-          isMarkerShown={this.state.isMarkerShown}
-          onMarkerClick={this.handleMarkerClick}
-        />
+        <>
+          <MyMapComponent
+            isMarkerShown={this.state.isMarkerShown}
+            onMarkerClick={this.handleMarkerClick}
+          />
+        </>
       );
     }
   }

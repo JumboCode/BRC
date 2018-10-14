@@ -14,9 +14,17 @@ const InfoBar = (props) => (
   <div style = {info}>
     <div style = {title}>  Bi Spot: Find a group near you.</div>
     <ul>
-            {props.locationData.map(location =>
-                <li key={location["_id"]}>locations n</li>
-            )}
+            {
+              Object.keys(props.locationData).map( (state, index) => {
+                const centers = Object.keys(props.locationData[state]).map( (center, index) => <p key={index}>{center}</p>);
+                return (
+                  <>
+                    <li key={index}>{state}</li>
+                    { centers }
+                  </>
+                );
+              })
+            }
     </ul>
   </div>
 );

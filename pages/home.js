@@ -1,4 +1,4 @@
-import { InfoBar, MapContainer, PopUp } from "../components";
+import { InfoBar, MapContainer, PopUp, NavBar } from "../components";
 import { Component } from "react";
 import fetch from 'isomorphic-fetch'
 
@@ -20,7 +20,7 @@ const mainContainer = {
   display: 'flex',
   flexFlow: 'row wrap',
   alignContent: 'space between',
-  margin: 10
+  margin: "3% 20px 0px 20px",
 };
 
 const map = {
@@ -42,14 +42,14 @@ class Home extends Component  {
     }
 
     render () {
-            return (
+        return (
             <div>
-              <div style={mainContainer}>
-                <InfoBar locationData={this.props.locations}/>
-                <div style={map}>
-                  < MapContainer />
+                <div style={mainContainer}>
+                    <InfoBar locationData={this.props.locations[0]["states"]}/>
+                    <div style={map}>
+                    < MapContainer />
+                    </div>
                 </div>
-              </div>
             </div>
         );
     }
