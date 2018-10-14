@@ -1,23 +1,31 @@
 import React from "react";
 
-const backGround = {
-	backgroundColor: '#eaeaea'
-};
+const foreGround = {
+	display: "flex",
+	flexDirection: "row",
+	alignItems: "center",
+	justifyContent: "center"
+}
 
 const centerdBox = {
-	color: '#515151',
-	backgroundColor: 'white',
-	margin: '25px 200px 25px 200px',
-	padding: '50px'
+	color: "#515151",
+	backgroundColor: "white",
+	width: "500px",
+	padding: "10px 50px 20px 50px",
+	border: "1px solid",
+	boxShadow: "1px 2px"
 };
 
-const images = {
+const images = { /* Original Sizes Pre James Flex: width="200" height="250" */
 	display: "flex",
+	flexDirection: "row",
+	alignItems: "flex-start",
 	justifyContent: "space-around",
 };
 
-function findArrayElementByTitle(array, title) {
-  return array.title;
+const exitX = {
+	position: "relative",
+	left: "485px"
 }
 
 //prop is an object named info which holds keys and values. 
@@ -33,42 +41,42 @@ function findArrayElementByTitle(array, title) {
 	img2: 'path'			 	 
 	};
 	*/
-class PopUp extends React.Component{
-	constructor(props) {
-    super(props);
-    this.state = ({});
-  }
-  render(){
-  	return(
-		<div style={backGround}>
-			<div style={centerdBox}>
-				<h1>
-					{this.props.info.heading}
-				</h1>
 
-				<p>
-					{this.props.info.address}
-				</p>
 
-				<p>
-					{this.props.info.description}
-				</p>
+class PopUp extends React.Component {
+    constructor(props) {
+    	super(props);
+    	this.state = { };
+	}
+		
+    closePopUp = () => {
+        /* this doesn't do anyting. */
+        return;
+	};
 
-				<a href="https://engineering.tufts.edu/ece/about/contact.htm">Visit our website</a>
-				<br/>
-				<br/>
-				<a href="https://www.cs.tufts.edu/~nr/">View events</a>
-				<br/>
-				<br/>
-				<div style={images}>
-					<img src={this.props.info.img1} alt="Noah" width="200" height="250"/>
-					<img src={this.props.info.img2} alt="Norman" width="200" height="250"/>
-					<img src={this.props.info.img3} alt="Megan" width="200" height="250"/>
+	render() {
+		return (
+			<div style={ foreGround }>
+				<div style={ centerdBox }>
+					<button style={ exitX } onClick={ this.closePopUp }> {"X"} </button>
+					<h1>{ this.props.info.heading }</h1>
+					<p>{ this.props.info.address }</p>
+					<p>	{ this.props.info.description }</p>
+					<a href="https://engineering.tufts.edu/ece/about/contact.htm">Visit our website</a>
+					<br/>
+					<br/>
+					<a href="https://www.cs.tufts.edu/~nr/">View events</a>
+					<br/>
+					<br/>
+					<div style={images}>
+						<img src={this.props.info.img1} alt="Noah" width="200" height="250"/>
+						<img src={this.props.info.img2} alt="Norman" width="200" height="250"/>
+						<img src={this.props.info.img3} alt="Megan" width="200" height="250"/>
+					</div>
 				</div>
 			</div>
-		</div>
-	);
-  }
+		);
+	}
 }
 
 export default PopUp;
