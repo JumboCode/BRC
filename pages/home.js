@@ -1,5 +1,4 @@
-import TitleBar from "../components/TitleBar";
-import MapContainer from "../components/MapContainer";
+import { InfoBar, MapContainer } from "../components";
 import { Component } from "react";
 import fetch from 'isomorphic-fetch'
 
@@ -44,10 +43,10 @@ class Home extends Component  {
 
     render () {
             return (
-            <div className = "Home">
-              <div style = {mainContainer}>
-                <TitleBar locationData = {this.props.locations}/>
-                <div style = {map}>
+            <div>
+              <div style={mainContainer}>
+                <InfoBar locationData={this.props.locations}/>
+                <div style={map}>
                   < MapContainer />
                 </div>
               </div>

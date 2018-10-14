@@ -10,7 +10,7 @@ const title = {
   fontFamily: 'BlinkMacSystemFont'
 };
 
-const TitleBar = (props) => (
+const InfoBar = (props) => (
   <div style = {info}>
     <div style = {title}>  Bi Spot: Find a group near you.</div>
     <ul>
@@ -21,4 +21,4 @@ const TitleBar = (props) => (
   </div>
 );
 
-export default TitleBar;
+export default InfoBar;
