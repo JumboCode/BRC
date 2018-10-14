@@ -1,5 +1,4 @@
-import TitleBar from "../components/TitleBar";
-import MapContainer from "../components/MapContainer";
+import { TitleBar, MapContainer, PopUp } from "../components";
 import { Component } from "react";
 import fetch from 'isomorphic-fetch'
 

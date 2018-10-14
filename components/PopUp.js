@@ -1,9 +1,5 @@
 import React from "react";
 
-const backGround = {
-	backgroundColor: "#eaeaea"
-};
-
 const foreGround = {
 	display: "flex",
 	flexDirection: "row",
@@ -12,13 +8,12 @@ const foreGround = {
 }
 
 const centerdBox = {
-	display: "inline",
 	color: "#515151",
 	backgroundColor: "white",
 	width: "500px",
-	/* margin: "25px 200px 25px 200px",  replaced with flexbox */
-	padding: "50px",
-	justifyContent: "center"
+	padding: "10px 50px 20px 50px",
+	border: "1px solid",
+	boxShadow: "1px 2px"
 };
 
 const images = { /* Original Sizes Pre James Flex: width="200" height="250" */
@@ -33,44 +28,50 @@ const exitX = {
 	left: "485px"
 }
 
-class PopUp extends React.Component {  // prop is an object named info which holds keys and values.
-        constructor(props) {	       // Example:
-        	super(props);	       //   var info = {
-        	this.state = { };      //     heading: 'some heading',
-        }			       //     address: 'some address',
-				       //     description: 'some description',
-				       //     img1: 'path',
-				       //     img2: 'path',
-				       //     img2: 'path'
-				       //   };
-        closePopUp = () => {
-        	/* this doesn't do anyting. */
-        	return;
+//prop is an object named info which holds keys and values. 
+//Example:
+	/*
+	var info = { 
+	
+	heading: 'some heading',
+	address: 'some address',
+	description: 'some description',
+	img1: 'path',
+	img2: 'path',
+	img2: 'path'			 	 
+	};
+	*/
+
+
+class PopUp extends React.Component {
+    constructor(props) {
+    	super(props);
+    	this.state = { };
+	}
+		
+    closePopUp = () => {
+        /* this doesn't do anyting. */
+        return;
 	};
 
 	render() {
 		return (
-			<div style={backGround}>
-				<div style={foreGround}>
-					<div style={centerdBox}>
-						<button style={exitX} onClick={this.closePopUp}> {"X"} </button>
-						<h1>Halligan Resouce Center</h1>
-						<p>161 College Ave, Medford, MA 021555</p>
-						<p>
-						We are open 24/7! You can drop by any time with any questions. Some of our physicians stay until very late in the labs. 
-						There are also a lot of people who have gone through a lot of stress, so they can be great resources as well!
-						</p>
-						<a href="https://engineering.tufts.edu/ece/about/contact.htm">Visit our website</a>
-						<br/>
-						<br/>
-						<a href="https://www.cs.tufts.edu/~nr/">View events</a>
-						<br/>
-						<br/>
-						<div style={images}>
-							<img src="./static/images/mendelsohn.jpg" alt="Noah" width="120" height="150"/>
-							<img src="./static/images/ramsey.jpg" alt="Norman" width="120" height="150"/>
-							<img src="./static/images/monroe.png" alt="Megan" width="120" height="150"/>
-						</div>
+			<div style={ foreGround }>
+				<div style={ centerdBox }>
+					<button style={ exitX } onClick={ this.closePopUp }> {"X"} </button>
+					<h1>{ this.props.info.heading }</h1>
+					<p>{ this.props.info.address }</p>
+					<p>	{ this.props.info.description }</p>
+					<a href="https://engineering.tufts.edu/ece/about/contact.htm">Visit our website</a>
+					<br/>
+					<br/>
+					<a href="https://www.cs.tufts.edu/~nr/">View events</a>
+					<br/>
+					<br/>
+					<div style={images}>
+						<img src={this.props.info.img1} alt="Noah" width="200" height="250"/>
+						<img src={this.props.info.img2} alt="Norman" width="200" height="250"/>
+						<img src={this.props.info.img3} alt="Megan" width="200" height="250"/>
 					</div>
 				</div>
 			</div>
