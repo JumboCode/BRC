@@ -6,7 +6,6 @@ const config = require('dotenv').config()
 //mongoClient.connect has to be called for each request? bc it's asynchronous
 var mongodb = require('mongodb');
 var MongoClient = mongodb.MongoClient;
-console.log(process.env);
 var mongoURI = process.env.MONGODB_URI || 
                process.env.MONGOLAB_URI || 
                process.env.MONGOHQ_URL;
