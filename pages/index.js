@@ -27,13 +27,10 @@ const linkStyle = {
   padding: '10px'
 };
 
-let GoogleMapUrl = "https://maps.googleapis.com/maps/api/js?key=" + publicRuntimeConfig.MAP_KEY + "&libraries=places";
-
 const Index = () => (
   <>
     <Head>
       <title>BiSpot: Find a Bi Group Around Me</title>
-      <script type="text/javascript" src={GoogleMapUrl}></script>
     </Head>
     <NavBar />
     <div style={titleStyle}>BiSpot: Find a Bi Group Around Me</div>
