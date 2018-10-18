@@ -6,7 +6,7 @@ const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 
 const MyMapComponent = compose(
     withProps({
-      googleMapURL: ("https://maps.googleapis.com/maps/api/js?key=" + publicRuntimeConfig.MAP_KEY + "&libraries=places"),
+      googleMapURL: ("https://maps.googleapis.com/maps/api/js?key=" + publicRuntimeConfig.MAP_KEY),
       loadingElement: <div style={{ height: `100%` }} />,
       containerElement: <div style={{ height: `400px` }} />,
       mapElement: <div style={{ height: `100%` }} />,
