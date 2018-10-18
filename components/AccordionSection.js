@@ -1,11 +1,13 @@
 import React from "react";
 
 const titleStyle = {
+    display: 'flex',
+    alignItems: 'center',
     border: '1px solid #CCCCCC',
     backgroundColor: '#CCCCCC',
     color: '#757575',
     marginBottom: '5px',
-    paddingLeft: '7px'
+    paddingLeft: '7px',
 }
 
 const sectionStyle = {
@@ -14,23 +16,17 @@ const sectionStyle = {
 }
 
 const arrowHead = {
-   // display: 'block',
-    width: '5%',
-    float: 'right',
-    height: '100%'
+    marginLeft: 'auto',
+    padding: '0'
 }
 
-const titleText = {
-   // display: 'block',
-    float: 'foat',
-    width: '95%',
-    height: '100%'
-    //float: 'right'
-    // Can't float or the text won't be there, 
-    // might be time to use flexbox
+const arrowHead2 = {
+    marginLeft: 'auto',
+    padding: '0',
+    transform: 'rotate(270deg)'
 }
 
-// An individual accordian thing
+// A list encompassing all sections within it
 class AccordionSection extends React.Component {
     // Contain the state row, and its resources are 
     constructor(props){
@@ -52,17 +48,19 @@ class AccordionSection extends React.Component {
       
     closeOpen = () => {
         this.setState({ open: !this.state.open})
-    }
+    };
     
 
     render(){
+        const isOpen = this.state.open;
         return(
         <div style = {sectionStyle}>
             <div className = "title" onClick={this.closeOpen} style = {titleStyle}>
-                <div style = {titleText}> <h1> {this.props.title}</h1> </div>
-                <div style= {arrowHead}>
+                <div> <h1> {this.props.title}</h1> </div>
+                <div style= {isOpen ? arrowHead2 : arrowHead}>
                     <img alt="Arrow head" src="./static/images/listArrow.png" width="12" height="12"/>
                 </div> 
+        
             </div>
             <div> 
                 {this.state.open && this.props.children}
@@ -71,6 +69,7 @@ class AccordionSection extends React.Component {
         )}
 }
 
+//                <div style= {isOpen ? {arrowHead} : {arrowHead2}}>
 
 
 export default AccordionSection;
