@@ -1,3 +1,8 @@
+import Accordion from "../components/Accordion";
+import AccordionSection from "../components/AccordionSection";
+import Resources from "../components/Resources";
+import { Component } from "react";
+
 const info = {
   flex: 1,
   display: 'flex',
@@ -10,23 +15,34 @@ const title = {
   fontFamily: 'BlinkMacSystemFont'
 };
 
-const InfoBar = (props) => (
-  <div style = {info}>
-    <div style = {title}>  Bi Spot: Find a group near you.</div>
-    <ul>
-            {
-              Object.keys(props.locationData).map( (state, index) => {
-                const centers = Object.keys(props.locationData[state]).map( (center, index) => <p key={index}>{center}</p>);
-                return (
-                  <>
-                    <li key={index}>{state}</li>
-                    { centers }
-                  </>
-                );
-              })
-            }
-    </ul>
+class InfoBar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  render() {
+    var locationData = this.props.locationData
+    var sections = []
+    var i = 0
+    for(var state in locationData){
+        if (locationData.hasOwnProperty(state)) {
+            var stateResources = locationData[state]
+            sections.push(<AccordionSection title = {state} key = {i}> <Resources resources = {stateResources}/> </AccordionSection>)
+            i++
+        }
+    }
+
+    return(
+      <div style = {info}>
+        <div style = {title}>  Bi Spot: Find a group near you.</div>
+        <Accordion>
+          {sections}
+        </Accordion>
   </div>
-);
+    )
+  }
+}
+
 
 export default InfoBar;
