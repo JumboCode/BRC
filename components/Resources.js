@@ -25,6 +25,11 @@ class Resource extends React.Component {
         }
     };
 
+    static propTypes = {
+        name: React.PropTypes.string.isRequired,
+        info: React.PropTypes.object.isRequired
+    }
+
     static defaultProps ={
         info : {"Email": "mail", "Website": "web", "Location": "loc", "Meetup": ""},
         url: "url",
@@ -57,8 +62,13 @@ class Resources extends React.Component {
         }
     }
 
+    static propTypes = {
+        state: React.PropTypes.string.isRequired,
+        resources: React.PropTypes.object.isRequired
+    }
+
     static defaultProps = {
-        list: []
+        resources: {"ResourceName": {"Email": "mail", "Website": "web", "Location": "loc", "Meetup": ""}}
     };
 
     printResources(){

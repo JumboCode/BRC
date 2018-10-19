@@ -37,8 +37,7 @@ class AccordionSection extends React.Component {
     }
 
     static propTypes = {
-        title: PropTypes.string.isRequired,
-        onClick: PropTypes.func.isRequired
+        title: PropTypes.string.isRequired
     }
 
     static defaultProps = {
@@ -68,8 +67,5 @@ class AccordionSection extends React.Component {
         </div>
         )}
 }
-
-//                <div style= {isOpen ? {arrowHead} : {arrowHead2}}>
-
 
 export default AccordionSection;
