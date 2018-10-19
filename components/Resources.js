@@ -1,5 +1,4 @@
-// A resource within some accordian
-
+// An individual resource along with associated data such as website,etc
 const divStyle = {
     backgroundColor: '#F0F0F0',
     paddingLeft: '7px',
@@ -16,7 +15,7 @@ const linkStyle = {
 
 }
 
-// Accept some object resourceObj
+// Accept some object info
 // Accept some string name
 class Resource extends React.Component {
     constructor(props){
@@ -49,7 +48,7 @@ class Resource extends React.Component {
         }
 }
 
-// Accept a list [[urlString, linkName], [urlString2, linkName2]]
+// A collection of resources
 // Accept an object "resources" {ResourceName: {Email: s@gmail.com, Website: bi.com, ...}, ResourceName2:{}, ...}
 class Resources extends React.Component {
     constructor(props){
@@ -68,11 +67,9 @@ class Resources extends React.Component {
                 var indivR = this.props.resources[key]
                 console.log(key + "-->" + indivR)
                 console.log(indivR)
-
             }
         }
     }
-    
 
     render(){
         var newResources = []
@@ -86,7 +83,7 @@ class Resources extends React.Component {
 
         return( 
             <div style = {ResourcesSpacing}>
-            {newResources}
+                {newResources}
             </div>
         )
     }
