@@ -1,5 +1,4 @@
-import TitleBar from "../components/TitleBar";
-import MapContainer from "../components/MapContainer";
+import { InfoBar, MapContainer, PopUp, NavBar } from "../components";
 import { Component } from "react";
 import fetch from 'isomorphic-fetch'
 
@@ -17,12 +16,22 @@ import fetch from 'isomorphic-fetch'
         etc...
     ]
 */
+const mainContainer = {
+  display: 'flex',
+  flexFlow: 'row wrap',
+  alignContent: 'space between',
+  margin: "3% 20px 0px 20px",
+};
+
+const map = {
+  flex: 1
+}
 
 class Home extends Component  {
     // get list of locations as prop
     static async getInitialProps({ req }) {
         //hard coded url for now... need to change later
-        const res = await fetch('http://localhost:3000/locations.json')
+        const res = await fetch('http://localhost:3000/locations')
         const locations = await res.json()
         return { locations }
     }
@@ -33,15 +42,14 @@ class Home extends Component  {
     }
 
     render () {
-            return (
-            <div className = "Home">
-                <TitleBar />
-                < MapContainer />
-                <ul>
-                        {this.props.locations.map(location =>
-                            <li key={location.name}>{location.name}</li>
-                        )}
-                </ul>
+        return (
+            <div>
+                <div style={mainContainer}>
+                    <InfoBar locationData={this.props.locations[0]["states"]}/>
+                    <div style={map}>
+                    < MapContainer />
+                    </div>
+                </div>
             </div>
         );
     }

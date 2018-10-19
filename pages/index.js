@@ -1,6 +1,7 @@
 import { SearchBar, NavBar } from "../components";
 import Head from "next/head";
 import Link from "next/link";
+
 import getConfig from "next/config";
 const { publicRuntimeConfig } = getConfig()
 
@@ -37,7 +38,7 @@ const Index = () => (
     <NavBar />
     <div style={titleStyle}>BiSpot: Find a Bi Group Around Me</div>
     <div style={logo}>
-    	<img alt="BRC logo" src="./static/images/BRC-logo.jpg" width="300" height="100"/>
+    	<img alt="BRC logo" src="./static/images/BRC-logo.jpg" width="300" height="110"/>
     </div>
     <SearchBar />
     <div style={linkStyle}>
