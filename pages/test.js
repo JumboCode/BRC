@@ -1,6 +1,7 @@
 import Accordion from "../components/Accordion";
 import AccordionSection from "../components/AccordionSection";
 import ResourceInfo from "../components/ResourceInfo";
+import Resources from "../components/Resources";
 import { Component } from "react";
 import fetch from 'isomorphic-fetch';
 
@@ -37,6 +38,7 @@ class Test extends Component {
         console.log(locationData[i])
     }
 
+    console.log("Using the little key in object thing loop")
     for(var key in locationData){
         if (locationData.hasOwnProperty(key)) {
             console.log(key + " ->" + locationData[key])
@@ -46,15 +48,44 @@ class Test extends Component {
             for(var k in innerData){
                 if (innerData.hasOwnProperty(k)){
                     console.log(k + "--->" + innerData[k])
+                    console.log()
+
                 }
             }
 
         }
 
     }
-
 }
+
+
     render (){
+        var locationData = this.props.locations[0].states
+        var states = Object.keys(locationData)
+        console.log("Trying to generate the things")
+
+        var stuff = []
+        // key is the state's name here
+        // inner data is the list of resources for that state
+        for(var key in locationData){
+            if (locationData.hasOwnProperty(key)) {
+                console.log(key + " ->" + locationData[key])
+                console.log(locationData[key])
+                var innerData = locationData[key]
+                stuff.push(<AccordionSection title = {key}> <Resources resources = {innerData}/> </AccordionSection>)
+                //innerData = locationData[key]
+/*                for(var k in innerData){
+                    if (innerData.hasOwnProperty(k)){
+                        console.log(k + "--->" + innerData[k])
+                        console.log()
+    
+                    }
+                }*/
+    
+            }
+    
+        }
+
         return(
         <div>
         <ul>
@@ -63,9 +94,10 @@ class Test extends Component {
             {}
         </ul>
         <Accordion> 
-
+            {stuff}
         </Accordion>
 
+<h1> old stuff </h1>
 
         <Accordion>
             <AccordionSection title = "Arizona">
