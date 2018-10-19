@@ -1,6 +1,6 @@
 import React from "react";
 
-// Contains multiple resource components
+// Intended to hold AccordionSections
 class Accordion extends React.Component{
     constructor(props) {
         super(props);
@@ -16,8 +16,6 @@ class Accordion extends React.Component{
         });
     }
 
-
-    // have a list of states and a list of resources
     render() {
         return (
         <div className = "accordian">

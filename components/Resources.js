@@ -1,4 +1,3 @@
-// An individual resource along with associated data such as website,etc
 const divStyle = {
     backgroundColor: '#F0F0F0',
     paddingLeft: '7px',
@@ -15,6 +14,7 @@ const linkStyle = {
 
 }
 
+// An individual resource along with associated data such as website,etc
 // Accept some object info
 // Accept some string name
 class Resource extends React.Component {
@@ -63,7 +63,6 @@ class Resources extends React.Component {
     }
 
     static propTypes = {
-        state: React.PropTypes.string.isRequired,
         resources: React.PropTypes.object.isRequired
     }
 
@@ -84,10 +83,10 @@ class Resources extends React.Component {
     render(){
         var newResources = []
         // Key should be the name of some center
-        for (var key in this.props.resources){
-            if(this.props.resources.hasOwnProperty(key)){
-                var indivR = this.props.resources[key]  // indivR should be information on it
-                newResources.push(<Resource name = {key} info = {indivR} />)
+        for (var resource in this.props.resources){
+            if(this.props.resources.hasOwnProperty(resource)){
+                var resourceInfo = this.props.resources[resource] 
+                newResources.push(<Resource name = {resource} info = {resourceInfo} />)
             }
         }
 

@@ -26,9 +26,9 @@ const arrowHead2 = {
     transform: 'rotate(270deg)'
 }
 
-// A list encompassing all sections within it
+// An individual section of the list, 
+// its contents are collapsible
 class AccordionSection extends React.Component {
-    // Contain the state row, and its resources are 
     constructor(props){
         super(props);
         this.state = {
@@ -42,7 +42,7 @@ class AccordionSection extends React.Component {
 
     static defaultProps = {
         title: 'TITLE'
-      };
+    };
 
       
     closeOpen = () => {
@@ -59,7 +59,6 @@ class AccordionSection extends React.Component {
                 <div style= {isOpen ? arrowHead2 : arrowHead}>
                     <img alt="Arrow head" src="./static/images/listArrow.png" width="12" height="12"/>
                 </div> 
-        
             </div>
             <div> 
                 {this.state.open && this.props.children}
