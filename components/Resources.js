@@ -33,11 +33,15 @@ class Resource extends React.Component {
         summary: "",
     };
 
+    printResource(){
+        console.log("Resource: " + this.props.name)
+        console.log(this.props.info.Website)
+    }
+
     render(){
         return(
             <div style = {divStyle}>
                 <a href={this.props.info.Website} style = {linkStyle}>{this.props.name}</a>
-                {console.log(this.props.info.Website)}
                 <p>{this.props.summary}</p>
                 <div>{this.props.children}</div>
             </div>
@@ -58,7 +62,7 @@ class Resources extends React.Component {
         list: []
     };
 
-    processResources(){
+    printResources(){
         for (var key in this.props.resources){
             if(this.props.resources.hasOwnProperty(key)){
                 var indivR = this.props.resources[key]
@@ -72,7 +76,7 @@ class Resources extends React.Component {
 
     render(){
         var newResources = []
-        // Key here should be the name of some center
+        // Key should be the name of some center
         for (var key in this.props.resources){
             if(this.props.resources.hasOwnProperty(key)){
                 var indivR = this.props.resources[key]  // indivR should be information on it
@@ -82,14 +86,6 @@ class Resources extends React.Component {
 
         return( 
             <div style = {ResourcesSpacing}>
-           {/*
-                this.props.list.map(function(object, i){
-                    return <Resource url={object[0]} linkName = {object[1]} key = {i}/>
-                })
-                */
-            }
-            {this.processResources()}
-            <p> Resources Object</p>
             {newResources}
             </div>
         )

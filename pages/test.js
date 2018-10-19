@@ -19,82 +19,25 @@ class Test extends Component {
         this.state = {};
     }
 
-    printLocations = () => {
-    //console.log("printLocations")
-    console.log(this.props.locations[0].states) // This is the one
-    var locationData = this.props.locations[0].states
-    console.log(Object.keys(locationData)) // Gets all the states in an array
-    var states = Object.keys(locationData)
-
-    var centers = []
-    for (var i = 0; i < states.length; i++){
-        centers.push(Object.keys(locationData[states[i]]))
-    }
-    console.log(centers)
-
-    console.log("Not sure what this is")
-    for(var i = 0; i < locationData.length; i++){
-        console.log(i)
-        console.log(locationData[i])
-    }
-
-    console.log("Using the little key in object thing loop")
-    for(var key in locationData){
-        if (locationData.hasOwnProperty(key)) {
-            console.log(key + " ->" + locationData[key])
-            console.log(locationData[key])
-            var innerData = locationData[key]
-            //innerData = locationData[key]
-            for(var k in innerData){
-                if (innerData.hasOwnProperty(k)){
-                    console.log(k + "--->" + innerData[k])
-                    console.log()
-
-                }
-            }
-
-        }
-
-    }
-}
-
-
     render (){
         var locationData = this.props.locations[0].states
-        var states = Object.keys(locationData)
-        console.log("Trying to generate the things")
 
-        var stuff = []
+        var sections = []
         // key is the state's name here
-        // inner data is the list of resources for that state
-        for(var key in locationData){
-            if (locationData.hasOwnProperty(key)) {
-                console.log(key + " ->" + locationData[key])
-                console.log(locationData[key])
-                var innerData = locationData[key]
-                stuff.push(<AccordionSection title = {key}> <Resources resources = {innerData}/> </AccordionSection>)
-                //innerData = locationData[key]
-/*                for(var k in innerData){
-                    if (innerData.hasOwnProperty(k)){
-                        console.log(k + "--->" + innerData[k])
-                        console.log()
-    
-                    }
-                }*/
-    
+        // state resources is the list of resources for that state
+        for(var state in locationData){
+            if (locationData.hasOwnProperty(state)) {
+                var stateResources = locationData[state]
+                sections.push(<AccordionSection title = {state}> <Resources resources = {stateResources}/> </AccordionSection>)
             }
     
         }
 
         return(
         <div>
-        <ul>
-            {console.log(this.props.locations)}
-            {this.printLocations()} 
-            {}
-        </ul>
+
         <Accordion> 
-            {stuff}
+            {sections}
         </Accordion>
 
 <h1> old stuff </h1>
