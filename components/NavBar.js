@@ -1,4 +1,5 @@
 import { slide as Menu } from 'react-burger-menu';
+import MediaQuery from 'react-responsive';
 
 const styles = {
     navBarContainer: {
@@ -16,9 +17,10 @@ const burger = {
       position: 'fixed',
       width: '36px',
       height: '30px',
-      left: '1230px',
+      right: '30px',
       top: '5px'
     },
+
     bmBurgerBars: {
       background: '#373a47'
     },
