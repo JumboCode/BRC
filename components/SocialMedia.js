@@ -11,7 +11,7 @@ const NavBar = () => (
         </div>
         <div style={styles.navBarContainer} /> 
         <div style={{ marginBottom: "40px" }} />
-
+        
 
     </>
 );
