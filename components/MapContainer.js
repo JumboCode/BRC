@@ -1,4 +1,4 @@
-import React from "react";
+import { Component } from "react";
 import { compose, withProps } from "recompose";
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps";
 import getConfig from "next/config";
@@ -16,13 +16,13 @@ const MyMapComponent = compose(
   )((props) =>
     <GoogleMap
       defaultZoom={8}
-      defaultCenter={{ lat: 42.4075, lng: -71.1190}}
+      center={{ lat: props.currLocation.lat, lng: props.currLocation.lng }}
     >
-      {props.isMarkerShown && <Marker position={{  lat: 42.4075, lng: -71.1190 }} onClick={props.onMarkerClick} />}
+      {props.isMarkerShown && <Marker position={{ lat: props.currLocation.lat, lng: props.currLocation.lng }} onClick={props.onMarkerClick} />}
     </GoogleMap>
   )
-  
-  class MapContainer extends React.PureComponent {
+
+  class MapContainer extends Component {
     state = {
       isMarkerShown: false,
     }
@@ -48,6 +48,7 @@ const MyMapComponent = compose(
           <MyMapComponent
             isMarkerShown={this.state.isMarkerShown}
             onMarkerClick={this.handleMarkerClick}
+            currLocation={this.props.currLocation}
           />
         </>
       );
