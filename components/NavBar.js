@@ -15,10 +15,10 @@ const burger = {
     bmBurgerButton: {
       justifyContent: 'flex-end',
       position: 'fixed',
-      width: '36px',
-      height: '30px',
-      right: '30px',
-      top: '5px'
+      width: '25px',
+      height: '20px',
+      right: '10px',
+      top: '10px'
     },
 
     bmBurgerBars: {
