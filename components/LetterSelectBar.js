@@ -9,12 +9,12 @@ class Letter extends Component{
 
     onClick(){
         // Call some function passed in by the parent
-        this.props.letterClicked(this.props.letter)
+        this.props.letterClicked()
     }
 
     render(){
         return(
-            <p>{this.props.letter}</p>
+            <p onClick = {this.onClick()}>{this.props.letter}</p>
         )
     }
 
@@ -26,7 +26,8 @@ Letter.propTypes = {
 };
 
 Letter.defaultProps = {
-    letterClicked: () => {}
+    letter: "A",
+    letterClicked: () => {console.log("Clicked letter")}
 
 }
 
