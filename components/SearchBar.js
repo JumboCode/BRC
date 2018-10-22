@@ -3,6 +3,7 @@ import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from 'react-places-autocomplete';
+import Link from 'next/link';
 
 const styles = {
   container: {
@@ -26,7 +27,7 @@ class SearchBar extends React.Component {
   handleChange = address => {
     this.setState({ address });
   };
- 
+
   handleSelect = address => {
     this.setState({ address });
   };
@@ -47,7 +48,13 @@ class SearchBar extends React.Component {
                     className: 'location-search-input',
                   })}
                 />
-                <input type="submit" value="search"></input>
+                <form>
+                  <div>
+                    <Link href={{ pathname: '/home', query: { search: this.state.address } }}>
+                      <button>Search</button>
+                    </Link>
+                  </div>
+                </form>
               </div>
               <div className="autocomplete-dropdown-container">
                 {loading && <div>Loading...</div>}
