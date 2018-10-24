@@ -35,12 +35,8 @@ app.prepare()
                         collection.find().toArray(function(err, results) {
                             //all results of db.locations.find() will go into...
                             //'results' will be an array (or list)
-                            if (!err) {
-                                res.send(results);
-                            } else {
-                                throw err;
-                                //res.send({});
-                            }
+                            if (err) throw err;
+                            res.send(results);
                         });
                     }
                 });
