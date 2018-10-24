@@ -26,7 +26,7 @@ app.prepare()
             //make mongodb connection
             MongoClient.connect(mongoURI, { useNewUrlParser: true }, function (err, client) {
                 if (err) throw err;
-                var db = client.db('brc2018');    //database name
+                var db = client.db(process.env.DB_NAME);    //database name
                 //equivalent to 'db.locations' in MongoDB client shell
                 db.collection('locations', function(err, collection) {
                     if (err) throw err;
