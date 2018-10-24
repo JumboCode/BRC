@@ -41,6 +41,7 @@ app.prepare()
                             if (!err) {
                                 res.send(results);
                             } else {
+                                console.log(err);
                                 res.send({});
                             }
                         });
