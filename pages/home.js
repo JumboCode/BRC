@@ -32,16 +32,17 @@ class Home extends Component  {
     // get list of locations as prop
     static async getInitialProps({ req }) {
         const appURL = publicRuntimeConfig.APP_URL || "http://localhost:3000";
-        console.log(appURL)
+        console.log(appURL);
         //hard coded url for now... need to change later
-        const res = await fetch(`${appURL}/locations`)
-        console.log("Getting data")
-        const locations = await res.json()
-        return { locations }
+        const res = await fetch(`${appURL}/locations`);
+        const locations = await res.json();
+        console.log("locations");
+        return { locations };
     }
 
     constructor (props) {
         super(props);
+        console.log("I'm in the constructor");
         this.state = {};
     }
 
