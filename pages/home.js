@@ -36,7 +36,7 @@ class Home extends Component  {
         //hard coded url for now... need to change later
         const res = await fetch(`${appURL}/locations`);
         const locations = await res.json();
-        console.log("locations");
+        console.log(locations);
         return { locations };
     }
 
