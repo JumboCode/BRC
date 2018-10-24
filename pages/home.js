@@ -1,7 +1,8 @@
 import { InfoBar, MapContainer, PopUp, NavBar } from "../components";
 import { Component } from "react";
 import fetch from 'isomorphic-fetch'
-
+import getConfig from "next/config";
+const { publicRuntimeConfig } = getConfig()
 /*
  * locations data is in the form:
     [
@@ -30,8 +31,9 @@ const map = {
 class Home extends Component  {
     // get list of locations as prop
     static async getInitialProps({ req }) {
+        const appURL = publicRuntimeConfig.APP_URL || "http://localhost:3000";
         //hard coded url for now... need to change later
-        const res = await fetch('http://localhost:3000/locations')
+        const res = await fetch(`${appURL}/locations`)
         const locations = await res.json()
         return { locations }
     }
