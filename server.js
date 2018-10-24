@@ -27,10 +27,11 @@ app.prepare()
             MongoClient.connect(mongoURI, { useNewUrlParser: true }, function (err, client) {
                 if (err) throw err;
                 var db = client.db('brc2018');    //database name
-
+                console.log("Mongo Client connection successful");
                 //equivalent to 'db.locations' in MongoDB client shell
                 db.collection('locations', function(err, collection) {
                     if (err) {
+                        console.log("Collection locations fail");
                         res.send({});
                     }
                     else {
@@ -41,7 +42,7 @@ app.prepare()
                             if (!err) {
                                 res.send(results);
                             } else {
-                                console.log(err);
+                                console.log("Collection find fail")
                                 res.send({});
                             }
                         });
