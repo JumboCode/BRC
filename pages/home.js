@@ -31,11 +31,11 @@ const map = {
 class Home extends Component  {
     // get list of locations as prop
     static async getInitialProps({ req }) {
-        console.log("I'm here")
         const appURL = publicRuntimeConfig.APP_URL || "http://localhost:3000";
         console.log(appURL)
         //hard coded url for now... need to change later
         const res = await fetch(`${appURL}/locations`)
+        console.log("Getting data")
         const locations = await res.json()
         return { locations }
     }
