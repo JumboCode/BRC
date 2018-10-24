@@ -31,6 +31,7 @@ const map = {
 class Home extends Component  {
     // get list of locations as prop
     static async getInitialProps({ req }) {
+        console.log("I'm here")
         const appURL = publicRuntimeConfig.APP_URL || "http://localhost:3000";
         console.log(appURL)
         //hard coded url for now... need to change later
