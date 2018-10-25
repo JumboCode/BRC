@@ -17,12 +17,17 @@ app.prepare()
     .then(() => {
         const server = express();
         server.get("/organizations", (req, res) => {
+            res.set('Content-Type', 'application/json');
+            res.header("Access-Control-Allow-Origin", process.env.APP_URL || `http://localhost:${port}`);
+			res.header("Access-Control-Allow-Methods", "GET");
             return {};
         });
 
         //list locations at /locations
         server.get('/locations', function(req, res) {
-            res.set('Content-Type', 'text/html');
+            res.set('Content-Type', 'application/json');
+            res.header("Access-Control-Allow-Origin", process.env.APP_URL || `http://localhost:${port}`);
+			res.header("Access-Control-Allow-Methods", "GET");
             //make mongodb connection
             MongoClient.connect(mongoURI, { useNewUrlParser: true }, function (err, client) {
                 if (err) throw err;

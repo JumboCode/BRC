@@ -15,6 +15,7 @@ export default class MyDocument extends Document {
         <Head>
           <style>{`body { margin: 0 } /* custom! */`}</style>
           <script type="text/javascript" src={GoogleMapUrl}></script>
+          <link rel="shortcut icon" type="image/png" href="./static/images/favicon.ico"/>
         </Head>
         <body className="custom_class">
           <Main />
