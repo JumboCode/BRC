@@ -23,44 +23,45 @@ import GoogleMapReact from "google-map-react";
 //     </GoogleMap>
 //   )
   
-  class MapContainer extends React.PureComponent {
-    state = {
-      isMarkerShown: false,
-    }
-    
-    static defaultProps = {
-      center: {
-        lat: 42.4075,
-        lng: -71.1190
-      },
-      zoom: 8
+class MapContainer extends React.Component {
+  // state = {
+  //   isMarkerShown: false,
+  // }
+  
+  static defaultProps = {
+    center: {
+      lat: 42.4075,
+      lng: -71.1190
+    },
+    zoom: 8
   };
-    componentDidMount() {
-      this.delayedShowMarker();
-    }
-  
-    delayedShowMarker = () => {
-      setTimeout(() => {
-        this.setState({ isMarkerShown: true });
-      }, 3000);
-    }
-  
-    handleMarkerClick = () => {
-      this.setState({ isMarkerShown: false });
-      this.delayedShowMarker();
-    }
-  
-    render() {
-      return (
-        <div style={{ height: `400px` }}>
-          <GoogleMapReact 
-            bootstrapURLKeys={{ key: publicRuntimeConfig.MAP_KEY }}
-            defaultCenter={this.props.center}
-            defaultZoom={this.props.zoom}          
-          />
-        </div>
-      );
-    }
+
+  // componentDidMount() {
+  //   this.delayedShowMarker();
+  // }
+
+  // delayedShowMarker = () => {
+  //   setTimeout(() => {
+  //     this.setState({ isMarkerShown: true });
+  //   }, 3000);
+  // }
+
+  // handleMarkerClick = () => {
+  //   this.setState({ isMarkerShown: false });
+  //   this.delayedShowMarker();
+  // }
+
+  render() {
+    return (
+      <div style={{ height: `400px` }}>
+        <GoogleMapReact 
+          bootstrapURLKeys={{ key: publicRuntimeConfig.MAP_KEY }}
+          defaultCenter={this.props.center}
+          defaultZoom={this.props.zoom}          
+        />
+      </div>
+    );
   }
+}
 
 export default MapContainer;
