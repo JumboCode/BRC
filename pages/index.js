@@ -26,9 +26,9 @@ const linkStyle = {
 
 const Index = () => (
   <>
-    <Head>
+    {/* <Head>
       <title>BiSpot: Find a Bi Group Around Me</title>
-    </Head>
+    </Head> */}
     <NavBar />
     <div style={titleStyle}>BiSpot: Find a Bi Group Around Me</div>
     <div style={logo}>

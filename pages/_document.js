@@ -13,6 +13,7 @@ export default class MyDocument extends Document {
     return (
       <html>
         <Head>
+          <title>BiSpot: Find a Bi Group Around Me</title>
           <style>{`body { margin: 0 } /* custom! */`}</style>
           <script type="text/javascript" src={GoogleMapUrl}></script>
           <link rel="shortcut icon" type="image/png" href="./static/images/favicon.ico"/>
