@@ -28,7 +28,7 @@ class InfoBar extends Component {
     for(var state in locationData){
         if (locationData.hasOwnProperty(state)) {
             var stateResources = locationData[state]
-            sections.push(<AccordionSection title = {state} key = {i}> <Resources resources = {stateResources}/> </AccordionSection>)
+            sections.push(<AccordionSection title = {state} key = {i}> <Resources resources={stateResources}/> </AccordionSection>)
             i++
         }
     }
@@ -39,7 +39,7 @@ class InfoBar extends Component {
         <Accordion>
           {sections}
         </Accordion>
-  </div>
+      </div>
     )
   }
 }
