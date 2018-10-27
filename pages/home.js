@@ -1,6 +1,8 @@
 import { InfoBar, MapContainer, PopUp, NavBar } from "../components";
 import { Component } from "react";
 import fetch from 'isomorphic-fetch'
+import getConfig from "next/config";
+const { publicRuntimeConfig } = getConfig()
 
 const mainContainer = {
   display: 'flex',
@@ -13,18 +15,20 @@ const map = {
   flex: 1
 }
 
-class Home extends Component {
-    // get list of locations as prop - hard coded url for now... change later
-    static async getInitialProps() {
-        const res = await fetch('http://localhost:3000/locations')
-        const locations = await res.json()
-        return { locations }
+class Home extends Component  {
+    // get list of locations as prop
+    static async getInitialProps({ req }) {
+        const appURL = publicRuntimeConfig.APP_URL || "http://localhost:3000";
+        //hard coded url for now... need to change later
+        const res = await fetch(`${appURL}/locations`);
+        const locations = await res.json();
+        return { locations };
     }
 
-    constructor(props) {
-        super(props)
+    constructor (props) {
+        super(props);
         this.state = {
-            currLatLng: {
+            position: {
                 lat: 0,
                 lng: 0
             }
@@ -32,31 +36,20 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        this.getGeoLocation()
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                console.log(position);
+                this.setState({
+                    position: {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    }
+                });
+            },
+            (error) => console.log(error),
+            { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 },
+        );
     }
-
-    componentWillUpdate() {
-        this.getGeoLocation()
-    }
-
-    //get curr location to center map
-    getGeoLocation = () => {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                position => {
-                    this.setState(prevState => ({
-                        currLatLng: {
-                            ...prevState.currLatLng,
-                            lat: position.coords.latitude,
-                            lng: position.coords.longitude
-                        }
-                    }))
-                }
-            )
-        } else {
-            error => console.log(error)
-        }
-    }   
 
     render () {
         return (
@@ -64,7 +57,7 @@ class Home extends Component {
                 <div style={mainContainer}>
                     <InfoBar locationData={this.props.locations[0]["states"]}/>
                     <div style={map}>
-                    < MapContainer currLocation={this.state.currLatLng}/>
+                    <MapContainer position={this.state.position}/>
                     </div>
                 </div>
             </div>
