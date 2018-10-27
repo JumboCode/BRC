@@ -35,7 +35,9 @@ class Home extends Component  {
                 <div style={mainContainer}>
                     <InfoBar locationData={this.props.locations[0]["states"]}/>
                     <div style={map}>
-                    <MapContainer currLocation={this.props.search}/>
+                    <MapContainer searched={this.props.search}
+                                  locations={this.props.locations}
+                    />
                     </div>
                 </div>
             </div>

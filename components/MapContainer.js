@@ -3,7 +3,7 @@ import React from "react";
 //import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps";
 import getConfig from "next/config";
 const { publicRuntimeConfig } = getConfig();
-import GoogleMapReact from "google-map-react";
+import GoogleMapReact, { Marker } from "google-map-react";
 
 // const MyMapComponent = compose(
 //     withProps({
@@ -22,7 +22,7 @@ import GoogleMapReact from "google-map-react";
 //       {props.isMarkerShown && <Marker position={{  lat: 42.4075, lng: -71.1190 }} onClick={props.onMarkerClick} />}
 //     </GoogleMap>
 //   )
-  
+
 class MapContainer extends React.Component {
   // state = {
   //   isMarkerShown: false,
@@ -34,7 +34,6 @@ class MapContainer extends React.Component {
 
   constructor(props) {
     super(props)
-    console.log(props)
     this.state = {
       userLocation: {
         lat: 0,
@@ -62,7 +61,6 @@ class MapContainer extends React.Component {
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        console.log(position);
         this.setState({
           userLocation: {
             lat: position.coords.latitude,
@@ -71,16 +69,12 @@ class MapContainer extends React.Component {
           loading: false
         });
       },
-      (error) => console.log(error),
-      { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 },
+      (error) => console.log(error)
     );
   }
 
   render() {
-    const { loading, userLocation } = this.state;
-    const { google } = this.props;
-
-    if (loading) {
+    if (this.state.loading) {
       return null;
     }
 
@@ -89,8 +83,13 @@ class MapContainer extends React.Component {
         <GoogleMapReact 
           bootstrapURLKeys={{ key: publicRuntimeConfig.MAP_KEY }}
           defaultCenter={this.state.userLocation}
-          defaultZoom={this.props.zoom}          
-        />
+          defaultZoom={this.props.zoom}
+        >
+          <Marker
+            name={"this marker isn't showing up"}
+            position={{lat: this.state.userLocation.lat, lng: this.state.userLocation.lng}} />
+        </GoogleMapReact>
+
       </div>
     );
   }
