@@ -19,15 +19,15 @@
 		"mongodb": "^3.1.8",
 		"next": "^6.1.2",
 		"react": "^16.5.1",
+		"react-burger-menu": "^2.5.3",
 		"react-dom": "^16.5.1",
-		"react-google-maps": "^9.4.5",
 		"react-places-autocomplete": "^7.2.0",
-		"webpack": "^4.20.2",
-		"webpack-cli": "^3.1.2"
-	},
-	"devDependencies": {
-		"react-places-autocomplete": "^7.2.0",
+<<<<<<< HEAD
 		"webpack": "^3.10.0",
+=======
+		"react-responsive": "^5.0.0",
+		"webpack": "^4.20.2",
+>>>>>>> 74cfd30449158c2d7ea7cad2c14cc23cbbb73147
 		"webpack-cli": "^3.1.2"
 	},
 	"dotenv": true

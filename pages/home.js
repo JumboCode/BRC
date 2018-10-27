@@ -3,7 +3,24 @@ import { Component } from "react";
 import fetch from 'isomorphic-fetch'
 import getConfig from "next/config";
 const { publicRuntimeConfig } = getConfig()
+<<<<<<< HEAD
 
+=======
+/*
+ * locations data is in the form:
+    [
+        {
+            "_id": { "$oid": "(some random string)" },
+            "name": "location 1 name"
+        },
+        {
+            "_id": { "$oid": "(some random string)" },
+            "name": "location 2 name"
+        },
+        etc...
+    ]
+*/
+>>>>>>> 74cfd30449158c2d7ea7cad2c14cc23cbbb73147
 const mainContainer = {
   display: 'flex',
   flexFlow: 'row wrap',
