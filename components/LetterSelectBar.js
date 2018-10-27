@@ -1,20 +1,22 @@
 import { Component } from "react"
 
 
-class Letter extends Component{
+class Letter extends React.Component{
     constructor(props){
         super(props);
         this.state = {};
     }
 
-    onClick(){
+    
+    onClick = () => {
         // Call some function passed in by the parent
-        this.props.letterClicked()
+        this.props.letterClicked(this.props.letter)
     }
+    
 
     render(){
         return(
-            <p onClick = {this.onClick()}>{this.props.letter}</p>
+            <p onClick = {this.onClick}>{this.props.letter}</p>
         )
     }
 
@@ -31,7 +33,6 @@ Letter.defaultProps = {
 
 }
 
-
 const LetterSelectBarStyle = {
     display: 'flex'
 }
@@ -40,6 +41,7 @@ const LetterSelectBarStyle = {
 class LetterSelectBar extends Component{
     constructor(props){
         super(props);
+        this.letterClicked = this.letterClicked.bind(this)
         this.state = {};
     }
 
@@ -57,19 +59,22 @@ class LetterSelectBar extends Component{
         return alphabet
     }
 
-
+    letterClicked(letter){
+        console.log("Returned letter")
+        console.log(letter)
+    }
 
 
     render(){
         var alphabet = (this.genAlphabet("A", "Z"))
-        console.log(alphabet)
+        //console.log(alphabet)
 
         var sections = []
         for (var i = 0; i < alphabet.length; i++){
             var character = alphabet[i]
-            sections.push(<Letter letter = {character}></Letter>)
+            sections.push(<Letter key = {i} letter = {character} letterClicked = {this.letterClicked}></Letter>)
             if (i != alphabet.length - 1){
-                sections.push(<p> | </p>)
+                sections.push(<p key = {i}> | </p>)
             }
         }
 

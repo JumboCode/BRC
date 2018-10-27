@@ -10,7 +10,6 @@ class Test extends Component {
     render () {
         return (
             <LetterSelectBar/>
-
         )
     }
 
