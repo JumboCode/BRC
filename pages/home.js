@@ -3,24 +3,7 @@ import { Component } from "react";
 import fetch from 'isomorphic-fetch'
 import getConfig from "next/config";
 const { publicRuntimeConfig } = getConfig()
-<<<<<<< HEAD
 
-=======
-/*
- * locations data is in the form:
-    [
-        {
-            "_id": { "$oid": "(some random string)" },
-            "name": "location 1 name"
-        },
-        {
-            "_id": { "$oid": "(some random string)" },
-            "name": "location 2 name"
-        },
-        etc...
-    ]
-*/
->>>>>>> 74cfd30449158c2d7ea7cad2c14cc23cbbb73147
 const mainContainer = {
   display: 'flex',
   flexFlow: 'row wrap',
@@ -42,30 +25,8 @@ class Home extends Component  {
         return { locations };
     }
 
-    constructor (props) {
+    constructor(props) {
         super(props);
-        this.state = {
-            position: {
-                lat: 0,
-                lng: 0
-            }
-        }
-    }
-
-    componentDidMount() {
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                console.log(position);
-                this.setState({
-                    position: {
-                        lat: position.coords.latitude,
-                        lng: position.coords.longitude
-                    }
-                });
-            },
-            (error) => console.log(error),
-            { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 },
-        );
     }
 
     render () {
@@ -74,7 +35,7 @@ class Home extends Component  {
                 <div style={mainContainer}>
                     <InfoBar locationData={this.props.locations[0]["states"]}/>
                     <div style={map}>
-                    <MapContainer position={this.state.position}/>
+                    <MapContainer currLocation={this.props.search}/>
                     </div>
                 </div>
             </div>
