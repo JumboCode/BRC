@@ -24,7 +24,6 @@ class InfoBar extends Component {
 
   onLetterClicked(letter){
     this.setState( {filterLetter: letter})
-    console.log("Received letter " + letter)
   }
 
   render() {
