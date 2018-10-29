@@ -4,45 +4,63 @@ const { publicRuntimeConfig } = getConfig();
 import GoogleMap from "google-map-react";
 
 class MapContainer extends React.Component {
+
   constructor(props) {
     super(props)
     this.state = {
       userLocation: {
-        lat: 0,
-        lng: 0
+        lat: 42.348591,
+        lng: -71.073051
       },
-      loading: true,
-      zoom: 8
+      zoom: 13,
+      markers: [],
+      map: null,
+      maps: null
     }
   }
 
-  componentDidMount() {
+  renderMarkers(map, maps) {
+    //make google map vars available to rest of component
+    this.state.map = map;
+    this.state.maps = maps;
+
+    //render marker at bisexual resource center (with hard-coded coords)
+    //with current implementation, it will always be on map
+    this.state.markers.push(
+      new maps.Marker({
+        position: {lat: 42.348591, lng: -71.073051},
+        map,
+        title: "Bisexual Resource Center"
+      })
+    );
+
     navigator.geolocation.getCurrentPosition(
       (position) => {
         this.setState({
           userLocation: {
             lat: position.coords.latitude,
             lng: position.coords.longitude
-          },
-          loading: false
+          }
         });
+
+        //must store in local temp variables to use
+        let map = this.state.map; 
+        let maps = this.state.maps;
+
+        //render marker at user's location
+        this.state.markers.push(
+          new maps.Marker({
+            position: {lat: this.state.userLocation.lat, lng: this.state.userLocation.lng},
+            map,
+            title: "You are here!"
+          })
+        );
       },
       (error) => console.log(error)
     );
   }
 
-  renderMarkers(map, maps) {
-    let marker = new maps.Marker({
-      position: {lat: this.state.userLocation.lat, lng: this.state.userLocation.lng},
-      map,
-      title: 'Hello World!'
-    });
-  }
-
   render() {
-    if (this.state.loading) {
-      return null;
-    }
 
     //SUCCESSFULLY LOADED GOOGLE MAPS MARKER!! :D
     //uses onGoogleApiLoaded to access google maps api directly
@@ -53,7 +71,8 @@ class MapContainer extends React.Component {
       <div style={{ height: `400px` }}>
         <GoogleMap 
           bootstrapURLKeys={{ key: publicRuntimeConfig.MAP_KEY }}
-          defaultCenter={this.state.userLocation}
+          defaultCenter={{lat: 42.348591, lng: -71.073051}}
+          center={this.state.userLocation}
           defaultZoom={this.state.zoom}
           onGoogleApiLoaded={({map, maps}) => this.renderMarkers(map, maps)}
           yesIWantToUseGoogleMapApiInternals
