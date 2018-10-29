@@ -1,6 +1,5 @@
 import { Component } from "react"
 
-
 class Letter extends React.Component{
     constructor(props){
         super(props);
@@ -8,19 +7,15 @@ class Letter extends React.Component{
         };
     }
 
-    
     onClick = () => {
-        // Call some function passed in by the parent
         this.props.onLetterClicked(this.props.letter)
     }
     
-
     render(){
         return(
             <p onClick = {this.onClick}>{this.props.letter}</p>
         )
     }
-
 }
 
 Letter.propTypes = {
@@ -34,7 +29,9 @@ Letter.defaultProps = {
 }
 
 const LetterSelectBarStyle = {
-    display: 'flex'
+    display: 'flex',
+    justifyContent: 'space-between'
+
 }
 
 
@@ -55,16 +52,12 @@ class LetterSelectBar extends Component{
         for(i; i <= j; i++){
             alphabet.push(String.fromCharCode(i))
         }
-
         return alphabet
     }
 
     onLetterClicked(letter){
-        console.log("Returned letter")
-        console.log(letter)
         this.props.onLetterClicked(letter)
     }
-
 
     render(){
         var alphabet = (this.genAlphabet("A", "Z"))
@@ -72,9 +65,10 @@ class LetterSelectBar extends Component{
         for (var i = 0; i < alphabet.length; i++){
             var character = alphabet[i]
             sections.push(<Letter key = {i} letter = {character} onLetterClicked = {this.onLetterClicked}></Letter>)
-            if (i != alphabet.length - 1){
+            /*if (i != alphabet.length - 1){
                 sections.push(<p key = {i}> | </p>)
             }
+            */
         }
 
         return(
@@ -92,7 +86,7 @@ LetterSelectBar.propTypes = {
 
 LetterSelectBar.defaultProps = {
     letter: "A",
-    onLetterClicked: (letter) => {console.log("Returning letter to page " + letter)}
+    onLetterClicked: (letter) => {console.log("Returning letter " + letter)}
 }
 
 
