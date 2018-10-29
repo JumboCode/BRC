@@ -1,8 +1,5 @@
-import Accordion from "../components/Accordion";
-import AccordionSection from "../components/AccordionSection";
-import Resources from "../components/Resources";
+import { Accordion, AccordionSection, Resources, LetterSelectBar } from ".";
 import { Component } from "react";
-import LetterSelectBar from "./LetterSelectBar";
 
 const info = {
   flex: 1,

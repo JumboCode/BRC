@@ -1,6 +1,5 @@
 import { Component } from "react"
 
-
 class Letter extends React.Component{
     constructor(props){
         super(props);
@@ -8,12 +7,10 @@ class Letter extends React.Component{
         };
     }
 
-    
     onClick = () => {
         // Call some function passed in by the parent
         this.props.onLetterClicked(this.props.letter)
     }
-    
 
     render(){
         return(
