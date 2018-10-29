@@ -47,15 +47,15 @@ class Home extends Component  {
 
     render () {
         return (
-            <div>
+            <>
+                <NavBar />
                 <div style={mainContainer}>
-                    <NavBar />
                     <InfoBar locationData={this.props.locations[0]["states"]}/>
                     <div style={map}>
                     < MapContainer />
                     </div>
                 </div>
-            </div>
+            </>
         );
     }
 }
