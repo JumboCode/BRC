@@ -14,7 +14,7 @@ class MapContainer extends React.Component {
 
   render() {
     return (
-      <div style={{ height: `400px` }}>
+      <div style={{ height: `600px` }}>
         <GoogleMapReact 
           bootstrapURLKeys={{ key: publicRuntimeConfig.MAP_KEY }}
           defaultCenter={this.props.center}

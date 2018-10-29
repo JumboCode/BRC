@@ -21,11 +21,13 @@ const mainContainer = {
   display: 'flex',
   flexFlow: 'row wrap',
   alignContent: 'space between',
-  margin: "3% 20px 0px 20px",
+  margin: "3% 20px 10px 20px",
 };
 
 const map = {
-  flex: 1
+  flex: 1,
+  paddingLeft: "30px",
+  paddingTop: "40px",
 }
 
 class Home extends Component  {
@@ -47,6 +49,7 @@ class Home extends Component  {
         return (
             <div>
                 <div style={mainContainer}>
+                    <NavBar />
                     <InfoBar locationData={this.props.locations[0]["states"]}/>
                     <div style={map}>
                     < MapContainer />

@@ -11,8 +11,10 @@ const info = {
 
 const title = {
   fontWeight: 'bold',
-  fontSize: 45,
-  fontFamily: 'BlinkMacSystemFont'
+  fontSize: 40,
+  fontFamily: 'sans-serif',
+  paddingBottom: "75px",
+  paddingTop: "35px",
 };
 
 class InfoBar extends Component {
