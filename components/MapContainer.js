@@ -14,13 +14,15 @@ class MapContainer extends React.Component {
 
   render() {
     return (
-      <div style={{ height: `400px` }}>
-        <GoogleMapReact 
-          bootstrapURLKeys={{ key: publicRuntimeConfig.MAP_KEY }}
-          defaultCenter={this.props.center}
-          defaultZoom={this.props.zoom}          
-        />
-      </div>
+      <>
+        <div style={{ height: `80%`, width: `45%` , position: `fixed` }}>
+          <GoogleMapReact 
+            bootstrapURLKeys={{ key: publicRuntimeConfig.MAP_KEY }}
+            defaultCenter={this.props.center}
+            defaultZoom={this.props.zoom}          
+          />
+        </div>
+      </>
     );
   }
 }

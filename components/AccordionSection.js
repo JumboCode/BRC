@@ -6,8 +6,8 @@ const titleStyle = {
     border: '1px solid #CCCCCC',
     backgroundColor: '#CCCCCC',
     color: '#757575',
-    marginBottom: '5px',
-    paddingLeft: '7px',
+    marginBottom: '5.5px',
+    paddingLeft: '10px',
 }
 
 const sectionStyle = {
@@ -17,12 +17,14 @@ const sectionStyle = {
 
 const arrowHead = {
     marginLeft: 'auto',
-    padding: '0'
+    padding: '0',
+    paddingRight: "7px",
 }
 
 const arrowHead2 = {
     marginLeft: 'auto',
     padding: '0',
+    paddingRight: "7px",
     transform: 'rotate(270deg)'
 }
 
@@ -55,9 +57,9 @@ class AccordionSection extends React.Component {
         return(
         <div style = {sectionStyle}>
             <div className = "title" onClick={this.closeOpen} style = {titleStyle}>
-                <div> <h1> {this.props.title}</h1> </div>
+                <div> <h3> {this.props.title}</h3> </div>
                 <div style= {isOpen ? arrowHead2 : arrowHead}>
-                    <img alt="Arrow head" src="./static/images/listArrow.png" width="12" height="12"/>
+                    <img alt="Arrow head" src="./static/images/listArrow.png" width="10" height="10"/>
                 </div> 
             </div>
             <div> 
