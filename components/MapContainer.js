@@ -1,3 +1,24 @@
+/*
+ * notes for directly using google maps api with google-map-react library:
+
+ * if google maps api variables "map" and "maps" are needed outside of
+   renderMarkers function, then the following should be added to this.state:
+
+    map: null,
+    maps: null
+
+ * then put the following lines of code in renderMarkers:
+
+    this.state.map = map;
+    this.state.maps = maps;
+
+ * and every time map and maps need to be used outside of renderMarkers,
+   declare them as temporary local variables like so:
+
+    let map = this.state.map; 
+    let maps = this.state.maps;
+*/
+
 import React from "react";
 import getConfig from "next/config";
 const { publicRuntimeConfig } = getConfig();
@@ -13,19 +34,13 @@ class MapContainer extends React.Component {
 				lng: -71.073051
 			},
 			zoom: 13,
-			markers: [],
-			map: null,
-			maps: null
+			markers: []
 		}
 	}
 
 	renderMarkers(map, maps) {
-		//make google map vars available to rest of component
-		this.state.map = map;
-		this.state.maps = maps;
-
-		//render marker at bisexual resource center (with hard-coded coords)
-		//with current implementation, it will always be on map
+		//render marker at bisexual resource center (also the default center)
+        //TODO: get lat + lng of all resources and add markers for each resource
 		this.state.markers.push(
 			new maps.Marker({
 				position: {lat: 42.348591, lng: -71.073051},
@@ -54,7 +69,9 @@ class MapContainer extends React.Component {
             }
         }
 
-        //get user's location in case "searched" prop is undefined
+        //get user's location
+        //TODO: center map at searched query (this.props.searched),
+        //      only use user location when searched is undefined
 		navigator.geolocation.getCurrentPosition(
 			(position) => {
 				this.setState({
@@ -62,16 +79,15 @@ class MapContainer extends React.Component {
 						lat: position.coords.latitude,
 						lng: position.coords.longitude
 					}
-				});
-
-				//must store in local temp variables to use
-				let map = this.state.map; 
-				let maps = this.state.maps;
+				});				
 
 				//render marker
 				this.state.markers.push(
 					new maps.Marker({
-						position: {lat: this.state.userLocation.lat, lng: this.state.userLocation.lng},
+						position: {
+                            lat: this.state.userLocation.lat,
+                            lng: this.state.userLocation.lng
+                        },
 						map,
 						title: "You are here!"
 					})
@@ -82,12 +98,6 @@ class MapContainer extends React.Component {
 	}
 
 	render() {
-
-		//SUCCESSFULLY LOADED GOOGLE MAPS MARKER!! :D
-		//uses onGoogleApiLoaded to access google maps api directly
-		//https://stackoverflow.com/questions/41405343/adding-marker-to-google-maps-in-google-map-react
-		//https://github.com/google-map-react/google-map-react/blob/master/API.md
-
 		return (
 			<div style={{ height: `400px` }}>
 				<GoogleMap 
