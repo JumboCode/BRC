@@ -15,7 +15,7 @@
  * and every time map and maps need to be used outside of renderMarkers,
    declare them as temporary local variables like so:
 
-    let map = this.state.map; 
+    let map = this.state.map;
     let maps = this.state.maps;
 */
 
@@ -79,7 +79,7 @@ class MapContainer extends React.Component {
 						lat: position.coords.latitude,
 						lng: position.coords.longitude
 					}
-				});				
+				});
 
 				//render marker
 				this.state.markers.push(
@@ -100,7 +100,7 @@ class MapContainer extends React.Component {
 	render() {
 		return (
 			<div style={{ height: `400px` }}>
-				<GoogleMap 
+				<GoogleMap
 					bootstrapURLKeys={{ key: publicRuntimeConfig.MAP_KEY }}
 					defaultCenter={{lat: 42.348591, lng: -71.073051}}
 					center={this.state.userLocation}
