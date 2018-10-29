@@ -38,7 +38,7 @@ class InfoBar extends Component {
       if(state[0] == this.state.filterLetter || this.state.filterLetter == "all") {
         if (locationData.hasOwnProperty(state)) {
             var stateResources = locationData[state]
-            sections.push(<AccordionSection title = {state} key = {i}> <Resources resources = {stateResources}/> </AccordionSection>)
+            sections.push(<AccordionSection title = {state} key = {i}> <Resources resources={stateResources}/> </AccordionSection>)
             i++
         }
       }
@@ -51,7 +51,7 @@ class InfoBar extends Component {
         <Accordion>
           {sections}
         </Accordion>
-  </div>
+      </div>
     )
   }
 }
