@@ -1,6 +1,4 @@
-import Accordion from "../components/Accordion";
-import AccordionSection from "../components/AccordionSection";
-import Resources from "../components/Resources";
+import { Accordion, AccordionSection, Resources, LetterSelectBar } from ".";
 import { Component } from "react";
 
 const info = {
@@ -20,7 +18,14 @@ const title = {
 class InfoBar extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      filterLetter: "all"
+    };
+    this.onLetterClicked = this.onLetterClicked.bind(this)
+  }
+
+  onLetterClicked(letter){
+    this.setState( {filterLetter: letter})
   }
 
   render() {
@@ -28,20 +33,23 @@ class InfoBar extends Component {
     var sections = []
     var i = 0
     for(var state in locationData){
+      if(state[0] == this.state.filterLetter || this.state.filterLetter == "all") {
         if (locationData.hasOwnProperty(state)) {
             var stateResources = locationData[state]
-            sections.push(<AccordionSection title = {state} key = {i}> <Resources resources = {stateResources}/> </AccordionSection>)
+            sections.push(<AccordionSection title = {state} key = {i}> <Resources resources={stateResources}/> </AccordionSection>)
             i++
         }
+      }
     }
 
     return(
       <div style = {info}>
         <div style = {title}>  Bi Spot: Find a group near you.</div>
+        <LetterSelectBar onLetterClicked = {this.onLetterClicked}/>
         <Accordion>
           {sections}
         </Accordion>
-  </div>
+      </div>
     )
   }
 }
