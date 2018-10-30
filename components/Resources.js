@@ -1,11 +1,12 @@
 const divStyle = {
     backgroundColor: '#F0F0F0',
     paddingLeft: '7px',
-    paddingTop: '5px'
+    paddingTop: '2px',
+    paddingBottom: '2px',
 }
 
 const ResourcesSpacing = {
-    minHeight: '200px'
+    minHeight: '40px',
 }
 
 const linkStyle = {
