@@ -2,7 +2,7 @@ const divStyle = {
     backgroundColor: '#F0F0F0',
     paddingLeft: '7px',
     paddingTop: '2px',
-    paddingBottom: '2px'
+    paddingBottom: '2px',
 }
 
 const ResourcesSpacing = {

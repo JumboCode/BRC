@@ -2,18 +2,24 @@ import { Accordion, AccordionSection, Resources, LetterSelectBar } from ".";
 import { Component } from "react";
 
 const info = {
-  flex: 1,
   display: 'flex',
-  flexFlow: 'column wrap'
+  flexFlow: 'column wrap',
+  height: '90vh',
+  overflow: 'auto',
 };
 
 const title = {
   fontWeight: 'bold',
   fontSize: 40,
   fontFamily: 'sans-serif',
-  paddingBottom: "75px",
-  paddingTop: "35px",
+  paddingBottom: "5%",
 };
+
+const scroll = {
+  paddingRight: "10px",
+  height: '70%',
+  overflow: 'scroll',
+}
 
 class InfoBar extends Component {
   constructor(props) {
@@ -46,9 +52,11 @@ class InfoBar extends Component {
       <div style = {info}>
         <div style = {title}>  Bi Spot: Find a group near you.</div>
         <LetterSelectBar onLetterClicked = {this.onLetterClicked}/>
-        <Accordion>
-          {sections}
-        </Accordion>
+        <div style={scroll}> 
+          <Accordion>
+            {sections}
+          </Accordion>
+        </div>
       </div>
     )
   }
