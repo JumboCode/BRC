@@ -27,7 +27,7 @@ const mainContainer = {
 
 const map = {
   width: "500px",
-  height: "500px",
+  height: "600px",
 }
 
 class Home extends Component  {

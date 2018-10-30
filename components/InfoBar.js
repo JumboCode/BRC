@@ -16,8 +16,7 @@ const title = {
 };
 
 const scroll = {
-  display: 'flex',
-  position: 'relative',
+  paddingRight: "10px",
   height: '70%',
   overflow: 'scroll',
 }
