@@ -59,26 +59,27 @@ class MapContainer extends React.Component {
             }
         });
 
-        //TODO: get lat/lng of all resources, add markers for each resource
+        //get lat/lng of all resources, add markers for each resource
         let locationData = this.props.locations[0]["states"];
         for(let region in locationData){
             if (locationData.hasOwnProperty(region)) {
                 for (let address in locationData[region])
                 {
-                    Geocoder.geocode({"address": address}, function(results, status) {
-                        if (status == "OK") {
-                            MapContainer.state.markers.push(
-                                new maps.Marker({
-                                    position: results[0].geometry.location,
-                                    map: map,
-                                    title: address
-                                })
-                            );
-                        }
-                        else {
-                            console.log("Geocode was not successful for the following reason: " + status);
-                        }
-                    });
+                    //TODO: cache results in local storage to not hit query limit
+                    // Geocoder.geocode({"address": address}, function(results, status) {
+                    //     if (status == "OK") {
+                    //         MapContainer.state.markers.push(
+                    //             new maps.Marker({
+                    //                 position: results[0].geometry.location,
+                    //                 map: map,
+                    //                 title: address
+                    //             })
+                    //         );
+                    //     }
+                    //     else {
+                    //         console.log("Geocode was not successful for the following reason: " + status);
+                    //     }
+                    // });
                 }
             }
         }
