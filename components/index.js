@@ -3,6 +3,7 @@ import PopUp from "./PopUp";
 import NavBar from "./NavBar";
 import SearchBar from "./SearchBar";
 import MapContainer from "./MapContainer";
+import EventCard from "./EventCard";
 import Accordion from "./Accordion";
 import AccordionSection from "./AccordionSection";
 import LetterSelectBar from "./LetterSelectBar";
@@ -14,6 +15,7 @@ export {
     NavBar,
     SearchBar,
     MapContainer,
+    EventCard,
     Accordion,
     AccordionSection,
     LetterSelectBar,
