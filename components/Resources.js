@@ -1,11 +1,12 @@
 const divStyle = {
     backgroundColor: '#F0F0F0',
     paddingLeft: '7px',
-    paddingTop: '5px'
+    paddingTop: '2px',
+    paddingBottom: '2px',
 }
 
 const ResourcesSpacing = {
-    minHeight: '200px'
+    minHeight: '40px',
 }
 
 const linkStyle = {
@@ -37,11 +38,6 @@ class Resource extends React.Component {
         summary: "",
     };
 
-    printResource(){
-        console.log("Resource: " + this.props.name)
-        console.log(this.props.info.Website)
-    }
-
     render(){
         return(
             <div style = {divStyle}>
@@ -69,16 +65,6 @@ class Resources extends React.Component {
     static defaultProps = {
         resources: {"ResourceName": {"Email": "mail", "Website": "web", "Location": "loc", "Meetup": ""}}
     };
-
-    printResources(){
-        for (var key in this.props.resources){
-            if(this.props.resources.hasOwnProperty(key)){
-                var indivR = this.props.resources[key]
-                console.log(key + "-->" + indivR)
-                console.log(indivR)
-            }
-        }
-    }
 
     render(){
         var newResources = []
