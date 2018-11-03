@@ -36,13 +36,19 @@ class InfoBar extends Component {
 
   render() {
     var locationData = this.props.locationData
+    //console.log(locationData);
     var sections = []
     var i = 0
     for(var state in locationData){
       if(state[0] == this.state.filterLetter || this.state.filterLetter == "all") {
         if (locationData.hasOwnProperty(state)) {
-            var stateResources = locationData[state]
-            sections.push(<AccordionSection title = {state} key = {i}> <Resources resources={stateResources}/> </AccordionSection>)
+            //var stateResources = locationData[state]
+            ////// This is where state resources are dished out
+            var stateResources = locationData[state];
+            var resourceRegion = state;
+            console.log(state);
+            
+            sections.push(<AccordionSection title = {state} key = {i}> <Resources region = {resourceRegion} resources={stateResources}/> </AccordionSection>)
             i++
         }
       }
