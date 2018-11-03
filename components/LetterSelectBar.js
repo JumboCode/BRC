@@ -30,8 +30,7 @@ Letter.defaultProps = {
 
 const LetterSelectBarStyle = {
     display: 'flex',
-    justifyContent: 'space-between'
-
+    justifyContent: 'center'
 }
 
 
@@ -59,28 +58,24 @@ class LetterSelectBar extends Component{
         this.props.onLetterClicked(letter)
     }
 
-    render(){
-        var alphabet = (this.genAlphabet("A", "Z"))
-        var sections = []
-        for (var i = 0; i < alphabet.length; i++){
-            var character = alphabet[i]
-            sections.push(<Letter key = {i} letter = {character} onLetterClicked = {this.onLetterClicked}></Letter>)
-            /*if (i != alphabet.length - 1){
-                sections.push(<p key = {i}> | </p>)
-            }
-            */
+    render() {
+        let sections = []
+        let filters = this.props.letters;
+        for (let i = 0; i < filters.length; i++){
+            let character = filters[i]
+            sections.push(<Letter key = {i} letter={character} onLetterClicked = {this.onLetterClicked}></Letter>)
         }
 
         return(
-            <div style = {LetterSelectBarStyle} className = "LetterSelectBar">
-                      {sections}
+            <div style={LetterSelectBarStyle} className = "LetterSelectBar">
+                {sections}
             </div>
         )
     }
 }
 
 LetterSelectBar.propTypes = {
-    letter: React.PropTypes.string.isRequired,
+    letters: React.PropTypes.array.isRequired,
     letterClicked: React.PropTypes.function.isRequired
 };
 
