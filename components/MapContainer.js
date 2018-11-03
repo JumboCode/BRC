@@ -30,7 +30,7 @@ class MapContainer extends React.Component {
 		super(props)
 		this.state = {
             //hard-coded default center is boston brc
-			userLocation: {
+			defaultCenter: {
 				lat: 42.348591,
 				lng: -71.073051
 			},
@@ -40,14 +40,13 @@ class MapContainer extends React.Component {
 	}
 
 	renderMarkers(map, maps) {
+        let MapContainer = this;
         const Geocoder = new maps.Geocoder();   //converts address to lat/lng
-        let state = this.state;
 
 		//render marker at bisexual resource center (also the default center)
-        //TODO: get lat + lng of all resources and add markers for each resource
         Geocoder.geocode({"address": "Bisexual Resource Center"}, function(results, status) {
             if (status == "OK") {
-                state.markers.push(
+                MapContainer.state.markers.push(
                     new maps.Marker({
                         position: results[0].geometry.location,
                         map: map,
@@ -60,13 +59,13 @@ class MapContainer extends React.Component {
             }
         });
 
+        //TODO: get lat/lng of all resources, add markers for each resource
         let locationData = this.props.locations[0]["states"];
-
         for(let region in locationData){
             if (locationData.hasOwnProperty(region)) {
                 for (let resource in locationData[region])
                 {
-                    console.log(resource);
+                    // console.log(resource);
                     // this.state.markers.push(
                     //     new maps.Marker({
                     //         position: {lat: , lng: },
@@ -78,32 +77,37 @@ class MapContainer extends React.Component {
             }
         }
 
-        //get user's location
-        //TODO: center map at searched query (this.props.searched),
-        //      only use user location when searched is undefined
-		navigator.geolocation.getCurrentPosition(
-			(position) => {
-				this.setState({
-					userLocation: {
-						lat: position.coords.latitude,
-						lng: position.coords.longitude
-					}
-				});				
+        //get lat/lng of search query
+        Geocoder.geocode({"address": this.props.search}, function(results, status) {
+            //if exists, recenter to searched location
+            if (status == "OK") {
+                map.setCenter(results[0].geometry.location);
 
-				//render marker
-				this.state.markers.push(
-					new maps.Marker({
-						position: {
-                            lat: this.state.userLocation.lat,
-                            lng: this.state.userLocation.lng
-                        },
-						map: map,
-						title: "You are here!"
-					})
-				);
-			},
-			(error) => console.log(error)
-		);
+                MapContainer.state.markers.push(
+                    new maps.Marker({
+                        position: results[0].geometry.location,
+                        map: map
+                    })
+                );
+            }
+            //if doesn't exist, recenter to user's location
+            else {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        map.setCenter({lat: position.coords.latitude, lng: position.coords.longitude});
+
+                        MapContainer.state.markers.push(
+                            new maps.Marker({
+                                position: {lat: position.coords.latitude, lng: position.coords.longitude},
+                                map: map,
+                                title: "You are here!"
+                            })
+                        );
+                    },
+                    (error) => console.log(error)
+                );
+            }
+        });        		
 	}
 
 	render() {
@@ -111,7 +115,7 @@ class MapContainer extends React.Component {
 			<div style={{ height: `400px` }}>
 				<GoogleMap 
 					bootstrapURLKeys={{ key: publicRuntimeConfig.MAP_KEY }}
-					center={this.state.userLocation}
+					defaultCenter={this.state.defaultCenter}
 					defaultZoom={this.state.zoom}
 					onGoogleApiLoaded={({map, maps}) => this.renderMarkers(map, maps)}
 					yesIWantToUseGoogleMapApiInternals

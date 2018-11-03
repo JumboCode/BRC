@@ -17,14 +17,15 @@ const map = {
   height: "600px",
 }
 
-class Home extends Component  {
+class Home extends Component {
     // get list of locations as prop
-    static async getInitialProps({ req }) {
+    static async getInitialProps(props) {
         const appURL = publicRuntimeConfig.APP_URL || "http://localhost:3000";
         //hard coded url for now... need to change later
         const res = await fetch(`${appURL}/locations`);
         const locations = await res.json();
-        return { locations };
+        const search = props.query.search
+        return { locations, search };
     }
 
     constructor(props) {
@@ -38,7 +39,7 @@ class Home extends Component  {
                 <div style={mainContainer}>
                     <InfoBar locationData={this.props.locations[0]["states"]}/>
                     <div style={map}>
-                    <MapContainer searched={this.props.search}
+                    <MapContainer search={this.props.search}
                                   locations={this.props.locations}
                     />
                     </div>
