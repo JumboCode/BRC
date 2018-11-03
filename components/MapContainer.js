@@ -63,16 +63,22 @@ class MapContainer extends React.Component {
         let locationData = this.props.locations[0]["states"];
         for(let region in locationData){
             if (locationData.hasOwnProperty(region)) {
-                for (let resource in locationData[region])
+                for (let address in locationData[region])
                 {
-                    // console.log(resource);
-                    // this.state.markers.push(
-                    //     new maps.Marker({
-                    //         position: {lat: , lng: },
-                    //         map,
-                    //         title: resource
-                    //     })
-                    // );
+                    Geocoder.geocode({"address": address}, function(results, status) {
+                        if (status == "OK") {
+                            MapContainer.state.markers.push(
+                                new maps.Marker({
+                                    position: results[0].geometry.location,
+                                    map: map,
+                                    title: address
+                                })
+                            );
+                        }
+                        else {
+                            console.log("Geocode was not successful for the following reason: " + status);
+                        }
+                    });
                 }
             }
         }
