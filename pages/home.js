@@ -20,12 +20,14 @@ const { publicRuntimeConfig } = getConfig()
 const mainContainer = {
   display: 'flex',
   flexFlow: 'row wrap',
-  alignContent: 'space between',
-  margin: "3% 20px 0px 20px",
+  justifyContent: 'space-around',
+  margin: "0 20px 0 20px",
+  paddingTop: "50px",
 };
 
 const map = {
-  flex: 1
+  width: "500px",
+  height: "600px",
 }
 
 class Home extends Component  {
@@ -45,14 +47,15 @@ class Home extends Component  {
 
     render () {
         return (
-            <div>
+            <>
+                <NavBar />
                 <div style={mainContainer}>
                     <InfoBar locationData={this.props.locations[0]["states"]}/>
                     <div style={map}>
-                    < MapContainer />
+                        <MapContainer />
                     </div>
                 </div>
-            </div>
+            </>
         );
     }
 }

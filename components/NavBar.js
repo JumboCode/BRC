@@ -1,4 +1,5 @@
 import { slide as Menu } from 'react-burger-menu';
+import Link from "next/link";
 
 const styles = {
     navBarContainer: {
@@ -8,7 +9,12 @@ const styles = {
         right: 0,
         backgroundColor: "grey",
         padding: "20px",
+        zIndex: "99",
     },
+    link: {
+      textDecoration: "none",
+      color: "grey"
+    }
 }
 
 const burger = {
@@ -57,10 +63,14 @@ const burger = {
 const NavBar = () => (
     <>
         <Menu right width={ 280 } styles={ burger }>
-            <a id="resources" className="menu-item" href="/">List of resources</a>
-            <a id="events" className="menu-item" href="/">BRC Events</a>
-            <a id="web" className="menu-item" href="/">Visit BRC Web</a>
-            <a id="subscription" className="menu-item" href="/">Subscription</a>
+            <div id="resources" className="menu-item">
+              <Link href={{pathname: "/home", query: { search: "", data: "locations" }}}><a style={styles.link}>List of resources</a></Link>
+            </div>
+            <div id="events" className="menu-item">
+              <Link href={{pathname: "/home", query: { search: "", data: "events" }}}><a style={styles.link}>BRC Events</a></Link>
+            </div>
+            <a id="web" className="menu-item" target="_blank" href="http://biresource.org/">Visit BRC Web</a>
+            <a id="subscription" className="menu-item" target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLScZDTmbGh8_f-FgbwbFJfje7Ktyp_r19d1UwS3yHJMBVn42FQ/viewform">Subscription</a>
         </Menu>
     
         <div style={styles.navBarContainer} /> 
