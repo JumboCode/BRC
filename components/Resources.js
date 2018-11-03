@@ -22,8 +22,8 @@ class Resource extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-
         }
+        this.onClick = this.onClick.bind(this);
     };
 
     static propTypes = {
@@ -42,10 +42,13 @@ class Resource extends React.Component {
         region: "United States of America"
     };
 
+    onClick(){
+        console.log("Region: " + this.props.info.Region)
+    }
+
     render(){
-        console.log("region" + this.props.info.Region)
         return(
-            <div style = {divStyle}>
+            <div onClick = {this.onClick} style = {divStyle}>
             {/*
                 <a href={this.props.info.Website} style = {linkStyle}>{this.props.name}</a>
             */}
@@ -83,9 +86,10 @@ class Resources extends React.Component {
         for (var resource in this.props.resources){
             if(this.props.resources.hasOwnProperty(resource)){
                 var resourceInfo = this.props.resources[resource]
-                resourceInfo.region = this.props.region
+                resourceInfo.Region = this.props.region;
+                console.log(resourceInfo);
                 
-                console.log(this.props.resources[resource].Location);
+                //console.log(this.props.resources[resource].Location);
                 newResources.push(<Resource name = {resource} info = {resourceInfo} />)
             }
         }
