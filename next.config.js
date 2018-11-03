@@ -11,6 +11,13 @@ module.exports = {
     publicRuntimeConfig: { // Will be available on both server and client
         MAP_KEY: process.env.GOOGLE_MAP_KEY,
         APP_URL: process.env.APP_URL
-    }
+    },
+    module: {
+      rules: [
+        {
+          test: /\.css$/,
+          use: [ 'style-loader', 'css-loader' ]
+        }
+      ]
+  }
 };
-

@@ -1,5 +1,6 @@
 import { Accordion, AccordionSection, Resources, LetterSelectBar } from ".";
 import { Component } from "react";
+import Calendar from 'react-calendar'
 
 const info = {
   display: 'flex',
@@ -22,6 +23,12 @@ const scroll = {
 }
 
 class InfoBar extends Component {
+  state = {
+    date: new Date(),
+  }
+
+  onChange = date => this.setState({Date})
+
   constructor(props) {
     super(props);
     this.state = {
@@ -51,8 +58,9 @@ class InfoBar extends Component {
     return(
       <div style = {info}>
         <div style = {title}>  Bi Spot: Find a group near you.</div>
+        <Calendar onChange = {this.onChange} value = {this.state.date}/>
         <LetterSelectBar onLetterClicked = {this.onLetterClicked}/>
-        <div style={scroll}> 
+        <div style={scroll}>
           <Accordion>
             {sections}
           </Accordion>
