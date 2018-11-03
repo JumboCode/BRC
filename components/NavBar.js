@@ -9,6 +9,7 @@ const styles = {
         right: 0,
         backgroundColor: "grey",
         padding: "20px",
+        zIndex: "99",
     },
     link: {
       textDecoration: "none",
