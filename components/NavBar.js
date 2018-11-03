@@ -7,7 +7,7 @@ const styles = {
         top: 0,
         left: 0,
         right: 0,
-        backgroundColor: "grey",
+        backgroundColor: "white",
         padding: "20px",
         zIndex: "99",
     },
@@ -28,7 +28,7 @@ const burger = {
     },
 
     bmBurgerBars: {
-      background: '#373a47'
+      background: '#F293C1'
     },
     bmCrossButton: {
       height: '24px',
@@ -43,7 +43,7 @@ const burger = {
       fontSize: '1.15em',
     },
     bmMorphShape: {
-      fill: '#373a47'
+      fill: '#F293C1'
     },
     bmItemList: {
       color: '#b8b7ad',
