@@ -4,6 +4,7 @@ import PlacesAutocomplete, {
   getLatLng,
 } from 'react-places-autocomplete';
 import Link from 'next/link';
+import Router from 'next/router';
 
 const styles = {
   container: {
@@ -32,6 +33,26 @@ class SearchBar extends React.Component {
     this.setState({ address });
   };
 
+  // Allows enter key triggering search
+  keyPress = e => {
+    console.log(e.key);
+    if(e.key == 13){
+      // routing stuff here
+      console.log("Phase 1");
+      Router.replace({
+        pathname: '/home',
+        query: { search: this.state.address }
+      })
+    }
+  }
+
+  // handler = () => {
+  //   Router.push({
+  //     pathname: '/home',
+  //     query: { search: this.state.address }
+  //   })
+  // }
+
   render () {
     return (
         <PlacesAutocomplete
@@ -42,12 +63,14 @@ class SearchBar extends React.Component {
           {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
             <div style={styles.locationSearchBox}>
               <div style={styles.container}>
-                <input
-                  {...getInputProps({
-                    placeholder: 'Search Places ...',
-                    className: 'location-search-input',
-                  })}
-                />
+              <form>
+                  <input tabIndex="0"
+                    {...getInputProps({
+                      placeholder: 'Search Places ...',
+                      className: 'location-search-input',
+                    })}
+                  />
+                </form>
                 <form>
                   <div>
                     <Link href={{ pathname: '/home', query: { search: this.state.address } }}>
