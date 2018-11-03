@@ -35,7 +35,7 @@ class Resource extends React.Component {
     static defaultProps ={
 //        info : {"Email": "mail", "Website": "web", "Location": "loc", "Meetup": ""},
         info : {"Email": "mail", "Website": "web", "Location": "loc", "Meetup": "", "Region":"Unknown"},
-
+        onResourceClicked: (region) => {console.log("Region: " + region)},
         url: "url",
         name : "centerName",
         summary: "",
@@ -43,7 +43,8 @@ class Resource extends React.Component {
     };
 
     onClick(){
-        console.log("Region: " + this.props.info.Region)
+        //console.log("Region: " + this.props.info.Region)
+        this.props.onResourceClicked(this.props.info.Region);
     }
 
     render(){
@@ -67,6 +68,7 @@ class Resources extends React.Component {
         super(props);
         this.state = {
         }
+        //this.resourceClicked = this.resourceClicked.bind(this);
     }
 
     static propTypes = {
@@ -76,8 +78,17 @@ class Resources extends React.Component {
 
     static defaultProps = {
         resources: {"ResourceName": {"Email": "mail", "Website": "web", "Location": "loc", "Meetup": ""}},
-        region: "United States of America" // Should normally be a state. 
+        region: "United States of America", // Should normally be a state. 
+        onResourceClick: (data) => {console.log("Resources has region: " + data)}
     };
+
+    // This is essentially the default prop for resourceOnClick;
+    /*
+    resourceClicked(region){
+        console.log("Resources has region: " + region);
+        return region;
+    }
+    */
 
     render(){
         var newResources = []
@@ -90,7 +101,7 @@ class Resources extends React.Component {
                 console.log(resourceInfo);
                 
                 //console.log(this.props.resources[resource].Location);
-                newResources.push(<Resource name = {resource} info = {resourceInfo} />)
+                newResources.push(<Resource name = {resource} info = {resourceInfo} onResourceClicked = {this.props.onResourceClick}/>)
             }
         }
 

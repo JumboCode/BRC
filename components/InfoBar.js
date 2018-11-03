@@ -30,6 +30,11 @@ class InfoBar extends Component {
     this.onLetterClicked = this.onLetterClicked.bind(this)
   }
 
+
+  static defaultProps = {
+    onResourceClick: (region) => {console.log("InfoBar has region: " + region)}
+  }
+
   onLetterClicked(letter){
     this.setState( {filterLetter: letter})
   }
@@ -48,7 +53,7 @@ class InfoBar extends Component {
             var resourceRegion = state;
             console.log(state);
             
-            sections.push(<AccordionSection title = {state} key = {i}> <Resources region = {resourceRegion} resources={stateResources}/> </AccordionSection>)
+            sections.push(<AccordionSection title = {state} key = {i}> <Resources region = {resourceRegion} resources={stateResources} onResourceClick = {this.props.onResourceClick}/> </AccordionSection>)
             i++
         }
       }
