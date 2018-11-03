@@ -33,7 +33,7 @@ class MapContainer extends React.Component {
 				lat: 42.348591,
 				lng: -71.073051
 			},
-			zoom: 13,
+			zoom: 8,
 			markers: []
 		}
 	}
