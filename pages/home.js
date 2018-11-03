@@ -1,4 +1,4 @@
-import { InfoBar, MapContainer, PopUp, NavBar, SocialMedia } from "../components";
+import { InfoBar, MapContainer, PopUp, NavBar } from "../components";
 import { Component } from "react";
 import fetch from 'isomorphic-fetch'
 
