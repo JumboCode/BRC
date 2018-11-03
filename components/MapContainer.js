@@ -29,33 +29,42 @@ class MapContainer extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
+            //hard-coded default center is boston brc
 			userLocation: {
 				lat: 42.348591,
 				lng: -71.073051
 			},
-			zoom: 8,
+			zoom: 13,
 			markers: []
 		}
 	}
 
 	renderMarkers(map, maps) {
+        const Geocoder = new maps.Geocoder();   //converts address to lat/lng
+        let state = this.state;
+
 		//render marker at bisexual resource center (also the default center)
         //TODO: get lat + lng of all resources and add markers for each resource
-		this.state.markers.push(
-			new maps.Marker({
-				position: {lat: 42.348591, lng: -71.073051},
-				map,
-				title: "Bisexual Resource Center"
-			})
-		);
+        Geocoder.geocode({"address": "Bisexual Resource Center"}, function(results, status) {
+            if (status == "OK") {
+                state.markers.push(
+                    new maps.Marker({
+                        position: results[0].geometry.location,
+                        map: map,
+                        title: "Bisexual Resource Center"
+                    })
+                );
+            }
+            else {
+                console.log("Geocode was not successful for the following reason: " + status);
+            }
+        });
 
         let locationData = this.props.locations[0]["states"];
 
-        console.log(locationData);
-
-        for(let state in locationData){
-            if (locationData.hasOwnProperty(state)) {
-                for (let resource in locationData[state])
+        for(let region in locationData){
+            if (locationData.hasOwnProperty(region)) {
+                for (let resource in locationData[region])
                 {
                     console.log(resource);
                     // this.state.markers.push(
@@ -88,7 +97,7 @@ class MapContainer extends React.Component {
                             lat: this.state.userLocation.lat,
                             lng: this.state.userLocation.lng
                         },
-						map,
+						map: map,
 						title: "You are here!"
 					})
 				);
@@ -102,7 +111,6 @@ class MapContainer extends React.Component {
 			<div style={{ height: `400px` }}>
 				<GoogleMap 
 					bootstrapURLKeys={{ key: publicRuntimeConfig.MAP_KEY }}
-					defaultCenter={{lat: 42.348591, lng: -71.073051}}
 					center={this.state.userLocation}
 					defaultZoom={this.state.zoom}
 					onGoogleApiLoaded={({map, maps}) => this.renderMarkers(map, maps)}
