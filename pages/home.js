@@ -42,7 +42,8 @@ class Home extends Component  {
 
     constructor (props) {
         super(props);
-        this.state = {};
+        this.state = {
+        };
         this.onResourceClicked = this.onResourceClicked.bind(this);
     }
 
@@ -57,7 +58,7 @@ class Home extends Component  {
                 <div style={mainContainer}>
                     <InfoBar locationData={this.props.locations[0]["states"]} onResourceClick = {this.onResourceClicked}/>
                     <div style={map}>
-                        <MapContainer />
+                        <MapContainer/>
                     </div>
                 </div>
             </>

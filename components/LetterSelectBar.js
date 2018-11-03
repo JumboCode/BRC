@@ -38,7 +38,7 @@ const LetterSelectBarStyle = {
 class LetterSelectBar extends Component{
     constructor(props){
         super(props);
-        this.onLetterClicked = this.onLetterClicked.bind(this)
+        //this.onLetterClicked = this.onLetterClicked.bind(this)
         this.state = {};
     }
 
@@ -54,17 +54,17 @@ class LetterSelectBar extends Component{
         }
         return alphabet
     }
-
+/*
     onLetterClicked(letter){
         this.props.onLetterClicked(letter)
     }
-
+*/
     render(){
         var alphabet = (this.genAlphabet("A", "Z"))
         var sections = []
         for (var i = 0; i < alphabet.length; i++){
             var character = alphabet[i]
-            sections.push(<Letter key = {i} letter = {character} onLetterClicked = {this.onLetterClicked}></Letter>)
+            sections.push(<Letter key = {i} letter = {character} onLetterClicked = {this.props.onLetterClicked}></Letter>)
             /*if (i != alphabet.length - 1){
                 sections.push(<p key = {i}> | </p>)
             }
