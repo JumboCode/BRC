@@ -33,12 +33,12 @@ class EventCard extends React.Component {
     return (
       <>
         <div style={style.event}>
-        <h1>this.props.info.Event1</h1>
-        <p>this.props.info.host</p>
-        <p>this.props.info.location</p>
-        <p>this.props.info.description</p>
-      </div>
-</>
+          <p style={{fontSize: "18px", fontWeight: "bold"}}>{this.props.event}</p>
+          <p>{this.props.host}</p>
+          <p>{this.props.location}</p>
+          <p>{this.props.description}</p>
+        </div>
+      </>
     );
   }
 }
