@@ -12,12 +12,8 @@ module.exports = {
         MAP_KEY: process.env.GOOGLE_MAP_KEY,
         APP_URL: process.env.APP_URL
     },
-    module: {
-      rules: [
-        {
-          test: /\.css$/,
-          use: [ 'style-loader', 'css-loader' ]
-        }
-      ]
-  }
+    webpack: (config, { dev }) => {
+      config.module.rules.push({ test: /\.css$/, loader: ['style-loader', 'css-loader'] });
+      return config;
+    }
 };
