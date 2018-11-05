@@ -31,24 +31,15 @@ class SearchBar extends React.Component {
   };
 
   // Allows enter key triggering search
-  keyPress = e => {
-    console.log(e.key);
-    if(e.key == 13){
-      // routing stuff here
-      console.log("Phase 1");
-      Router.replace({
+  onKeyPress = (event, suggestions) => {
+    const suggestionsOpen = !!suggestions.length;
+    if (!suggestionsOpen && event.keyCode === 13){ // if this is enter key, submit form
+      Router.push({
         pathname: '/home',
         query: { search: this.state.address }
-      })
+      });    
     }
   }
-
-  // handler = () => {
-  //   Router.push({
-  //     pathname: '/home',
-  //     query: { search: this.state.address }
-  //   })
-  // }
 
   render () {
     return (
@@ -61,10 +52,11 @@ class SearchBar extends React.Component {
             <div style={styles.locationSearchBox}>
               <div style={styles.container}>
               <form>
-                  <input tabIndex="0"
+                  <input
                     {...getInputProps({
                       placeholder: 'Search Places ...',
                       className: 'location-search-input',
+                      onKeyDown: (e) => this.onKeyPress(e, suggestions),
                     })}
                   />
                 </form>
