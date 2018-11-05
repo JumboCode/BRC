@@ -22,10 +22,10 @@
 		"react-burger-menu": "^2.5.3",
 		"react-dom": "^16.5.1",
 		"react-places-autocomplete": "^7.2.0",
-		"react-responsive": "^5.0.0"
+		"react-responsive": "^5.0.0",
+		"webpack": "^4.20.2"
 	},
 	"devDependencies": {
-		"webpack": "^4.20.2",
 		"webpack-cli": "^3.1.2"
 	},
 	"dotenv": true
