@@ -1,4 +1,4 @@
-import { SearchBar, NavBar } from "../components";
+import { SearchBar, NavBar, SocialMedia } from "../components";
 import Head from "next/head";
 import Link from "next/link";
 
@@ -37,6 +37,7 @@ const Index = () => (
     		<a textDecoration="none">or click to view BRC events (current month)</a>
     	</Link>
     </div>
+    <SocialMedia />
   </>
 );
 
