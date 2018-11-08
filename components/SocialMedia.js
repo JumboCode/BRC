@@ -2,10 +2,9 @@ import React from "react";
 var createReactClass = require('create-react-class');
 
 const icons = {
-    textAlign: "center",
-    paddingTop: "50px"
+    display: "flex",
+    justifyContent: "center",
 }
-
 const indiv = {
     paddingRight: "20px"
 }
