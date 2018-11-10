@@ -1,4 +1,4 @@
-import { InfoBar, MapContainer, PopUp, NavBar } from "../components";
+import { InfoBar, MapContainer, PopUp, NavBar, BurgerMenu } from "../components";
 import { Component } from "react";
 import fetch from 'isomorphic-fetch'
 import getConfig from "next/config";
@@ -49,6 +49,7 @@ class Home extends Component  {
         return (
             <>
                 <NavBar />
+                <BurgerMenu />
                 <div style={mainContainer}>
                     <InfoBar locationData={this.props.locations[0]["states"]}/>
                     <div style={map}>
