@@ -1,4 +1,4 @@
-import { SearchBar, NavBar } from "../components";
+import { SearchBar, NavBar, SocialMedia } from "../components";
 import Head from "next/head";
 import Link from "next/link";
 
@@ -10,11 +10,18 @@ const titleStyle = {
   paddingBottom: '15px'
 };
 
+const bodyStyle = {
+  display: "flex", 
+  flexDirection: "column", 
+  alignItems: "center",
+  justifyContent: "center",
+  minHeight: "87vh",
+}
+
 const logo = {
 	justifyContent: "center",
 	display: "flex",
 	paddingBottom: "50px",
-	paddingTop: "50px"
 };
 
 const linkStyle = {
@@ -27,16 +34,18 @@ const linkStyle = {
 const Index = () => (
   <>
     <NavBar />
-    <div style={titleStyle}>BiSpot: Find a Bi Group Around Me</div>
-    <div style={logo}>
-    	<img alt="BRC logo" src="./static/images/BRC-logo.jpg" width="300" height="110"/>
+    <div style={bodyStyle}>
+      <div style={logo}>
+        <img alt="BRC logo" src="./static/images/BRC-logo.jpg" width="300" height="110"/>
+      </div>
+      <SearchBar />
+      <div style={linkStyle}>
+        <Link href="/home">
+          <a textDecoration="none">or click to view BRC events (current month)</a>
+        </Link>
+      </div>
     </div>
-    <SearchBar />
-    <div style={linkStyle}>
-    	<Link href="/home">
-    		<a textDecoration="none">or click to view BRC events (current month)</a>
-    	</Link>
-    </div>
+    <SocialMedia />
   </>
 );
 
