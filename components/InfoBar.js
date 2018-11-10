@@ -1,6 +1,7 @@
 import { Accordion, AccordionSection, Resources, LetterSelectBar } from ".";
 import { Component } from "react";
-import Calendar from 'react-calendar'
+import Calendar from 'rc-calendar';
+import ReactDOM from 'react-dom';
 
 const info = {
   display: 'flex',
@@ -14,6 +15,13 @@ const title = {
   fontSize: 40,
   fontFamily: 'sans-serif',
   paddingBottom: "5%",
+};
+
+const calendar = {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  textAlign: 'center',
 };
 
 const scroll = {
@@ -58,7 +66,7 @@ class InfoBar extends Component {
     return(
       <div style = {info}>
         <div style = {title}>  Bi Spot: Find a group near you.</div>
-        <Calendar onChange = {this.onChange} value = {this.state.date}/>
+        <div style = {calendar}> <Calendar showDateInput={false} showToday={false}/> </div>
         <LetterSelectBar onLetterClicked = {this.onLetterClicked}/>
         <div style={scroll}>
           <Accordion>
@@ -69,6 +77,5 @@ class InfoBar extends Component {
     )
   }
 }
-
 
 export default InfoBar;

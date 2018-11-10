@@ -19,5 +19,13 @@ module.exports = {
           use: [ 'style-loader', 'css-loader' ]
         }
       ]
-  }
+    },
+    babelLoader: {
+      test: /\.jsx?$/,
+      loader: 'babel-loader',
+      exclude: /node_modules/,
+      query: {
+        presets: ['es2015']
+    }
+}
 };
