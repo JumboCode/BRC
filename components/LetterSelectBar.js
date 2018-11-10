@@ -13,7 +13,7 @@ class Letter extends React.Component{
     
     render(){
         return(
-            <p onClick = {this.onClick}>{this.props.letter}</p>
+            <p style={LetterStyle} onClick = {this.onClick}>{this.props.letter}</p>
         )
     }
 }
@@ -30,7 +30,14 @@ Letter.defaultProps = {
 
 const LetterSelectBarStyle = {
     display: 'flex',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    fontSize: '20px',
+    fontFamily: 'sans-serif',  // find out if a different font is needed
+    color: '#707070'
+}
+
+const LetterStyle = {
+    paddingRight: '10px'
 }
 
 
