@@ -1,4 +1,4 @@
-import { SearchBar, NavBar, BurgerMenu } from "../components";
+import { SearchBar, BurgerMenu } from "../components";
 import Head from "next/head";
 import Link from "next/link";
 

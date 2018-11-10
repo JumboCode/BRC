@@ -7,6 +7,7 @@ import Accordion from "./Accordion";
 import AccordionSection from "./AccordionSection";
 import LetterSelectBar from "./LetterSelectBar";
 import Resources from "./Resources";
+import BurgerMenu from "./BurgerMenu";
 
 export {
     InfoBar,
@@ -18,4 +19,5 @@ export {
     AccordionSection,
     LetterSelectBar,
     Resources,
+    BurgerMenu,
 };
