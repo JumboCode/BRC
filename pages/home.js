@@ -31,15 +31,21 @@ class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            centeredOn : null
         };
         this.onResourceClicked = this.onResourceClicked.bind(this);
     }
 
     onResourceClicked(region){
         console.log("Home has " + region);
+        this.setState({centeredOn: region});
+        console.log("Home has state " + this.state.centeredOn);
     }
 
+
     render () {
+        //console.log(this.props.locations)
+        console.log("Centered on in render" + this.state.centeredOn)
         return (
             <>
                 <NavBar />
@@ -48,6 +54,7 @@ class Home extends Component {
                     <div style={map}>
                     <MapContainer search={this.props.search}
                                   locations={this.props.locations}
+                                  centeredOn = {this.state.centeredOn}
                     />
                     </div>
                 </div>
