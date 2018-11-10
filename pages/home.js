@@ -3,20 +3,7 @@ import { Component } from "react";
 import fetch from 'isomorphic-fetch'
 import getConfig from "next/config";
 const { publicRuntimeConfig } = getConfig()
-/*
- * locations data is in the form:
-    [
-        {
-            "_id": { "$oid": "(some random string)" },
-            "name": "location 1 name"
-        },
-        {
-            "_id": { "$oid": "(some random string)" },
-            "name": "location 2 name"
-        },
-        etc...
-    ]
-*/
+
 const mainContainer = {
   display: 'flex',
   flexFlow: 'row wrap',
@@ -30,19 +17,19 @@ const map = {
   height: "600px",
 }
 
-class Home extends Component  {
+class Home extends Component {
     // get list of locations as prop
-    static async getInitialProps({ req }) {
+    static async getInitialProps(props) {
         const appURL = publicRuntimeConfig.APP_URL || "http://localhost:3000";
         //hard coded url for now... need to change later
         const res = await fetch(`${appURL}/locations`);
         const locations = await res.json();
-        return { locations };
+        const search = props.query.search
+        return { locations, search };
     }
 
-    constructor (props) {
+    constructor(props) {
         super(props);
-        this.state = {};
     }
 
     render () {
@@ -53,7 +40,9 @@ class Home extends Component  {
                 <div style={mainContainer}>
                     <InfoBar locationData={this.props.locations[0]["states"]}/>
                     <div style={map}>
-                        <MapContainer />
+                    <MapContainer search={this.props.search}
+                                  locations={this.props.locations}
+                    />
                     </div>
                 </div>
             </>
