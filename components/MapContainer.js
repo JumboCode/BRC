@@ -148,6 +148,7 @@ class MapContainer extends React.Component {
                     if (status == "OK") {
                         console.log("Testing the getNewCenter results:" + results[0].geometry.location);
                         map.setCenter(results[0].geometry.location);
+                        map.setZoom(6);
                         return (results[0].geometry.location);
                     }
                 })
