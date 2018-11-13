@@ -1,18 +1,14 @@
 const divStyle = {
     backgroundColor: '#F0F0F0',
     paddingLeft: '7px',
-    paddingTop: '2px',
     paddingBottom: '2px',
 }
 
-const ResourcesSpacing = {
-    minHeight: '40px',
-}
-
 const linkStyle = {
-    textDecoration: 'none',
     color: '#757575', 
-
+    fontSize: '14px',
+    cursor: 'pointer',
+    paddingLeft: '7px'
 }
 
 // An individual resource along with associated data such as website,etc
@@ -33,7 +29,6 @@ class Resource extends React.Component {
     }
 
     static defaultProps ={
-//        info : {"Email": "mail", "Website": "web", "Location": "loc", "Meetup": ""},
         info : {"Email": "mail", "Website": "web", "Location": "loc", "Meetup": "", "Region":"Unknown"},
         onResourceClicked: (region) => {console.log("Region: " + region)},
         url: "url",
@@ -43,7 +38,6 @@ class Resource extends React.Component {
     };
 
     onClick(){
-        //console.log("Region: " + this.props.info.Region)
         this.props.onResourceClicked(this.props.info.Region);
     }
 
@@ -53,9 +47,7 @@ class Resource extends React.Component {
             {/*
                 <a href={this.props.info.Website} style = {linkStyle}>{this.props.name}</a>
             */}
-                <h6 style = {linkStyle}>{this.props.name}</h6>
-                <p>{this.props.summary}</p>
-                <div>{this.props.children}</div>
+                <p style = {linkStyle}>{this.props.name}</p>
             </div>
         )
         }
@@ -82,31 +74,20 @@ class Resources extends React.Component {
         onResourceClick: (data) => {console.log("Resources has region: " + data)}
     };
 
-    // This is essentially the default prop for resourceOnClick;
-    /*
-    resourceClicked(region){
-        console.log("Resources has region: " + region);
-        return region;
-    }
-    */
-
     render(){
         var newResources = []
-        console.log(this.props.region);
         // Key should be the name of some center
         for (var resource in this.props.resources){
             if(this.props.resources.hasOwnProperty(resource)){
                 var resourceInfo = this.props.resources[resource]
                 resourceInfo.Region = this.props.region;
-                console.log(resourceInfo);
                 
-                //console.log(this.props.resources[resource].Location);
                 newResources.push(<Resource name = {resource} info = {resourceInfo} onResourceClicked = {this.props.onResourceClick}/>)
             }
         }
 
         return( 
-            <div style = {ResourcesSpacing}>
+            <div>
                 {newResources}
             </div>
         )

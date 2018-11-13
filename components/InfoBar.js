@@ -28,6 +28,7 @@ class InfoBar extends Component {
       filterLetter: "all"
     };
     this.onLetterClicked = this.onLetterClicked.bind(this)
+    this.onClearClicked = this.onClearClicked.bind(this)
   }
 
 
@@ -36,24 +37,31 @@ class InfoBar extends Component {
   }
 
   onLetterClicked(letter){
-    this.setState( {filterLetter: letter})
+    this.setState( { filterLetter: letter })
+  }
+  onClearClicked(){
+    this.setState( {filterLetter: "all" })
+  }
+
+  getLetterFilters = () => {
+    let noDuplicates = {}
+    let letters = Object.keys(this.props.locationData).map((word) => {
+      noDuplicates[word[0]] = true;
+    });
+    return Object.keys(noDuplicates);
   }
 
   render() {
-    var locationData = this.props.locationData
-    //console.log(locationData);
-    var sections = []
-    var i = 0
-    for(var state in locationData){
+    let stateInitials = this.getLetterFilters();
+    let locationData = this.props.locationData
+    let sections = []
+    let i = 0
+    for(let state in locationData){
       if(state[0] == this.state.filterLetter || this.state.filterLetter == "all") {
         if (locationData.hasOwnProperty(state)) {
-            //var stateResources = locationData[state]
-            ////// This is where state resources are dished out
-            var stateResources = locationData[state];
-            var resourceRegion = state;
-            console.log(state);
-            
-            sections.push(<AccordionSection title = {state} key = {i}> <Resources region = {resourceRegion} resources={stateResources} onResourceClick = {this.props.onResourceClick}/> </AccordionSection>)
+          var stateResources = locationData[state];
+          var resourceRegion = state;
+          sections.push(<AccordionSection title = {state} key = {i}> <Resources region = {resourceRegion} resources={stateResources} onResourceClick = {this.props.onResourceClick}/> </AccordionSection>)
             i++
         }
       }
@@ -62,7 +70,7 @@ class InfoBar extends Component {
     return(
       <div style = {info}>
         <div style = {title}>  Bi Spot: Find a group near you.</div>
-        <LetterSelectBar onLetterClicked = {this.onLetterClicked}/>
+        <LetterSelectBar letters={stateInitials} selected={this.state.filterLetter} onLetterClicked = {this.onLetterClicked} onClearClicked = {this.onClearClicked}/>
         <div style={scroll}> 
           <Accordion>
             {sections}

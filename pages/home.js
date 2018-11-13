@@ -37,15 +37,11 @@ class Home extends Component {
     }
 
     onResourceClicked(region){
-        console.log("Home has " + region);
         this.setState({centeredOn: region});
-        console.log("Home has state " + this.state.centeredOn);
     }
 
 
     render () {
-        //console.log(this.props.locations)
-        console.log("Centered on in render" + this.state.centeredOn)
         return (
             <>
                 <NavBar />
