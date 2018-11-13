@@ -3,6 +3,7 @@ import PopUp from "./PopUp";
 import NavBar from "./NavBar";
 import SearchBar from "./SearchBar";
 import MapContainer from "./MapContainer";
+import SocialMedia from "./SocialMedia";
 import EventCard from "./EventCard";
 import Accordion from "./Accordion";
 import AccordionSection from "./AccordionSection";
@@ -16,6 +17,7 @@ export {
     NavBar,
     SearchBar,
     MapContainer,
+    SocialMedia,
     EventCard,
     Accordion,
     AccordionSection,
