@@ -83,19 +83,6 @@ class LetterSelectBar extends Component{
         this.state = {};
     }
 
-    // Generate a list of the alphabet starting from 
-    // startChar and ending at endChar inclusive
-    genAlphabet(startChar, endChar){
-        var i = startChar.charCodeAt(0)
-        var j = endChar.charCodeAt(0)
-        var alphabet = []
-
-        for(i; i <= j; i++){
-            alphabet.push(String.fromCharCode(i))
-        }
-        return alphabet
-    }
-
     onLetterClicked(letter){
         this.props.onLetterClicked(letter)
     }
@@ -113,9 +100,9 @@ class LetterSelectBar extends Component{
             if (character === this.props.selected) {
                 letterStyle = ActiveLetter
             }
-            sections.push(<Letter key = {i} letter={character} styleLetter = {letterStyle} onLetterClicked = {this.onLetterClicked}></Letter>)
+            sections.push(<Letter key ={i} letter={character} styleLetter = {letterStyle} onLetterClicked = {this.onLetterClicked}></Letter>)
         }
-        sections.push(<Clear onClearClicked = {this.onClearClicked}></Clear>)
+        sections.push(<Clear key={-1} onClearClicked = {this.onClearClicked}></Clear>)
 
         return(
             <div style={LetterSelectBarStyle} className = "LetterSelectBar">
