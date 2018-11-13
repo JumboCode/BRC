@@ -64,13 +64,15 @@ const LetterSelectBarStyle = {
 
 const LetterStyle = {
     paddingRight: '10px',
-    color: '#707070'
+    color: '#707070',
+    cursor: "pointer",
 }
 
 const ActiveLetter = {
     paddingRight: '10px',
     color: '#F293C1',
-    textDecoration: 'underline'
+    textDecoration: 'underline',
+    cursor: "pointer",
 }
 
 
