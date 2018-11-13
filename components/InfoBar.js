@@ -28,10 +28,15 @@ class InfoBar extends Component {
       filterLetter: "all"
     };
     this.onLetterClicked = this.onLetterClicked.bind(this)
+    this.onClearClicked = this.onClearClicked.bind(this)
   }
 
   onLetterClicked(letter){
     this.setState( { filterLetter: letter })
+  }
+  onClearClicked(){
+    console.log("Step 1\n")
+    this.setState( {filterLetter: "all" })
   }
 
   getLetterFilters = () => {
@@ -60,7 +65,7 @@ class InfoBar extends Component {
     return(
       <div style = {info}>
         <div style = {title}>  Bi Spot: Find a group near you.</div>
-        <LetterSelectBar letters={stateInitials} onLetterClicked = {this.onLetterClicked}/>
+        <LetterSelectBar letters={stateInitials} selected={this.state.filterLetter} onLetterClicked = {this.onLetterClicked} onClearClicked = {this.onClearClicked}/>
         <div style={scroll}> 
           <Accordion>
             {sections}

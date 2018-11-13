@@ -13,7 +13,26 @@ class Letter extends React.Component{
     
     render(){
         return(
-            <p style={LetterStyle} onClick = {this.onClick}>{this.props.letter}</p>
+            <p style={this.props.styleLetter} onClick = {this.onClick}>{this.props.letter}</p>
+        )
+    }
+}
+
+class Clear extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {
+        };
+    }
+
+    onClick = () => {
+        console.log("Step 2\n")
+        this.props.onClearClicked()
+    }
+
+    render(){
+        return(
+            <p style={LetterStyle} onClick = {this.onClick}>Clear</p>
         )
     }
 }
@@ -28,16 +47,30 @@ Letter.defaultProps = {
     onLetterClicked: (letter) => {console.log("Clicked letter")}
 }
 
+Clear.propTypes = {
+    clearClicked: React.PropTypes.function.isRequired
+};
+
+Clear.defaultProps = {
+    onClearClicked: (clear) => { console.log("Selection cleared") }
+};
+
 const LetterSelectBarStyle = {
     display: 'flex',
     justifyContent: 'center',
     fontSize: '20px',
-    fontFamily: 'sans-serif',  // find out if a different font is needed
-    color: '#707070'
+    fontFamily: 'sans-serif'  // find out if a different font is needed
 }
 
 const LetterStyle = {
-    paddingRight: '10px'
+    paddingRight: '10px',
+    color: '#707070'
+}
+
+const ActiveLetter = {
+    paddingRight: '10px',
+    color: '#F293C1',
+    textDecoration: 'underline'
 }
 
 
@@ -45,6 +78,7 @@ class LetterSelectBar extends Component{
     constructor(props){
         super(props);
         this.onLetterClicked = this.onLetterClicked.bind(this)
+        this.onClearClicked = this.onClearClicked.bind(this)
         this.state = {};
     }
 
@@ -65,13 +99,27 @@ class LetterSelectBar extends Component{
         this.props.onLetterClicked(letter)
     }
 
+    onClearClicked(){
+        console.log("Step 3\n")
+        this.props.onClearClicked()
+    }
+
     render() {
         let sections = []
         let filters = this.props.letters;
         for (let i = 0; i < filters.length; i++){
             let character = filters[i]
-            sections.push(<Letter key = {i} letter={character} onLetterClicked = {this.onLetterClicked}></Letter>)
+            var letterStyle = LetterStyle
+            // console.log(style)
+            if (character === this.props.selected) {
+                console.log("ALERT: if statement has been entered!!\n")
+                letterStyle = ActiveLetter
+                console.log(letterStyle)
+            }
+            sections.push(<Letter key = {i} letter={character} styleLetter = {letterStyle} onLetterClicked = {this.onLetterClicked}></Letter>)
+            console.log(letterStyle)
         }
+        sections.push(<Clear onClearClicked = {this.onClearClicked}></Clear>)
 
         return(
             <div style={LetterSelectBarStyle} className = "LetterSelectBar">
@@ -83,12 +131,14 @@ class LetterSelectBar extends Component{
 
 LetterSelectBar.propTypes = {
     letters: React.PropTypes.array.isRequired,
-    letterClicked: React.PropTypes.function.isRequired
+    letterClicked: React.PropTypes.function.isRequired,
+    clearClicked: React.PropTypes.function.isRequired
 };
 
 LetterSelectBar.defaultProps = {
     letter: "A",
-    onLetterClicked: (letter) => {console.log("Returning letter " + letter)}
+    onLetterClicked: (letter) => {console.log("Returning letter " + letter)},
+    onClearClicked: (clear) => { console.log("You clicked the clear button!")}
 }
 
 
