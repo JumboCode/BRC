@@ -1,6 +1,7 @@
 import React from "react";
 import PlacesAutocomplete from 'react-places-autocomplete';
 import Link from 'next/link';
+import Router from 'next/router';
 
 const styles = {
   container: {
@@ -29,6 +30,17 @@ class SearchBar extends React.Component {
     this.setState({ address });
   };
 
+  // Allows enter key triggering search
+  onKeyPress = (event, suggestions) => {
+    const suggestionsOpen = !!suggestions.length;
+    if (!suggestionsOpen && event.keyCode === 13){ // if this is enter key, submit form
+      Router.push({
+        pathname: '/home',
+        query: { search: this.state.address }
+      });    
+    }
+  }
+
   render () {
     return (
         <PlacesAutocomplete
@@ -39,12 +51,15 @@ class SearchBar extends React.Component {
           {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
             <div style={styles.locationSearchBox}>
               <div style={styles.container}>
-                <input
-                  {...getInputProps({
-                    placeholder: 'Search Places ...',
-                    className: 'location-search-input',
-                  })}
-                />
+              <form>
+                  <input
+                    {...getInputProps({
+                      placeholder: 'Search Places ...',
+                      className: 'location-search-input',
+                      onKeyDown: (e) => this.onKeyPress(e, suggestions),
+                    })}
+                  />
+                </form>
                 <form>
                   <div>
                     <Link href={{ pathname: '/home', query: { search: this.state.address } }}>
