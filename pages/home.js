@@ -30,7 +30,16 @@ class Home extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            centeredOn : null
+        };
+        this.onResourceClicked = this.onResourceClicked.bind(this);
     }
+
+    onResourceClicked(region){
+        this.setState({centeredOn: region});
+    }
+
 
     render () {
         return (
@@ -38,10 +47,11 @@ class Home extends Component {
                 <NavBar />
                 <BurgerMenu />
                 <div style={mainContainer}>
-                    <InfoBar locationData={this.props.locations[0]["states"]}/>
+                    <InfoBar locationData={this.props.locations[0]["states"]} onResourceClick = {this.onResourceClicked}/>
                     <div style={map}>
                     <MapContainer search={this.props.search}
                                   locations={this.props.locations}
+                                  centeredOn = {this.state.centeredOn}
                     />
                     </div>
                 </div>

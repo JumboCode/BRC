@@ -33,19 +33,34 @@ class MapContainer extends React.Component {
 			defaultCenter: {
 				lat: 42.348591,
 				lng: -71.073051
-			},
+            },
 			zoom: 13,
-			markers: []
-		}
-	}
+            markers: [],
+            map: null,
+            maps: null,
+            centeredOn: null
+        }
+        this.getNewCenter = this.getNewCenter.bind(this);
+    }
+    // new prop, centeredResource: "Region"
 
+    static defaultProps = {
+        center: [59.938043, 30.337157],
+        zoom: 9,
+        //greatPlaceCoords: {lat: 59.724465, lng: 30.080121}
+      };
+
+// this may only occur once the the api loads, which only occurs once, despite any changes to the props,etc
 	renderMarkers(map, maps) {
         let MapContainer = this;
+        this.state.maps = maps;
+        this.state.map = map;
         const Geocoder = new maps.Geocoder();   //converts address to lat/lng
 
 		//render marker at bisexual resource center (also the default center)
         Geocoder.geocode({"address": "Bisexual Resource Center"}, function(results, status) {
             if (status == "OK") {
+                //console.log("Testing geocode with BRC: " + results[0].geometry.location)
                 MapContainer.state.markers.push(
                     new maps.Marker({
                         position: results[0].geometry.location,
@@ -88,7 +103,7 @@ class MapContainer extends React.Component {
         Geocoder.geocode({"address": this.props.search}, function(results, status) {
             //if exists, recenter to searched location
             if (status == "OK") {
-                map.setCenter(results[0].geometry.location);
+                //map.setCenter(results[0].geometry.location);
 
                 MapContainer.state.markers.push(
                     new maps.Marker({
@@ -101,7 +116,7 @@ class MapContainer extends React.Component {
             else {
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
-                        map.setCenter({lat: position.coords.latitude, lng: position.coords.longitude});
+                        //map.setCenter({lat: position.coords.latitude, lng: position.coords.longitude});
 
                         MapContainer.state.markers.push(
                             new maps.Marker({
@@ -114,17 +129,45 @@ class MapContainer extends React.Component {
                     (error) => console.log(error)
                 );
             }
-        });        		
-	}
+        });    
+        
+        this.getNewCenter(map, maps);
+    }
+    
+    getNewCenter(map, maps){
+        //get lat/lng of search query
+        if (maps != null){
+        const Geocoder = new maps.Geocoder();   //converts address to lat/lng
+        //console.log("CenteredOn when trying to create the focus" + this.props.centeredOn);
+        if (this.props.centeredOn != null){
+                Geocoder.geocode({"address": this.props.centeredOn}, function(results, status) {
+                    //if exists, recenter to searched location
+                    if (status == "OK") {
+                        //console.log("Testing the getNewCenter results:" + results[0].geometry.location);
+                        map.setCenter(results[0].geometry.location);
+                        map.setZoom(6);
+                        return (results[0].geometry.location);
+                    }
+                })
+        }
+    }
+        return this.state.defaultCenter;
+    }
 
 	render() {
+        this.getNewCenter(this.state.map, this.state.maps);
+        //console.log("MapContainer centered on: " + this.props.centeredOn)
 		return (
 			<div style={{ height: `400px` }}>
 				<GoogleMap 
 					bootstrapURLKeys={{ key: publicRuntimeConfig.MAP_KEY }}
-					defaultCenter={this.state.defaultCenter}
+                    defaultCenter={this.state.defaultCenter}
+                    //center = {({map, maps}) => this.getNewCenter(map, maps)}
+                    //center = {this.getNewCenter}
+                    //center = {[0, 0]}
 					defaultZoom={this.state.zoom}
-					onGoogleApiLoaded={({map, maps}) => this.renderMarkers(map, maps)}
+                    onGoogleApiLoaded={({map, maps}) => this.renderMarkers(map, maps)}
+                    center = {this.getNewCenter()}
 					yesIWantToUseGoogleMapApiInternals
 				>
 				</GoogleMap>
