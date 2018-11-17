@@ -34,7 +34,7 @@ class MapContainer extends React.Component {
 				lat: 42.348591,
 				lng: -71.073051
             },
-			zoom: 13,
+			zoom: 11,
             markers: [],
             map: null,
             maps: null,
@@ -50,7 +50,7 @@ class MapContainer extends React.Component {
         //greatPlaceCoords: {lat: 59.724465, lng: 30.080121}
       };
 
-// this may only occur once the the api loads, which only occurs once, despite any changes to the props,etc
+    // this may only occur once the the api loads, which only occurs once, despite any changes to the props,etc
 	renderMarkers(map, maps) {
         let MapContainer = this;
         this.state.maps = maps;
@@ -74,37 +74,11 @@ class MapContainer extends React.Component {
             }
         });
 
-        //get lat/lng of all resources, add markers for each resource
-        let locationData = this.props.locations[0]["states"];
-        for(let region in locationData){
-            if (locationData.hasOwnProperty(region)) {
-                for (let address in locationData[region])
-                {
-                    //TODO: cache results in local storage to not hit query limit
-                    // Geocoder.geocode({"address": address}, function(results, status) {
-                    //     if (status == "OK") {
-                    //         MapContainer.state.markers.push(
-                    //             new maps.Marker({
-                    //                 position: results[0].geometry.location,
-                    //                 map: map,
-                    //                 title: address
-                    //             })
-                    //         );
-                    //     }
-                    //     else {
-                    //         console.log("Geocode was not successful for the following reason: " + status);
-                    //     }
-                    // });
-                }
-            }
-        }
-
         //get lat/lng of search query
         Geocoder.geocode({"address": this.props.search}, function(results, status) {
             //if exists, recenter to searched location
             if (status == "OK") {
-                //map.setCenter(results[0].geometry.location);
-
+                map.setCenter(results[0].geometry.location);
                 MapContainer.state.markers.push(
                     new maps.Marker({
                         position: results[0].geometry.location,
@@ -114,10 +88,10 @@ class MapContainer extends React.Component {
             }
             //if doesn't exist, recenter to user's location
             else {
+                alert("Address doesn't exist, using your current position.");
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
-                        //map.setCenter({lat: position.coords.latitude, lng: position.coords.longitude});
-
+                        map.setCenter({lat: position.coords.latitude, lng: position.coords.longitude});
                         MapContainer.state.markers.push(
                             new maps.Marker({
                                 position: {lat: position.coords.latitude, lng: position.coords.longitude},
@@ -162,9 +136,6 @@ class MapContainer extends React.Component {
 				<GoogleMap 
 					bootstrapURLKeys={{ key: publicRuntimeConfig.MAP_KEY }}
                     defaultCenter={this.state.defaultCenter}
-                    //center = {({map, maps}) => this.getNewCenter(map, maps)}
-                    //center = {this.getNewCenter}
-                    //center = {[0, 0]}
 					defaultZoom={this.state.zoom}
                     onGoogleApiLoaded={({map, maps}) => this.renderMarkers(map, maps)}
                     center = {this.getNewCenter()}
