@@ -12,6 +12,8 @@
 	"author": "",
 	"dependencies": {
 		"@material-ui/core": "^3.1.1",
+		"@zeit/next-css": "^1.0.1",
+		"babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
 		"create-react-class": "^15.6.3",
 		"dotenv": "^6.0.0",
 		"dotenv-webpack": "^1.5.7",
@@ -29,14 +31,16 @@
 		"react-native-calendars": "^1.21.0",
 		"react-places-autocomplete": "^7.2.0",
 		"react-responsive": "^5.0.0",
-		"webpack": "^4.20.2"
+		"styled-jsx": "^3.1.2"
 	},
 	"devDependencies": {
-		"webpack-cli": "^3.1.2"
-	},
-	"dotenv": true,
-	"devDependencies": {
+		"@babel/core": "^7.1.6",
+		"@babel/preset-env": "^7.1.6",
+		"babel-loader": "^8.0.4",
 		"css-loader": "^1.0.1",
-		"style-loader": "^0.23.1"
-	}
+		"style-loader": "^0.23.1",
+		"styled-jsx-css-loader": "^0.3.0",
+		"webpack": "^4.25.1"
+	},
+	"dotenv": true
 }
