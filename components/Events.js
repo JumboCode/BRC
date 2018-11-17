@@ -2,6 +2,27 @@ import React from "react";
 import { EventCard } from ".";
 import { Component } from "react";
 
+const eventsStyle = {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: 'space-around'
+  };
+
+const fakeData = [
+    {
+        event: "Arith",
+        host: "Norman Ramsey",
+        location: "Halligan 116",
+        description: "We will compress an image using NR's compressor and decompress the image using your decompressor!"
+    },
+    {
+        event: "Sleep over",
+        host: "0xmchow",
+        location: "Ming's couches",
+        description: "We will have a sleepover!"
+    }
+];
+
 class Events extends React.Component {
     constructor(props) {
       super(props);
@@ -14,29 +35,25 @@ class Events extends React.Component {
     };
 
     render() {
-        return (
-        <>
-            <EventCard
-                event = "Arith"
-                host = "aaa"
-                location = "dd"
-                description = "aa"
+        var eventInstances = new Array();
+        for (let i = 0; i < fakeData.length; i++) {
+            eventInstances.push(
+                <EventCard
+                event = {fakeData[i].event}
+                host = {fakeData[i].host}
+                location = {fakeData[i].location}
+                description = {fakeData[i].description}
                 />
-        </>
-        )}
-}
-const fakeData = [
-    {
-        event: "Arith",
-        host: "NR",
-        location: "Halligan 116",
-        description: "We will compress an image using NR's compressor and decompress the image using your decompressor"
-    },
-    {
-        event: "Let's Sleep!",
-        host: "Ming Chow",
-        location: "Halligan 102",
-        description: "We will have a sleepover"
+            );    
+        }
+
+        return(
+            <div style={eventsStyle}>
+                <h2>Events</h2>
+                {eventInstances}
+            </div>
+        );
     }
-];
+}
+
 export default Events;

@@ -1,5 +1,4 @@
 import React from "react";
-var createReactClass = require('create-react-class');
 
 const icons = {
     display: "flex",
