@@ -36,6 +36,7 @@ class MapContainer extends React.Component {
             },
 			zoom: 13,
             markers: [],
+            infowindows: [],
             map: null,
             maps: null,
             centeredOn: null
@@ -88,7 +89,8 @@ class MapContainer extends React.Component {
                     //             new maps.Marker({
                     //                 position: results[0].geometry.location,
                     //                 map: map,
-                    //                 title: address
+                    //                 title: address,
+                    //                 icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
                     //             })
                     //         );
                     //     }
@@ -123,7 +125,9 @@ class MapContainer extends React.Component {
                             new maps.Marker({
                                 position: {lat: position.coords.latitude, lng: position.coords.longitude},
                                 map: map,
-                                title: "You are here!"
+                                title: "You are here!",
+                                icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
+
                             })
                         );
                     },
