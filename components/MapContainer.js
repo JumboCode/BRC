@@ -73,9 +73,13 @@ class MapContainer extends React.Component {
                     content: "test"
                   });
 
-                currentMarker.addListener('click', function() {
+                currentMarker.addListener('mouseover', function() {
                     infowindow.open(map, currentMarker);
                   });
+                
+                currentMarker.addListener('mouseout', function(){
+                    infowindow.close()
+                })
 
                 MapContainer.state.markers.push(
                     currentMarker
