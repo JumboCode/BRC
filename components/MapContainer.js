@@ -62,13 +62,29 @@ class MapContainer extends React.Component {
         Geocoder.geocode({"address": "Bisexual Resource Center"}, function(results, status) {
             if (status == "OK") {
                 //console.log("Testing geocode with BRC: " + results[0].geometry.location)
+                var currentMarker = new maps.Marker({
+                    position: results[0].geometry.location,
+                    map: map,
+                    title: "Bisexual Resource Center",
+                    icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
+                })
+
+                var infowindow = new google.maps.InfoWindow({
+                    content: "test"
+                  });
+
+                currentMarker.addListener('click', function() {
+                    infowindow.open(map, currentMarker);
+                  });
+
                 MapContainer.state.markers.push(
-                    new maps.Marker({
+                    currentMarker
+                    /*new maps.Marker({
                         position: results[0].geometry.location,
                         map: map,
                         title: "Bisexual Resource Center",
                         icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
-                    })
+                    })*/
                 );
             }
             else {
