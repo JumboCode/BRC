@@ -65,7 +65,8 @@ class MapContainer extends React.Component {
                     new maps.Marker({
                         position: results[0].geometry.location,
                         map: map,
-                        title: "Bisexual Resource Center"
+                        title: "Bisexual Resource Center",
+                        icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
                     })
                 );
             }
