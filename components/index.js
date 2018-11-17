@@ -12,7 +12,6 @@ import Resources from "./Resources";
 import BurgerMenu from "./BurgerMenu";
 
 export {
-    BurgerMenu,
     InfoBar,
     PopUp,
     NavBar,
@@ -24,4 +23,5 @@ export {
     AccordionSection,
     LetterSelectBar,
     Resources,
+    BurgerMenu,
 };

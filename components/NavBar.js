@@ -1,5 +1,3 @@
-import { slide as Menu } from 'react-burger-menu';
-import Link from "next/link";
 import BurgerMenu from "./BurgerMenu";
 
 const styles = {
