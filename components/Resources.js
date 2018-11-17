@@ -1,5 +1,5 @@
 const divStyle = {
-    backgroundColor: '#F0F0F0',
+    backgroundColor: '#FFFFFF',
     paddingLeft: '7px',
     paddingBottom: '2px',
 }
