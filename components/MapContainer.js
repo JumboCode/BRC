@@ -74,6 +74,28 @@ class MapContainer extends React.Component {
             }
         });
 
+        //get lat/lng of all resources, add markers for each resource
+        let locationData = this.props.locations[0]["states"];
+        for(let region in locationData){
+            if (locationData.hasOwnProperty(region)) {
+                for (let resource in locationData[region])
+                {
+                    //use hard-coded lat/lng coords and add to map
+                    if (locationData[region][resource]["lat"] != undefined &&
+                        locationData[region][resource]["lng"] != undefined)
+                    {
+                        MapContainer.state.markers.push(
+                            new maps.Marker({
+                                position: {lat: locationData[region][resource]["lat"], lng: locationData[region][resource]["lng"]},
+                                map: map,
+                                title: resource
+                            })
+                        );
+                    }
+                }
+            }
+        }
+
         //get lat/lng of search query
         Geocoder.geocode({"address": this.props.search}, function(results, status) {
             //if exists, recenter to searched location
