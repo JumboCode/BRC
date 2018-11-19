@@ -47,8 +47,7 @@ class MapContainer extends React.Component {
     static defaultProps = {
         center: [59.938043, 30.337157],
         zoom: 9,
-        //greatPlaceCoords: {lat: 59.724465, lng: 30.080121}
-      };
+    };
 
     // this may only occur once the the api loads, which only occurs once, despite any changes to the props,etc
 	renderMarkers(map, maps) {
@@ -80,7 +79,6 @@ class MapContainer extends React.Component {
             if (locationData.hasOwnProperty(region)) {
                 for (let resource in locationData[region])
                 {
-                    //use hard-coded lat/lng coords and add to map
                     if (locationData[region][resource]["lat"] != undefined &&
                         locationData[region][resource]["lng"] != undefined)
                     {
@@ -130,29 +128,27 @@ class MapContainer extends React.Component {
         this.getNewCenter(map, maps);
     }
     
-    getNewCenter(map, maps){
+    getNewCenter(map, maps) {
         //get lat/lng of search query
-        if (maps != null){
-        const Geocoder = new maps.Geocoder();   //converts address to lat/lng
-        //console.log("CenteredOn when trying to create the focus" + this.props.centeredOn);
-        if (this.props.centeredOn != null){
+        if (maps != null) {
+            const Geocoder = new maps.Geocoder();
+
+            //if exists, recenter to searched location
+            if (this.props.centeredOn != null) {
                 Geocoder.geocode({"address": this.props.centeredOn}, function(results, status) {
-                    //if exists, recenter to searched location
                     if (status == "OK") {
-                        //console.log("Testing the getNewCenter results:" + results[0].geometry.location);
                         map.setCenter(results[0].geometry.location);
                         map.setZoom(6);
                         return (results[0].geometry.location);
                     }
                 })
+            }
         }
-    }
         return this.state.defaultCenter;
     }
 
 	render() {
         this.getNewCenter(this.state.map, this.state.maps);
-        //console.log("MapContainer centered on: " + this.props.centeredOn)
 		return (
 			<div style={{ height: `400px` }}>
 				<GoogleMap 
