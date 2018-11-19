@@ -4,7 +4,8 @@ import fetch from 'isomorphic-fetch'
 import getConfig from "next/config";
 const { publicRuntimeConfig } = getConfig()
 import Calendar from 'rc-calendar';
-import 'rc-calendar/assets/index.css';
+import styles from 'rc-calendar/assets/index.css';
+import Head from "next/head";
 
 const mainContainer = {
   display: 'flex',
@@ -28,12 +29,17 @@ class Event extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            centeredOn : null
         };
     }
 
     render () {
+        console.log(styles);
         return (
             <>
+                <Head>
+                    <style jsx>{styles}</style>
+                </Head>
                 <NavBar />
                 <div style={mainContainer}>
                     <Calendar />
