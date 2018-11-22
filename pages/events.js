@@ -1,4 +1,4 @@
-import { InfoBar, MapContainer, PopUp, NavBar, Events } from "../components";
+import { InfoBar, MapContainer, PopUp, NavBar, BurgerMenu, Events } from "../components";
 import { Component } from "react";
 import fetch from 'isomorphic-fetch'
 import getConfig from "next/config";
@@ -6,12 +6,10 @@ const { publicRuntimeConfig } = getConfig()
 
 const mainContainer = {
     display: "flex",
-    justifyContent: "center",
     flexFlow: 'row wrap',
     justifyContent: 'space-around',
     margin: "0 20px 0 20px",
     paddingTop: "50px",
-    paddingLeft: "50px",
   };
 
 const map = {
@@ -30,22 +28,22 @@ class EventsPage extends Component {
         return { locations, search };
     }
 
-    constructor(props) {
-        super(props);
+    onResourceClicked(region){
+        this.setState({centeredOn: region});
     }
 
     render () {
         return (
             <>
                 <NavBar/>
-
+                <BurgerMenu />
                 <div style={mainContainer}>
-                    <Events/>
+                    <Events onResourceClick = {this.onResourceClicked}/>
                     <div style={map}>
-                        <MapContainer 
+                    <MapContainer 
                             search={this.props.search}
                             locations={this.props.locations}
-                        />
+                    />
                     </div>
                 </div>
                 

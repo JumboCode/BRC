@@ -5,7 +5,10 @@ import { Component } from "react";
 const eventsStyle = {
     display: "flex",
     flexDirection: "column",
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
+    paddingRight: "10px",
+    height: '70%',
+    overflow: 'scroll',
   };
 
 const fakeData = [
@@ -14,6 +17,18 @@ const fakeData = [
         host: "Norman Ramsey",
         location: "Halligan 116",
         description: "We will compress an image using NR's compressor and decompress the image using your decompressor!"
+    },
+    {
+        event: "Sleep over",
+        host: "0xmchow",
+        location: "Ming's couches",
+        description: "We will have a sleepover!"
+    },
+    {
+        event: "Sleep over",
+        host: "0xmchow",
+        location: "Ming's couches",
+        description: "We will have a sleepover!"
     },
     {
         event: "Sleep over",
