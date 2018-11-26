@@ -6,8 +6,8 @@ const eventsStyle = {
     display: "flex",
     flexDirection: "column",
     justifyContent: 'space-around',
-    paddingRight: "10px",
-    height: '70%',
+    paddingTop: "500px",
+    height: '400px',
     overflow: 'scroll',
   };
 
@@ -19,19 +19,31 @@ const fakeData = [
         description: "We will compress an image using NR's compressor and decompress the image using your decompressor!"
     },
     {
-        event: "Sleep over",
+        event: "Event 1",
         host: "0xmchow",
         location: "Ming's couches",
         description: "We will have a sleepover!"
     },
     {
-        event: "Sleep over",
+        event: "Event 2",
         host: "0xmchow",
         location: "Ming's couches",
         description: "We will have a sleepover!"
     },
     {
-        event: "Sleep over",
+        event: "Event 3",
+        host: "0xmchow",
+        location: "Ming's couches",
+        description: "We will have a sleepover!"
+    },
+    {
+        event: "Event 4",
+        host: "0xmchow",
+        location: "Ming's couches",
+        description: "We will have a sleepover!"
+    },
+    {
+        event: "Event 5",
         host: "0xmchow",
         location: "Ming's couches",
         description: "We will have a sleepover!"
@@ -62,11 +74,12 @@ class Events extends React.Component {
             );    
         }
 
-        return(
-            <div style={eventsStyle}>
-                <h2>Events</h2>
-                {eventInstances}
-            </div>
+        return (
+            <>
+                <div style={eventsStyle}>
+                    {eventInstances}
+                </div>
+            </>
         );
     }
 }

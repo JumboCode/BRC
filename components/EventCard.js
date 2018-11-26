@@ -5,7 +5,7 @@ const style = {
     "margin": "12px",
     "border": "1px solid #eee",
     "boxShadow": "0 2px 2px #ccc",
-    "width": "200px",
+    "width": "450px",
     "padding": "20px"
   },
 }

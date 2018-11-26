@@ -28,17 +28,17 @@ class EventsPage extends Component {
         return { locations, search };
     }
 
-    onResourceClicked(region){
-        this.setState({centeredOn: region});
-    }
-
     render () {
         return (
             <>
                 <NavBar/>
                 <BurgerMenu />
                 <div style={mainContainer}>
-                    <Events onResourceClick = {this.onResourceClicked}/>
+                    <div>
+                        <h1>Events Calendar</h1>
+                        <Events/>
+                    </div>
+
                     <div style={map}>
                     <MapContainer 
                             search={this.props.search}
