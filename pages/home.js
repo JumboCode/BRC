@@ -2,6 +2,12 @@ import { InfoBar, MapContainer, PopUp, NavBar, BurgerMenu } from "../components"
 import { Component } from "react";
 import fetch from 'isomorphic-fetch'
 import getConfig from "next/config";
+
+var React = require('react');
+var ReactBootstrap = require('react-bootstrap');
+var Overlay = ReactBootstrap.Overlay;
+
+
 const { publicRuntimeConfig } = getConfig()
 
 const mainContainer = {
@@ -15,6 +21,46 @@ const mainContainer = {
 const map = {
   width: "500px",
   height: "600px",
+}
+
+const popupTest = {
+    heading: "Pop-Up Heading",
+    address: "123 Address Ave, AZ 01234",
+    description: "This is a test of the pop-up. Doesn't it look nice?"
+}
+
+// const popupStyle = {
+//     display: "block",
+//     position: "fixed",
+//     bottom: "8000px",
+//     width: "100%",
+//     height: "100%",
+//     top: "0",
+//     left: "0",
+//     right: "0",
+//     bottom: "0",
+//     backgroundColor: "#000000",
+//     zIndex: "2",
+//     cursor: "pointer"
+// }
+
+class PUbutton extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = { showPU: false };
+    }
+
+    onClick = () => {
+        this.setState({ showPU: true })
+    }
+
+    render(){
+        return(
+            <>
+                <p onClick={this.handleToggle}>Click to see Pop-Up</p>
+            </>
+        );
+    }
 }
 
 class Home extends Component {
@@ -31,13 +77,19 @@ class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            centeredOn : null
+            centeredOn : null,
+            show: true
         };
         this.onResourceClicked = this.onResourceClicked.bind(this);
+        this.handleToggle = this.handleToggle.bind(this)
     }
 
     onResourceClicked(region){
         this.setState({centeredOn: region});
+    }
+
+    handleToggle() {
+        this.setState({ show: !this.state.show });
     }
 
 
@@ -55,6 +107,16 @@ class Home extends Component {
                     />
                     </div>
                 </div>
+                <PUbutton onClick={this.onClick} />
+                <Overlay
+                    show={this.state.show}
+                    onHide={() => this.setState({ show: false })}
+                    placement="top"
+                    container={this}
+                    targer={() => ReactDOM.findDDOMNode(this.target)}
+                > 
+                    <PopUp info={popupTest} />
+                </Overlay>
             </>
         );
     }

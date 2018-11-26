@@ -1,10 +1,13 @@
 import React from "react";
 
 const foreGround = {
-	display: "flex",
+	display: "flex", // this may need to change in order to overlay
 	flexDirection: "row",
+	position: "fixed",
 	alignItems: "center",
-	justifyContent: "center"
+	justifyContent: "center",
+	// bottom: "800px",
+	zIndex: "2"
 }
 
 const centerdBox = {
