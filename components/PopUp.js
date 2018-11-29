@@ -1,12 +1,12 @@
 import React from "react";
 
 const foreGround = {
-	display: "flex", // this may need to change in order to overlay
-	flexDirection: "row",
+	display: "flex",
+	flexDirection: "column",
 	position: "fixed",
-	alignItems: "center",
-	justifyContent: "center",
-	// bottom: "800px",
+	// right: "300px",
+	// alignItems: "center",
+	justifyContent: "space-between", // center
 	zIndex: "2"
 }
 

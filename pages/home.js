@@ -44,25 +44,6 @@ const popupTest = {
 //     cursor: "pointer"
 // }
 
-class PUbutton extends React.Component{
-    constructor(props){
-        super(props);
-        this.state = { showPU: false };
-    }
-
-    onClick = () => {
-        this.setState({ showPU: true })
-    }
-
-    render(){
-        return(
-            <>
-                <p onClick={this.handleToggle}>Click to see Pop-Up</p>
-            </>
-        );
-    }
-}
-
 class Home extends Component {
     // get list of locations as prop
     static async getInitialProps(props) {
@@ -78,7 +59,7 @@ class Home extends Component {
         super(props);
         this.state = {
             centeredOn : null,
-            show: true
+            show: false
         };
         this.onResourceClicked = this.onResourceClicked.bind(this);
         this.handleToggle = this.handleToggle.bind(this)
@@ -107,11 +88,11 @@ class Home extends Component {
                     />
                     </div>
                 </div>
-                <PUbutton onClick={this.onClick} />
+                <p onClick={this.handleToggle} > Show Pop-up </p>
                 <Overlay
                     show={this.state.show}
                     onHide={() => this.setState({ show: false })}
-                    placement="top"
+                    placement="right"
                     container={this}
                     targer={() => ReactDOM.findDDOMNode(this.target)}
                 > 
