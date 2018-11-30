@@ -6,9 +6,6 @@ const eventsStyle = {
     display: "flex",
     flexDirection: "column",
     justifyContent: 'space-around',
-    paddingTop: "500px",
-    height: '400px',
-    overflow: 'scroll',
   };
 
 const fakeData = [
@@ -66,10 +63,11 @@ class Events extends React.Component {
         for (let i = 0; i < fakeData.length; i++) {
             eventInstances.push(
                 <EventCard
-                event = {fakeData[i].event}
-                host = {fakeData[i].host}
-                location = {fakeData[i].location}
-                description = {fakeData[i].description}
+                    key={i}
+                    event = {fakeData[i].event}
+                    host = {fakeData[i].host}
+                    location = {fakeData[i].location}
+                    description = {fakeData[i].description}
                 />
             );    
         }

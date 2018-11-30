@@ -9,10 +9,16 @@ const mainContainer = {
     flexFlow: 'row wrap',
     justifyContent: 'space-around',
     margin: "0 20px 0 20px",
-    paddingTop: "50px",
-  };
+};
+
+const info = {
+    marginTop: "30px",
+    height: '70vh',
+    overflow: 'scroll',
+};
 
 const map = {
+    marginTop: "20px",
     width: "500px",
     height: "600px",
 }
@@ -36,12 +42,12 @@ class EventsPage extends Component {
                 <div style={mainContainer}>
                     <div>
                         <h1>Events Calendar</h1>
-                        <Events/>
+                        <div style={info}><Events/></div>
                     </div>
 
                     <div style={map}>
                     <MapContainer 
-                            search={this.props.search}
+                            search={"Boston, MA"}
                             locations={this.props.locations}
                     />
                     </div>
