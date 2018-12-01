@@ -5,7 +5,8 @@ const divStyle = {
 }
 
 const linkStyle = {
-    color: '#757575', 
+    color: '#F293C1', 
+    fontweight: 'bold',
     fontSize: '14px',
     cursor: 'pointer',
     paddingLeft: '7px'
