@@ -1,6 +1,5 @@
 import { Accordion, AccordionSection, Resources, LetterSelectBar } from ".";
 import { Component } from "react";
-import Calendar from 'rc-calendar';
 import ReactDOM from 'react-dom';
 
 const info = {
