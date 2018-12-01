@@ -39,7 +39,7 @@ const Index = () => (
       </div>
       <SearchBar />
       <div style={linkStyle}>
-        <Link href="/home">
+        <Link href="/events">
           <a textDecoration="none">or click to view BRC events (current month)</a>
         </Link>
       </div>
