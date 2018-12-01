@@ -27,8 +27,8 @@ export default class Error extends React.Component {
         <div style={errorStyle}>
           <h2>
             {this.props.statusCode
-              ? `An error ${this.props.statusCode} occurred on server, the page you're trying to find may not exist`
-              : 'An error occurred on client'}
+              ? `An error ${this.props.statusCode} occurred on server, the page you're trying to find may not exist or is currently in work`
+              : `An error occurred on client, the page you're trying to find may not exist or is currently in work`}
           </h2>
           <p>Please check your url or <a style={linkStyle} href="../">return to homepage</a></p>
         </div>
