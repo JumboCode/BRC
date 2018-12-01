@@ -1,14 +1,16 @@
-import { InfoBar, MapContainer, PopUp, NavBar, BurgerMenu } from "../components";
+import { InfoBar, MapContainer, PopupContents, NavBar, BurgerMenu } from "../components";
 import { Component } from "react";
 import fetch from 'isomorphic-fetch'
 import getConfig from "next/config";
-
-var React = require('react');
-var ReactBootstrap = require('react-bootstrap');
-var Overlay = ReactBootstrap.Overlay;
+import Popup from 'reactjs-popup'
 
 
 const { publicRuntimeConfig } = getConfig()
+
+const fullpage = {
+    display: "block",
+    position: "relative"
+}
 
 const mainContainer = {
   display: 'flex',
@@ -23,26 +25,18 @@ const map = {
   height: "600px",
 }
 
+const exitX = {
+    position: "relative",
+    left: "750px",
+    top: "10px"
+}
+
+/*  Test parameters for the Pop-Up  */
 const popupTest = {
     heading: "Pop-Up Heading",
     address: "123 Address Ave, AZ 01234",
     description: "This is a test of the pop-up. Doesn't it look nice?"
 }
-
-// const popupStyle = {
-//     display: "block",
-//     position: "fixed",
-//     bottom: "8000px",
-//     width: "100%",
-//     height: "100%",
-//     top: "0",
-//     left: "0",
-//     right: "0",
-//     bottom: "0",
-//     backgroundColor: "#000000",
-//     zIndex: "2",
-//     cursor: "pointer"
-// }
 
 class Home extends Component {
     // get list of locations as prop
@@ -79,29 +73,39 @@ class Home extends Component {
             <>
                 <NavBar />
                 <BurgerMenu />
-                <div style={mainContainer}>
-                    <InfoBar locationData={this.props.locations[0]["states"]} onResourceClick = {this.onResourceClicked}/>
-                    <div style={map}>
-                    <MapContainer search={this.props.search}
-                                  locations={this.props.locations}
-                                  centeredOn = {this.state.centeredOn}
-                    />
+                <div style={fullpage}>
+                    <div style={mainContainer}>
+                        <InfoBar
+                            locationData={this.props.locations[0]["states"]}
+                            onResourceClick = {this.onResourceClicked}
+                        />
+                        <div style={map}>
+                        <MapContainer search={this.props.search}
+                                      locations={this.props.locations}
+                                      centeredOn = {this.state.centeredOn}
+                        />
+                        </div>
                     </div>
+                
+                    <Popup
+                        trigger={<button className="button"> Open Modal </button>}
+                        modal={true}
+                        closeOnDocumentClick={true}
+                        position={'top center'}
+                    >
+                        {close => (
+                            <div>
+                                <button style={exitX} onClick={() => {close()} }>
+                                    {"X"}
+                                </button>
+                                <PopupContents info={popupTest} />
+                            </div>
+                        )}
+                    </Popup>
                 </div>
-                <p onClick={this.handleToggle} > Show Pop-up </p>
-                <Overlay
-                    show={this.state.show}
-                    onHide={() => this.setState({ show: false })}
-                    placement="right"
-                    container={this}
-                    targer={() => ReactDOM.findDDOMNode(this.target)}
-                > 
-                    <PopUp info={popupTest} />
-                </Overlay>
             </>
         );
     }
 }
-
 
 export default Home;
