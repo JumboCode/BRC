@@ -24,6 +24,7 @@ import getConfig from "next/config";
 const { publicRuntimeConfig } = getConfig();
 import GoogleMap from "google-map-react";
 
+
 class MapContainer extends React.Component {
 
 	constructor(props) {
@@ -171,6 +172,14 @@ class MapContainer extends React.Component {
         return this.state.defaultCenter;
     }
 
+    _onChildMouseEnter = (key) => {
+        this.props.onHoverKeyChange(key);
+    }
+
+    _onChildMouseLeave = () => {
+        this.props.onHoverKeyChange(null);
+    }
+
 	render() {
         this.getNewCenter(this.state.map, this.state.maps);
 		return (
@@ -181,6 +190,8 @@ class MapContainer extends React.Component {
 					defaultZoom={this.state.zoom}
                     onGoogleApiLoaded={({map, maps}) => this.renderMarkers(map, maps)}
                     center = {this.getNewCenter()}
+                    onChildMouseEnter = {this._onChildMouseEnter}
+                    onChildMouseLeave = {this._onChildMouseLeave}
 					yesIWantToUseGoogleMapApiInternals
 				>
 				</GoogleMap>
