@@ -10,9 +10,9 @@ const errorStyle = {
 };
 
 const linkStyle = {
-  textDecoration: 'none',
+  textDecoration: 'underline',
   color: '#F293C1',
-  fontSize: '20px',
+  fontWeight: 'bold',
 }
 
 export default class Error extends React.Component {
@@ -27,10 +27,10 @@ export default class Error extends React.Component {
         <div style={errorStyle}>
           <h2>
             {this.props.statusCode
-              ? `An error ${this.props.statusCode} occurred on server`
+              ? `An error ${this.props.statusCode} occurred on server, the page you're trying to find may not exist`
               : 'An error occurred on client'}
           </h2>
-          <a style={linkStyle} href="../">Return to homepage</a>
+          <p>Please check your url or <a style={linkStyle} href="../">return to homepage</a></p>
         </div>
       </>
     )
