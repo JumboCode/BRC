@@ -59,7 +59,6 @@ class MapContainer extends React.Component {
 		//render marker at bisexual resource center (also the default center)
         Geocoder.geocode({"address": "Bisexual Resource Center"}, function(results, status) {
             if (status == "OK") {
-                //console.log("Testing geocode with BRC: " + results[0].geometry.location)
                 MapContainer.state.markers.push(
                     new maps.Marker({
                         position: results[0].geometry.location,
@@ -75,7 +74,7 @@ class MapContainer extends React.Component {
 
         //get lat/lng of all resources, add markers for each resource
         let locationData = this.props.locations[0]["states"];
-        for(let region in locationData){
+        for (let region in locationData) {
             if (locationData.hasOwnProperty(region)) {
                 for (let resource in locationData[region])
                 {
@@ -138,7 +137,7 @@ class MapContainer extends React.Component {
                 Geocoder.geocode({"address": this.props.centeredOn}, function(results, status) {
                     if (status == "OK") {
                         map.setCenter(results[0].geometry.location);
-                        map.setZoom(6);
+                        map.setZoom(11);
                         return (results[0].geometry.location);
                     }
                 })

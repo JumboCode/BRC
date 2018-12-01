@@ -15,7 +15,7 @@ const linkStyle = {
 // Accept some object info
 // Accept some string name
 class Resource extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
         }
@@ -28,7 +28,7 @@ class Resource extends React.Component {
         //region: React.PropTypes.string.isRequired,
     }
 
-    static defaultProps ={
+    static defaultProps = {
         info : {"Email": "mail", "Website": "web", "Location": "loc", "Meetup": "", "Region":"Unknown"},
         onResourceClicked: (region) => {console.log("Region: " + region)},
         url: "url",
@@ -37,26 +37,26 @@ class Resource extends React.Component {
         region: "United States of America"
     };
 
-    onClick(){
-        this.props.onResourceClicked(this.props.info.Region);
+    onClick() {
+        this.props.onResourceClicked(this.props.info.Location);
     }
 
-    render(){
+    render() {
         return(
             <div onClick = {this.onClick} style = {divStyle}>
-            {/*
-                <a href={this.props.info.Website} style = {linkStyle}>{this.props.name}</a>
-            */}
-                <p style = {linkStyle}>{this.props.name}</p>
+            {
+                // <a href={this.props.info.Website} style = {linkStyle}>{this.props.name}</a>
+            }
+            <p style = {linkStyle}>{this.props.name}</p>
             </div>
         )
-        }
+    }
 }
 
 // A collection of resources
 // Accept an object "resources" {ResourceName: {Email: s@gmail.com, Website: bi.com, ...}, ResourceName2:{}, ...}
 class Resources extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
         }
@@ -74,11 +74,11 @@ class Resources extends React.Component {
         onResourceClick: (data) => {console.log("Resources has region: " + data)}
     };
 
-    render(){
+    render() {
         var newResources = []
         // Key should be the name of some center
-        for (var resource in this.props.resources){
-            if(this.props.resources.hasOwnProperty(resource)){
+        for (var resource in this.props.resources) {
+            if (this.props.resources.hasOwnProperty(resource)) {
                 var resourceInfo = this.props.resources[resource]
                 resourceInfo.Region = this.props.region;
                 
@@ -86,7 +86,7 @@ class Resources extends React.Component {
             }
         }
 
-        return( 
+        return ( 
             <div>
                 {newResources}
             </div>
