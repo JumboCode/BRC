@@ -1,13 +1,20 @@
 import React from "react";
 
-const titleStyle = {
+const openTitle = {
     display: 'flex',
     alignItems: 'center',
-    border: '1px solid #F5F5F5',
-    backgroundColor: '#F5F5F5',
+    backgroundColor: '#CCCCCC',
     color: '#757575',
     marginBottom: '5.5px',
-    paddingLeft: '10px',
+    padding: '0 5px 0 10px',
+}
+const closedTitle = {
+    display: 'flex',
+    alignItems: 'center',
+    backgroundColor: '#F0F0F0',
+    color: '#757575',
+    marginBottom: '5.5px',
+    padding: '0 5px 0 10px',
 }
 
 const sectionStyle = {
@@ -26,14 +33,6 @@ const arrowHead2 = {
     padding: '0',
     paddingRight: "7px",
     transform: 'rotate(270deg)'
-}
-
-const openTitle = {
-    backgroundColor: 'CCCCCC'
-}
-
-const closedTitle = {
-    backgroundColor: 'F0F0F0'
 }
 
 // An individual section of the list, 
@@ -64,8 +63,8 @@ class AccordionSection extends React.Component {
         const isOpen = this.state.open;
         return(
         <div style = {sectionStyle}>
-            <div className = "title" onClick={this.closeOpen} style = {titleStyle}>
-                <div style= {isOpen ? openTitle : closedTitle}> <h3> {this.props.title}</h3> </div>
+            <div className = "title" onClick={this.closeOpen} style={isOpen ? openTitle: closedTitle}>
+                <div> <h3> {this.props.title}</h3> </div>
                 <div style= {isOpen ? arrowHead2 : arrowHead}>
                     <img alt="Arrow head" src="./static/images/listArrow.png" width="10" height="10"/>
                 </div> 
