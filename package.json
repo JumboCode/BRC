@@ -32,11 +32,8 @@
 		"webpack": "^4.20.2"
 	},
 	"devDependencies": {
-		"webpack-cli": "^3.1.2"
-	},
-	"dotenv": true,
-	"devDependencies": {
 		"css-loader": "^1.0.1",
 		"style-loader": "^0.23.1"
-	}
+	},
+	"dotenv": true
 }

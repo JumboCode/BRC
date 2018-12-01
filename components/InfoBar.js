@@ -52,8 +52,13 @@ class InfoBar extends Component {
   }
 
   onLetterClicked(letter){
-    this.setState( { filterLetter: letter })
+    if (letter === this.state.filterLetter) {
+      this.setState( { filterLetter: "all" })
+    } else {
+      this.setState( {filterLetter: letter})
+    }
   }
+
   onClearClicked(){
     this.setState( {filterLetter: "all" })
   }
