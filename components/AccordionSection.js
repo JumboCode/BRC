@@ -38,6 +38,10 @@ class AccordionSection extends React.Component {
         }
     }
 
+    onClick = () => {
+        this.props.onClearClicked()
+    }
+
     static propTypes = {
         title: PropTypes.string.isRequired
     }

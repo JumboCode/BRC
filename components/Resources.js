@@ -4,6 +4,10 @@ const divStyle = {
     paddingBottom: '2px',
 }
 
+const divStyle = {
+    backgroundColor: ''
+}
+
 const linkStyle = {
     color: '#757575', 
     fontSize: '14px',
@@ -34,11 +38,13 @@ class Resource extends React.Component {
         url: "url",
         name : "centerName",
         summary: "",
-        region: "United States of America"
+        region: "United States of America",
+        isSelected: false
     };
 
     onClick(){
         this.props.onResourceClicked(this.props.info.Region);
+        this.props.isSelected = true;
     }
 
     render(){
