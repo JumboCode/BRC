@@ -86,22 +86,17 @@ class Home extends Component {
                         />
                         </div>
                     </div>
-                
-                    <Popup
+                    {/* Pop up component for on label click */}
+                    {/* <Popup
                         trigger={<button className="button"> Open Modal </button>}
                         modal={true}
                         closeOnDocumentClick={true}
                         position={'top center'}
                     >
-                        {close => (
-                            <div>
-                                <button style={exitX} onClick={() => {close()} }>
-                                    {"X"}
-                                </button>
-                                <PopupContents info={popupTest} />
-                            </div>
+                        { close => (
+                            <PopupContents info={popupTest} />
                         )}
-                    </Popup>
+                    </Popup> */}
                 </div>
             </>
         );
