@@ -31,13 +31,14 @@ class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            centeredOn : null
+            centeredOn : null   //position to recenter to
         };
         this.onResourceClicked = this.onResourceClicked.bind(this);
     }
 
-    onResourceClicked(region){
-        this.setState({centeredOn: region});
+    //position is of the format {lat: lat, lng: lng}
+    onResourceClicked(position) {
+        this.setState({centeredOn: position});
     }
 
 

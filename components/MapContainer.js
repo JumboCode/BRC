@@ -38,7 +38,7 @@ class MapContainer extends React.Component {
             markers: [],
             map: null,
             maps: null,
-            centeredOn: null
+            centeredOn: null    //position to recenter to
         }
         this.getNewCenter = this.getNewCenter.bind(this);
     }
@@ -59,7 +59,6 @@ class MapContainer extends React.Component {
 		//render marker at bisexual resource center (also the default center)
         Geocoder.geocode({"address": "Bisexual Resource Center"}, function(results, status) {
             if (status == "OK") {
-                //console.log("Testing geocode with BRC: " + results[0].geometry.location)
                 MapContainer.state.markers.push(
                     new maps.Marker({
                         position: results[0].geometry.location,
@@ -75,7 +74,7 @@ class MapContainer extends React.Component {
 
         //get lat/lng of all resources, add markers for each resource
         let locationData = this.props.locations[0]["states"];
-        for(let region in locationData){
+        for (let region in locationData) {
             if (locationData.hasOwnProperty(region)) {
                 for (let resource in locationData[region])
                 {
@@ -128,20 +127,12 @@ class MapContainer extends React.Component {
         this.getNewCenter(map, maps);
     }
     
+    //create new google maps lat/lng object with passed in position
     getNewCenter(map, maps) {
-        //get lat/lng of search query
-        if (maps != null) {
-            const Geocoder = new maps.Geocoder();
-
-            //if exists, recenter to searched location
-            if (this.props.centeredOn != null) {
-                Geocoder.geocode({"address": this.props.centeredOn}, function(results, status) {
-                    if (status == "OK") {
-                        map.setCenter(results[0].geometry.location);
-                        map.setZoom(6);
-                        return (results[0].geometry.location);
-                    }
-                })
+        if (this.props.centeredOn != null) {
+            if (maps != null) {
+                map.setCenter(new google.maps.LatLng(this.props.centeredOn.lat, this.props.centeredOn.lng));
+                return this.props.position;
             }
         }
         return this.state.defaultCenter;

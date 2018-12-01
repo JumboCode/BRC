@@ -16,7 +16,7 @@ const linkStyle = {
 // Accept some object info
 // Accept some string name
 class Resource extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
         }
@@ -29,8 +29,8 @@ class Resource extends React.Component {
         //region: React.PropTypes.string.isRequired,
     }
 
-    static defaultProps ={
-        info : {"Email": "mail", "Website": "web", "Location": "loc", "Meetup": "", "Region":"Unknown"},
+    static defaultProps = {
+        info : {"Email": "mail", "Website": "web", "Location": "loc", "Meetup": "", "Region":"Unknown", "lat": -1, "lng": -1},
         onResourceClicked: (region) => {console.log("Region: " + region)},
         url: "url",
         name : "centerName",
@@ -38,26 +38,26 @@ class Resource extends React.Component {
         region: "United States of America"
     };
 
-    onClick(){
-        this.props.onResourceClicked(this.props.info.Region);
+    onClick() {
+        this.props.onResourceClicked({lat: this.props.info.lat, lng: this.props.info.lng});
     }
 
-    render(){
+    render() {
         return(
             <div onClick = {this.onClick} style = {divStyle}>
-            {/*
-                <a href={this.props.info.Website} style = {linkStyle}>{this.props.name}</a>
-            */}
-                <p style = {linkStyle}>{this.props.name}</p>
+            {
+                // <a href={this.props.info.Website} style = {linkStyle}>{this.props.name}</a>
+            }
+            <p style = {linkStyle}>{this.props.name}</p>
             </div>
         )
-        }
+    }
 }
 
 // A collection of resources
 // Accept an object "resources" {ResourceName: {Email: s@gmail.com, Website: bi.com, ...}, ResourceName2:{}, ...}
 class Resources extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
         }
@@ -70,24 +70,26 @@ class Resources extends React.Component {
     }
 
     static defaultProps = {
-        resources: {"ResourceName": {"Email": "mail", "Website": "web", "Location": "loc", "Meetup": ""}},
+        resources: {"ResourceName": {"Email": "mail", "Website": "web", "Location": "loc", "Meetup": "", "lat": -1, "lng": -1}},
         region: "United States of America", // Should normally be a state. 
         onResourceClick: (data) => {console.log("Resources has region: " + data)}
     };
 
-    render(){
+    render() {
         var newResources = []
         // Key should be the name of some center
-        for (var resource in this.props.resources){
-            if(this.props.resources.hasOwnProperty(resource)){
+        for (var resource in this.props.resources) {
+            if (this.props.resources.hasOwnProperty(resource)) {
                 var resourceInfo = this.props.resources[resource]
                 resourceInfo.Region = this.props.region;
                 
-                newResources.push(<Resource name = {resource} info = {resourceInfo} onResourceClicked = {this.props.onResourceClick}/>)
+                newResources.push(<Resource name = {resource}
+                                            info = {resourceInfo}
+                                            onResourceClicked = {this.props.onResourceClick}/>)
             }
         }
 
-        return( 
+        return ( 
             <div>
                 {newResources}
             </div>
