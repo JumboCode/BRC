@@ -18,7 +18,7 @@ class Accordion extends React.Component{
 
     render() {
         return (
-        <div className = "accordian">
+        <div className = "accordion">
             {this.renderChildren()}
         </div>
         )
