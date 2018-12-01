@@ -59,7 +59,7 @@ const burger = {
         <Link href={{pathname: "/home", query: { search: "", data: "locations" }}}><a style={styles.link}>List of resources</a></Link>
         </div>
         <div id="events" className="menu-item">
-        <Link href={{pathname: "/home", query: { search: "", data: "events" }}}><a style={styles.link}>BRC Events</a></Link>
+        <Link href={{pathname: "/events", query: { search: "", data: "events" }}}><a style={styles.link}>BRC Events</a></Link>
         </div>
         <a id="web" className="menu-item" target="_blank" href="http://biresource.org/">Visit BRC Web</a>
         <a id="subscription" className="menu-item" target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLScZDTmbGh8_f-FgbwbFJfje7Ktyp_r19d1UwS3yHJMBVn42FQ/viewform">Subscription</a>

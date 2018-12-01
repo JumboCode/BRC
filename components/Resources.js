@@ -1,11 +1,12 @@
 const divStyle = {
-    backgroundColor: '#F0F0F0',
+    backgroundColor: '#FFFFFF',
     paddingLeft: '7px',
     paddingBottom: '2px',
 }
 
 const linkStyle = {
-    color: '#757575', 
+    color: '#F293C1', 
+    fontweight: 'bold',
     fontSize: '14px',
     cursor: 'pointer',
     paddingLeft: '7px'
