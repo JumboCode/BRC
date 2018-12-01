@@ -57,7 +57,11 @@ class InfoBar extends Component {
       this.setState( {filterLetter: letter})
     }
   }
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> release/dev
   onClearClicked(){
     this.setState( {filterLetter: "all" })
   }

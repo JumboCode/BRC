@@ -24,9 +24,7 @@
 		"prop-types": "^15.6.2",
 		"rc-calendar": "^9.7.11",
 		"react": "^16.5.1",
-		"react-burger-menu": "^2.5.3",
-		"react-calendar": "^2.17.5",
-		"react-day-picker": "^7.2.4",
+		"react-burger-menu": "^2.5.4",
 		"react-dom": "^16.5.1",
 		"react-native-calendars": "^1.21.0",
 		"react-places-autocomplete": "^7.2.0",
@@ -36,11 +34,7 @@
 	"devDependencies": {
 		"@babel/core": "^7.1.6",
 		"@babel/preset-env": "^7.1.6",
-		"babel-loader": "^8.0.4",
-		"css-loader": "^1.0.1",
-		"style-loader": "^0.23.1",
-		"styled-jsx-css-loader": "^0.3.0",
-		"webpack": "^4.25.1"
+		"webpack-cli": "^3.1.2"
 	},
 	"dotenv": true
 }

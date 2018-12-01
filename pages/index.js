@@ -1,5 +1,4 @@
-import { SearchBar, NavBar, SocialMedia } from "../components";
-import Head from "next/head";
+import { SearchBar, BurgerMenu, SocialMedia } from "../components";
 import Link from "next/link";
 
 const titleStyle = {
@@ -33,14 +32,14 @@ const linkStyle = {
 
 const Index = () => (
   <>
-    <NavBar />
+    <BurgerMenu />
     <div style={bodyStyle}>
       <div style={logo}>
         <img alt="BRC logo" src="./static/images/BRC-logo.jpg" width="300" height="110"/>
       </div>
       <SearchBar />
       <div style={linkStyle}>
-        <Link href="/home">
+        <Link href="/events">
           <a textDecoration="none">or click to view BRC events (current month)</a>
         </Link>
       </div>
