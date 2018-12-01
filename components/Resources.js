@@ -29,7 +29,7 @@ class Resource extends React.Component {
     }
 
     static defaultProps = {
-        info : {"Email": "mail", "Website": "web", "Location": "loc", "Meetup": "", "Region":"Unknown"},
+        info : {"Email": "mail", "Website": "web", "Location": "loc", "Meetup": "", "Region":"Unknown", "lat": -1, "lng": -1},
         onResourceClicked: (region) => {console.log("Region: " + region)},
         url: "url",
         name : "centerName",
@@ -38,7 +38,7 @@ class Resource extends React.Component {
     };
 
     onClick() {
-        this.props.onResourceClicked(this.props.info.Location);
+        this.props.onResourceClicked({lat: this.props.info.lat, lng: this.props.info.lng});
     }
 
     render() {
@@ -69,7 +69,7 @@ class Resources extends React.Component {
     }
 
     static defaultProps = {
-        resources: {"ResourceName": {"Email": "mail", "Website": "web", "Location": "loc", "Meetup": ""}},
+        resources: {"ResourceName": {"Email": "mail", "Website": "web", "Location": "loc", "Meetup": "", "lat": -1, "lng": -1}},
         region: "United States of America", // Should normally be a state. 
         onResourceClick: (data) => {console.log("Resources has region: " + data)}
     };
@@ -82,7 +82,9 @@ class Resources extends React.Component {
                 var resourceInfo = this.props.resources[resource]
                 resourceInfo.Region = this.props.region;
                 
-                newResources.push(<Resource name = {resource} info = {resourceInfo} onResourceClicked = {this.props.onResourceClick}/>)
+                newResources.push(<Resource name = {resource}
+                                            info = {resourceInfo}
+                                            onResourceClicked = {this.props.onResourceClick}/>)
             }
         }
 
