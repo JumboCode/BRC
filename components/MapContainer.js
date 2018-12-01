@@ -123,8 +123,6 @@ class MapContainer extends React.Component {
                 );
             }
         });    
-        
-        this.getNewCenter(map, maps);
     }
     
     //create new google maps lat/lng object with passed in position
