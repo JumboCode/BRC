@@ -1,30 +1,39 @@
 import React from "react";
 
-const titleStyle = {
+const openTitle = {
     display: 'flex',
     alignItems: 'center',
-    border: '1px solid #CCCCCC',
     backgroundColor: '#CCCCCC',
     color: '#757575',
     marginBottom: '5.5px',
-    paddingLeft: '10px',
+    padding: '0 15px 0 10px',
+}
+const closedTitle = {
+    display: 'flex',
+    alignItems: 'center',
+    backgroundColor: '#F0F0F0',
+    color: '#757575',
+    marginBottom: '5.5px',
+    padding: '0 15px 0 10px',
 }
 
 const sectionStyle = {
-    backgroundColor: '#F0F0F0',
+    backgroundColor: '#FFFFFF',
     color: '#757575',
 }
 
-const arrowHead = {
+const closedArrow = {
     marginLeft: 'auto',
     padding: '0',
-    paddingRight: "7px",
 }
 
-const arrowHead2 = {
+const openArrow = {
+    backgroundColor: 'white',
+    borderRadius: '50%',
     marginLeft: 'auto',
-    padding: '0',
-    paddingRight: "7px",
+    //padding: '0',
+    paddingLeft: '4px',
+    paddingRight: '4px',
     transform: 'rotate(270deg)'
 }
 
@@ -56,9 +65,9 @@ class AccordionSection extends React.Component {
         const isOpen = this.state.open;
         return(
         <div style = {sectionStyle}>
-            <div className = "title" onClick={this.closeOpen} style = {titleStyle}>
+            <div className = "title" onClick={this.closeOpen} style={isOpen ? openTitle: closedTitle}>
                 <div> <h3> {this.props.title}</h3> </div>
-                <div style= {isOpen ? arrowHead2 : arrowHead}>
+                <div style= {isOpen ? openArrow : closedArrow}>
                     <img alt="Arrow head" src="./static/images/listArrow.png" width="10" height="10"/>
                 </div> 
             </div>

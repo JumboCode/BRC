@@ -59,8 +59,9 @@ class Home extends Component {
         this.handleToggle = this.handleToggle.bind(this)
     }
 
-    onResourceClicked(region){
-        this.setState({centeredOn: region});
+    //position is of the format {lat: lat, lng: lng}
+    onResourceClicked(position) {
+        this.setState({centeredOn: position});
     }
 
     handleToggle() {
