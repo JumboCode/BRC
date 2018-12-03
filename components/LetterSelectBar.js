@@ -10,7 +10,7 @@ class Letter extends React.Component{
     onClick = () => {
         this.props.onLetterClicked(this.props.letter)
     }
-    
+
     render(){
         return(
             <p style={this.props.styleLetter} onClick = {this.onClick}>{this.props.letter}</p>
