@@ -56,6 +56,7 @@ Clear.defaultProps = {
 
 const LetterSelectBarStyle = {
     display: 'flex',
+    flexDirection: 'row wrap',
     justifyContent: 'center',
     fontSize: '20px',
     fontFamily: 'sans-serif'  // find out if a different font is needed
@@ -102,8 +103,6 @@ class LetterSelectBar extends Component{
             }
             sections.push(<Letter key ={i} letter={character} styleLetter = {letterStyle} onLetterClicked = {this.onLetterClicked}></Letter>)
         }
-
-        sections.push(<Clear key={-1} onClearClicked = {this.onClearClicked}></Clear>)
 
         return(
             <div style={LetterSelectBarStyle} className = "LetterSelectBar">
