@@ -1,5 +1,6 @@
 import { Accordion, AccordionSection, Resources, LetterSelectBar } from ".";
 import { Component } from "react";
+import ReactDOM from 'react-dom';
 
 const info = {
   display: 'flex',
@@ -15,6 +16,13 @@ const title = {
   paddingBottom: "5%",
 };
 
+const calendar = {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  textAlign: 'center',
+};
+
 const scroll = {
   paddingRight: "10px",
   height: '70%',
@@ -22,6 +30,12 @@ const scroll = {
 }
 
 class InfoBar extends Component {
+  state = {
+    date: new Date(),
+  }
+
+  onChange = date => this.setState({Date})
+
   constructor(props) {
     super(props);
     this.state = {
@@ -37,9 +51,13 @@ class InfoBar extends Component {
   }
 
   onLetterClicked(letter){
-    this.setState( { filterLetter: letter })
+    if (letter === this.state.filterLetter) {
+      this.setState( { filterLetter: "all" })
+    } else {
+      this.setState( {filterLetter: letter})
+    }
   }
-  
+
   onClearClicked(){
     this.setState( {filterLetter: "all" })
   }
@@ -72,7 +90,7 @@ class InfoBar extends Component {
       <div style = {info}>
         <div style = {title}>  Bi Spot: Find a group near you.</div>
         <LetterSelectBar letters={stateInitials} selected={this.state.filterLetter} onLetterClicked = {this.onLetterClicked} onClearClicked = {this.onClearClicked}/>
-        <div style={scroll}> 
+        <div style={scroll}>
           <Accordion>
             {sections}
           </Accordion>
@@ -81,6 +99,5 @@ class InfoBar extends Component {
     )
   }
 }
-
 
 export default InfoBar;
