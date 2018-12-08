@@ -13,7 +13,8 @@ const styles = {
   },
   homeButton: {
     transform: `rotate(${30}deg)`,
-    padding: "5px"
+    padding: "5px",
+    cursor: "pointer",
   }
 }
 
@@ -30,7 +31,7 @@ const NavBar = () => (
     <Link href="/">
       <img alt="Home" src="./static/images/favicon.ico" width="50" height="50" style={styles.homeButton} />
     </Link>
-    <SearchBar style={searchStyle} />
+    {/* <SearchBar style={searchStyle} /> */}
     <BurgerMenu />
     <div style={styles.navBarContainer} />
     <div style={{ marginBottom: "40px" }} />
