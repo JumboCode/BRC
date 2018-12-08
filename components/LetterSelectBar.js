@@ -43,9 +43,13 @@ const LetterStyle = {
 }
 
 const ActiveLetter = {
-    paddingRight: '10px',
-    color: '#F293C1',
-    textDecoration: 'underline',
+    paddingRight: '4px',
+    paddingLeft: '4px',
+    paddingTop: '1px',
+    paddingBottom: '1px',
+    marginRight: '10px',
+    color: '#FFFFFF',
+    backgroundColor: '#F293C1',
     cursor: "pointer",
 }
 
