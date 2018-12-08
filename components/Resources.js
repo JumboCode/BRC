@@ -1,7 +1,16 @@
 const divStyle = {
+    paddingTop: '0.3px',
     backgroundColor: '#FFFFFF',
     paddingLeft: '7px',
-    paddingBottom: '2px',
+    paddingBottom: '0.3px',
+}
+
+const selectDivStyle = {
+    paddingTop: '0.3px',
+    backgroundColor: '#F293C1',
+    boxSizing: "border-box",
+    paddingLeft: '7px',
+    paddingBottom: '0.3px',
 }
 
 const linkStyle = {
@@ -12,6 +21,15 @@ const linkStyle = {
     paddingLeft: '7px'
 }
 
+const selectLinkStyle = {
+    color: '#FFFFFF',
+    fontweight: 'bold',
+    fontSize: '14px',
+    cursor: 'pointer',
+    paddingLeft: '7px'
+
+}
+
 // An individual resource along with associated data such as website,etc
 // Accept some object info
 // Accept some string name
@@ -19,6 +37,7 @@ class Resource extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            isSelected:false,
         }
         this.onClick = this.onClick.bind(this);
     };
@@ -35,27 +54,37 @@ class Resource extends React.Component {
         url: "url",
         name : "centerName",
         summary: "",
-        region: "United States of America"
+        region: "United States of America",
+        isSelected: false,
+
     };
 
-    onClick() {
+    onClick(){
+        this.props.onResourceClicked(this.props.info.Region);
         this.props.onResourceClicked({lat: this.props.info.lat, lng: this.props.info.lng});
+        this.state.isSelected = true;    
     }
 
-    render() {
+    render(){
+        let blockDivStyle = divStyle;
+        let blockLinkStyle = linkStyle;
+        if (this.state.isSelected)
+        {
+            blockDivStyle = selectDivStyle;
+            blockLinkStyle = selectLinkStyle;
+        }
+        this.state.isSelected = this.props.isSelected;
         return(
-            <div onClick = {this.onClick} style = {divStyle}>
-            {
-                // <a href={this.props.info.Website} style = {linkStyle}>{this.props.name}</a>
-            }
-            <p style = {linkStyle}>{this.props.name}</p>
+            <div onClick = {this.onClick} style = {blockDivStyle}>
+                <p style = {blockLinkStyle}>{this.props.name}</p>    
             </div>
         )
     }
 }
 
-// A collection of resources
-// Accept an object "resources" {ResourceName: {Email: s@gmail.com, Website: bi.com, ...}, ResourceName2:{}, ...}
+
+ // A collection of resources
+ // Accept an object "resources" {ResourceName: {Email: s@gmail.com, Website: bi.com, ...}, ResourceName2:{}, ...}
 class Resources extends React.Component {
     constructor(props) {
         super(props);
@@ -78,6 +107,7 @@ class Resources extends React.Component {
     render() {
         var newResources = []
         // Key should be the name of some center
+
         for (var resource in this.props.resources) {
             if (this.props.resources.hasOwnProperty(resource)) {
                 var resourceInfo = this.props.resources[resource]

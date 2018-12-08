@@ -42,7 +42,6 @@ class InfoBar extends Component {
       filterLetter: "all"
     };
     this.onLetterClicked = this.onLetterClicked.bind(this)
-    this.onClearClicked = this.onClearClicked.bind(this)
   }
 
 
@@ -58,9 +57,6 @@ class InfoBar extends Component {
     }
   }
 
-  onClearClicked(){
-    this.setState( {filterLetter: "all" })
-  }
 
   getLetterFilters = () => {
     let noDuplicates = {}
@@ -80,7 +76,7 @@ class InfoBar extends Component {
         if (locationData.hasOwnProperty(state)) {
           var stateResources = locationData[state];
           var resourceRegion = state;
-          sections.push(<AccordionSection title = {state} key = {i}> <Resources region = {resourceRegion} resources={stateResources} onResourceClick = {this.props.onResourceClick}/> </AccordionSection>)
+          sections.push(<AccordionSection title ={state} key = {i}> <Resources region = {resourceRegion} resources={stateResources} onResourceClick = {this.props.onResourceClick}/> </AccordionSection>)
             i++
         }
       }
@@ -89,7 +85,7 @@ class InfoBar extends Component {
     return(
       <div style = {info}>
         <div style = {title}>  Bi Spot: Find a group near you.</div>
-        <LetterSelectBar letters={stateInitials} selected={this.state.filterLetter} onLetterClicked = {this.onLetterClicked} onClearClicked = {this.onClearClicked}/>
+        <LetterSelectBar letters={stateInitials} selected={this.state.filterLetter} onLetterClicked = {this.onLetterClicked} />
         <div style={scroll}>
           <Accordion>
             {sections}
