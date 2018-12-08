@@ -21,7 +21,8 @@ const styles = {
 const searchStyle = {
   display: "flex",
   position: "fixed",
-  // top: 20,
+  paddingTop: 10,
+  top: 20,
   left: 90,
   flexDirection: "row",
 }
@@ -31,7 +32,7 @@ const NavBar = () => (
     <Link href="/">
       <img alt="Home" src="./static/images/favicon.ico" width="50" height="50" style={styles.homeButton} />
     </Link>
-    {/* <SearchBar style={searchStyle} /> */}
+    <SearchBar style={searchStyle} />
     <BurgerMenu />
     <div style={styles.navBarContainer} />
     <div style={{ marginBottom: "40px" }} />
