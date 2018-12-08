@@ -1,24 +1,18 @@
 import React from "react";
 
-const openTitle = {
+const titleStyle = {
     display: 'flex',
     alignItems: 'center',
+    border: '1px solid #CCCCCC',
     backgroundColor: '#CCCCCC',
     color: '#757575',
     marginBottom: '5.5px',
-    padding: '0 5px 0 10px',
-}
-const closedTitle = {
-    display: 'flex',
-    alignItems: 'center',
-    backgroundColor: '#F0F0F0',
-    color: '#757575',
-    marginBottom: '5.5px',
-    padding: '0 5px 0 10px',
+    marginTop: '5.5px', //5.5
+    paddingLeft: '10px',
 }
 
 const sectionStyle = {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#FFFFFF', //#F0F0F0
     color: '#757575',
 }
 
@@ -34,6 +28,7 @@ const arrowHead2 = {
     paddingRight: "7px",
     transform: 'rotate(270deg)'
 }
+
 
 // An individual section of the list, 
 // its contents are collapsible
@@ -67,7 +62,7 @@ class AccordionSection extends React.Component {
         const isOpen = this.state.open;
         return(
         <div style = {sectionStyle}>
-            <div className = "title" onClick={this.closeOpen} style={isOpen ? openTitle: closedTitle}>
+            <div className = "title" onClick={this.closeOpen} style = {titleStyle}>
                 <div> <h3> {this.props.title}</h3> </div>
                 <div style= {isOpen ? arrowHead2 : arrowHead}>
                     <img alt="Arrow head" src="./static/images/listArrow.png" width="10" height="10"/>
