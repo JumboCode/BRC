@@ -10,17 +10,17 @@ const titleStyle = {
 };
 
 const bodyStyle = {
-  display: "flex", 
-  flexDirection: "column", 
+  display: "flex",
+  flexDirection: "column",
   alignItems: "center",
   justifyContent: "center",
   minHeight: "87vh",
 }
 
 const logo = {
-	justifyContent: "center",
-	display: "flex",
-	paddingBottom: "50px",
+  justifyContent: "center",
+  display: "flex",
+  paddingBottom: "50px",
 };
 
 const linkStyle = {
@@ -30,14 +30,20 @@ const linkStyle = {
   padding: '10px'
 };
 
+const searchStyle = {
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "center",
+}
+
 const Index = () => (
   <>
     <BurgerMenu />
     <div style={bodyStyle}>
       <div style={logo}>
-        <img alt="BRC logo" src="./static/images/BRC-logo.jpg" width="300" height="110"/>
+        <img alt="BRC logo" src="./static/images/BRC-logo.jpg" width="300" height="110" />
       </div>
-      <SearchBar />
+      <SearchBar style={searchStyle} />
       <div style={linkStyle}>
         <Link href="/events">
           <a textDecoration="none">or click to view BRC events (current month)</a>
