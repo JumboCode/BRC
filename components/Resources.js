@@ -68,7 +68,7 @@ class Resource extends React.Component {
     render(){
         let blockDivStyle = divStyle;
         let blockLinkStyle = linkStyle;
-        if(this.state.isSelected)
+        if (this.state.isSelected)
         {
             blockDivStyle = selectDivStyle;
             blockLinkStyle = selectLinkStyle;
@@ -76,14 +76,15 @@ class Resource extends React.Component {
         this.state.isSelected = this.props.isSelected;
         return(
             <div onClick = {this.onClick} style = {blockDivStyle}>
-            {/*
-                <a href={this.props.info.Website} style = {linkStyle}>{this.props.name}</a>
-            */}
                 <p style = {blockLinkStyle}>{this.props.name}</p>    
+            </div>
+        )
+    }
 }
 
-// A collection of resources
-// Accept an object "resources" {ResourceName: {Email: s@gmail.com, Website: bi.com, ...}, ResourceName2:{}, ...}
+
+ // A collection of resources
+ // Accept an object "resources" {ResourceName: {Email: s@gmail.com, Website: bi.com, ...}, ResourceName2:{}, ...}
 class Resources extends React.Component {
     constructor(props) {
         super(props);
