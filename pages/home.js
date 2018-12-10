@@ -1,8 +1,16 @@
-import { InfoBar, MapContainer, PopUp, NavBar, BurgerMenu } from "../components";
+import { InfoBar, MapContainer, PopupContents, NavBar, BurgerMenu } from "../components";
 import { Component } from "react";
 import fetch from 'isomorphic-fetch'
 import getConfig from "next/config";
+import Popup from 'reactjs-popup'
+
+
 const { publicRuntimeConfig } = getConfig()
+
+const fullpage = {
+    display: "block",
+    position: "relative"
+}
 
 const mainContainer = {
   display: 'flex',
@@ -15,6 +23,19 @@ const mainContainer = {
 const map = {
   width: "500px",
   height: "600px",
+}
+
+const exitX = {
+    position: "relative",
+    left: "750px",
+    top: "10px"
+}
+
+/*  Test parameters for the Pop-Up  */
+const popupTest = {
+    heading: "Pop-Up Heading",
+    address: "123 Address Ave, AZ 01234",
+    description: "This is a test of the pop-up. Doesn't it look nice?"
 }
 
 class Home extends Component {
@@ -31,16 +52,24 @@ class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            centeredOn : null
+            centeredOn : null,
+            show: false
         };
         this.onResourceClicked = this.onResourceClicked.bind(this);
         this.centerState = this.centerState.bind(this);
+        this.handleToggle = this.handleToggle.bind(this)
     }
 
-    onResourceClicked(region){
-        this.setState({centeredOn: region});
+    //position is of the format {lat: lat, lng: lng}
+    onResourceClicked(position) {
+        this.setState({centeredOn: position});
     }
 
+    handleToggle() {
+        this.setState({ show: !this.state.show });
+    }
+
+    //region is of the format {lat: null, lng: null, region: string}
     centerState = (region) => {
         this.setState({centeredOn: region});
     }
@@ -59,11 +88,21 @@ class Home extends Component {
                                   centeredOn = {this.state.centeredOn}
                     />
                     </div>
+                    {/* Pop up component for on label click */}
+                    {/* <Popup
+                        trigger={<button className="button"> Open Modal </button>}
+                        modal={true}
+                        closeOnDocumentClick={true}
+                        position={'top center'}
+                    >
+                        { close => (
+                            <PopupContents info={popupTest} />
+                        )}
+                    </Popup> */}
                 </div>
             </>
         );
     }
 }
-
 
 export default Home;

@@ -26,19 +26,20 @@ import GoogleMap from "google-map-react";
 
 class MapContainer extends React.Component {
 
-	constructor(props) {
-		super(props)
-		this.state = {
+    constructor(props) {
+        super(props)
+        this.state = {
             //hard-coded default center is boston brc
-			defaultCenter: {
-				lat: 42.348591,
-				lng: -71.073051
+            defaultCenter: {
+                lat: 42.348591,
+                lng: -71.073051
             },
-			zoom: 11,
+            zoom: 11,
             markers: [],
             map: null,
             maps: null,
-            centeredOn: null
+            centeredOn: null,   //position to recenter to
+            clicked: false      //true when map has recentered to any resource
         }
         this.getNewCenter = this.getNewCenter.bind(this);
     }
@@ -50,16 +51,15 @@ class MapContainer extends React.Component {
     };
 
     // this may only occur once the the api loads, which only occurs once, despite any changes to the props,etc
-	renderMarkers(map, maps) {
+    renderMarkers(map, maps) {
         let MapContainer = this;
         this.state.maps = maps;
         this.state.map = map;
         const Geocoder = new maps.Geocoder();   //converts address to lat/lng
 
-		//render marker at bisexual resource center (also the default center)
-        Geocoder.geocode({"address": "Bisexual Resource Center"}, function(results, status) {
+        //render marker at bisexual resource center (also the default center)
+        Geocoder.geocode({ "address": "Bisexual Resource Center" }, function (results, status) {
             if (status == "OK") {
-                //console.log("Testing geocode with BRC: " + results[0].geometry.location)
                 MapContainer.state.markers.push(
                     new maps.Marker({
                         position: results[0].geometry.location,
@@ -75,16 +75,14 @@ class MapContainer extends React.Component {
 
         //get lat/lng of all resources, add markers for each resource
         let locationData = this.props.locations[0]["states"];
-        for(let region in locationData){
+        for (let region in locationData) {
             if (locationData.hasOwnProperty(region)) {
-                for (let resource in locationData[region])
-                {
+                for (let resource in locationData[region]) {
                     if (locationData[region][resource]["lat"] != undefined &&
-                        locationData[region][resource]["lng"] != undefined)
-                    {
+                        locationData[region][resource]["lng"] != undefined) {
                         MapContainer.state.markers.push(
                             new maps.Marker({
-                                position: {lat: locationData[region][resource]["lat"], lng: locationData[region][resource]["lng"]},
+                                position: { lat: locationData[region][resource]["lat"], lng: locationData[region][resource]["lng"] },
                                 map: map,
                                 title: resource
                             })
@@ -95,74 +93,84 @@ class MapContainer extends React.Component {
         }
 
         //get lat/lng of search query
-        Geocoder.geocode({"address": this.props.search}, function(results, status) {
+        Geocoder.geocode({ "address": this.props.search }, function (results, status) {
             //if exists, recenter to searched location
             if (status == "OK") {
-                map.setCenter(results[0].geometry.location);
-                MapContainer.state.markers.push(
-                    new maps.Marker({
-                        position: results[0].geometry.location,
-                        map: map
-                    })
-                );
+                //if one of the listed resources wasn't clicked yet
+                if (!MapContainer.state.clicked)
+                {
+                    map.setCenter(results[0].geometry.location);
+                    MapContainer.state.markers.push(
+                        new maps.Marker({
+                            position: results[0].geometry.location,
+                            map: map
+                        })
+                    );
+                }
             }
             //if doesn't exist, recenter to user's location
             else {
                 alert("Address doesn't exist, using your current position.");
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
-                        map.setCenter({lat: position.coords.latitude, lng: position.coords.longitude});
-                        MapContainer.state.markers.push(
-                            new maps.Marker({
-                                position: {lat: position.coords.latitude, lng: position.coords.longitude},
-                                map: map,
-                                title: "You are here!"
-                            })
-                        );
+                        if (!MapContainer.state.clicked) {
+                            map.setCenter({ lat: position.coords.latitude, lng: position.coords.longitude });
+                            MapContainer.state.markers.push(
+                                new maps.Marker({
+                                    position: { lat: position.coords.latitude, lng: position.coords.longitude },
+                                    map: map,
+                                    title: "You are here!"
+                                })
+                            );
+                        }
                     },
                     (error) => console.log(error)
                 );
             }
-        });    
-        
-        this.getNewCenter(map, maps);
+        });
     }
-    
-    getNewCenter(map, maps) {
-        //get lat/lng of search query
-        if (maps != null) {
-            const Geocoder = new maps.Geocoder();
 
-            //if exists, recenter to searched location
-            if (this.props.centeredOn != null) {
-                Geocoder.geocode({"address": this.props.centeredOn}, function(results, status) {
-                    if (status == "OK") {
-                        map.setCenter(results[0].geometry.location);
-                        map.setZoom(6);
-                        return (results[0].geometry.location);
-                    }
-                })
+    //create new google maps lat/lng object with passed in position
+    getNewCenter(map, maps) {
+        if (this.props.centeredOn != null) {
+            if (maps != null) {
+                this.state.clicked = true;
+                if (this.props.centeredOn.lat === null && this.props.centeredOn.lng === null) {
+                    const Geocoder = new maps.Geocoder(); 
+                    Geocoder.geocode({ "address": this.props.centeredOn.region }, function (results, status) {
+                        if (status == "OK") {
+                            map.setCenter(results[0].geometry.location);
+                        }
+                        else {
+                            console.log("Geocode was not successful for the following reason: " + status);
+                        }
+                    });
+                }
+                else {
+                    map.setCenter(new google.maps.LatLng(this.props.centeredOn.lat, this.props.centeredOn.lng));
+                }
+                return this.props.position;
             }
         }
         return this.state.defaultCenter;
     }
 
-	render() {
+    render() {
         this.getNewCenter(this.state.map, this.state.maps);
-		return (
-			<div style={{ height: `400px` }}>
-				<GoogleMap 
-					bootstrapURLKeys={{ key: publicRuntimeConfig.MAP_KEY }}
+        return (
+            <div style={{ height: `400px` }}>
+                <GoogleMap
+                    bootstrapURLKeys={{ key: publicRuntimeConfig.MAP_KEY }}
                     defaultCenter={this.state.defaultCenter}
-					defaultZoom={this.state.zoom}
-                    onGoogleApiLoaded={({map, maps}) => this.renderMarkers(map, maps)}
-                    center = {this.getNewCenter()}
-					yesIWantToUseGoogleMapApiInternals
-				>
-				</GoogleMap>
-			</div>
-		);
-	}
+                    defaultZoom={this.state.zoom}
+                    onGoogleApiLoaded={({ map, maps }) => this.renderMarkers(map, maps)}
+                    center={this.getNewCenter()}
+                    yesIWantToUseGoogleMapApiInternals
+                >
+                </GoogleMap>
+            </div>
+        );
+    }
 }
 
 export default MapContainer;
