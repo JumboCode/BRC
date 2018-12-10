@@ -38,7 +38,8 @@ class MapContainer extends React.Component {
             markers: [],
             map: null,
             maps: null,
-            centeredOn: null    //position to recenter to
+            centeredOn: null,   //position to recenter to
+            clicked: false      //true when map has recentered to any resource
         }
         this.getNewCenter = this.getNewCenter.bind(this);
     }
@@ -95,27 +96,33 @@ class MapContainer extends React.Component {
         Geocoder.geocode({ "address": this.props.search }, function (results, status) {
             //if exists, recenter to searched location
             if (status == "OK") {
-                map.setCenter(results[0].geometry.location);
-                MapContainer.state.markers.push(
-                    new maps.Marker({
-                        position: results[0].geometry.location,
-                        map: map
-                    })
-                );
+                //if one of the listed resources wasn't clicked yet
+                if (!MapContainer.state.clicked)
+                {
+                    map.setCenter(results[0].geometry.location);
+                    MapContainer.state.markers.push(
+                        new maps.Marker({
+                            position: results[0].geometry.location,
+                            map: map
+                        })
+                    );
+                }
             }
             //if doesn't exist, recenter to user's location
             else {
                 alert("Address doesn't exist, using your current position.");
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
-                        map.setCenter({ lat: position.coords.latitude, lng: position.coords.longitude });
-                        MapContainer.state.markers.push(
-                            new maps.Marker({
-                                position: { lat: position.coords.latitude, lng: position.coords.longitude },
-                                map: map,
-                                title: "You are here!"
-                            })
-                        );
+                        if (!MapContainer.state.clicked) {
+                            map.setCenter({ lat: position.coords.latitude, lng: position.coords.longitude });
+                            MapContainer.state.markers.push(
+                                new maps.Marker({
+                                    position: { lat: position.coords.latitude, lng: position.coords.longitude },
+                                    map: map,
+                                    title: "You are here!"
+                                })
+                            );
+                        }
                     },
                     (error) => console.log(error)
                 );
@@ -127,6 +134,7 @@ class MapContainer extends React.Component {
     getNewCenter(map, maps) {
         if (this.props.centeredOn != null) {
             if (maps != null) {
+                this.state.clicked = true;
                 map.setCenter(new google.maps.LatLng(this.props.centeredOn.lat, this.props.centeredOn.lng));
                 return this.props.position;
             }
