@@ -113,14 +113,16 @@ class MapContainer extends React.Component {
                 alert("Address doesn't exist, using your current position.");
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
-                        map.setCenter({ lat: position.coords.latitude, lng: position.coords.longitude });
-                        MapContainer.state.markers.push(
-                            new maps.Marker({
-                                position: { lat: position.coords.latitude, lng: position.coords.longitude },
-                                map: map,
-                                title: "You are here!"
-                            })
-                        );
+                        if (!MapContainer.state.clicked) {
+                            map.setCenter({ lat: position.coords.latitude, lng: position.coords.longitude });
+                            MapContainer.state.markers.push(
+                                new maps.Marker({
+                                    position: { lat: position.coords.latitude, lng: position.coords.longitude },
+                                    map: map,
+                                    title: "You are here!"
+                                })
+                            );
+                        }
                     },
                     (error) => console.log(error)
                 );
