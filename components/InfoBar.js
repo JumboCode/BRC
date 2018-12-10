@@ -62,7 +62,7 @@ class InfoBar extends Component {
         if (locationData.hasOwnProperty(state)) {
           var stateResources = locationData[state];
           var resourceRegion = state;
-          sections.push(<AccordionSection title = {state} key = {i}> <Resources region = {resourceRegion} resources={stateResources} onResourceClick = {this.props.onResourceClick}/> </AccordionSection>)
+          sections.push(<AccordionSection title = {state} key = {i} region = {resourceRegion} centerState = {this.props.centerState}> <Resources region = {resourceRegion} resources={stateResources} onResourceClick = {this.props.onResourceClick}/> </AccordionSection>)
             i++
         }
       }

@@ -50,14 +50,17 @@ class AccordionSection extends React.Component {
     closeOpen = () => {
         this.setState({ open: !this.state.open})
     };
-    
 
+    onClick = () => {
+        this.props.centerState({"region": this.props.title});
+    }
+    
     render(){
         const isOpen = this.state.open;
         return(
         <div style = {sectionStyle}>
             <div className = "title" onClick={this.closeOpen} style = {titleStyle}>
-                <div> <h3> {this.props.title}</h3> </div>
+                <div onClick={() => this.props.centerState()}> <h3> {this.props.title} </h3> </div>
                 <div style= {isOpen ? arrowHead2 : arrowHead}>
                     <img alt="Arrow head" src="./static/images/listArrow.png" width="10" height="10"/>
                 </div> 
