@@ -19,15 +19,16 @@ app.prepare()
         server.get("/organizations", (req, res) => {
             res.set('Content-Type', 'application/json');
             res.header("Access-Control-Allow-Origin", process.env.APP_URL || `http://localhost:${port}`);
-			res.header("Access-Control-Allow-Methods", "GET");
+            res.header("Access-Control-Allow-Methods", "GET");
+            res.header("Access-Control-Allow-Headers", "Authorization");
             return {};
         });
 
         //list locations at /locations
         server.get('/locations', function(req, res) {
             res.set('Content-Type', 'application/json');
-            res.header("Access-Control-Allow-Origin", process.env.APP_URL || `http://localhost:${port}`);
-			res.header("Access-Control-Allow-Methods", "GET");
+            res.header("Access-Control-Allow-Origin", "*");
+			res.header("Access-Control-Allow-Methods", "GET, POST");
             //make mongodb connection
             MongoClient.connect(mongoURI, { useNewUrlParser: true }, function (err, client) {
                 if (err) throw err;
