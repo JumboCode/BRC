@@ -28,7 +28,7 @@ app.prepare()
         server.get('/locations', function(req, res) {
             res.set('Content-Type', 'application/json');
             res.header("Access-Control-Allow-Origin", "*");
-			res.header("Access-Control-Allow-Methods", "GET, POST");
+			res.header("Access-Control-Allow-Methods", "GET");
             //make mongodb connection
             MongoClient.connect(mongoURI, { useNewUrlParser: true }, function (err, client) {
                 if (err) throw err;
