@@ -40,6 +40,9 @@ const openArrow = {
     transform: 'rotate(270deg)'
 }
 
+const stateStyle = {
+    cursor: 'pointer',
+}
 
 // An individual section of the list, 
 // its contents are collapsible
@@ -47,7 +50,8 @@ class AccordionSection extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            open: false
+            open: false,
+            state: null
         }
     }
 
@@ -61,19 +65,23 @@ class AccordionSection extends React.Component {
 
       
     closeOpen = () => {
-        this.setState({ open: !this.state.open})
+        this.setState({ open: !this.state.open })
     };
-    
 
+    onClick = (e) => {
+        e.stopPropagation();
+        this.props.centerState({ lat: null, lng: null, region: this.props.title });
+    }
+    
     render(){
         const isOpen = this.state.open;
         return(
         <div style = {sectionStyle}>
             <div className = "title" onClick={this.closeOpen} style = {titleStyle}>
-                <div> <h3> {this.props.title}</h3> </div>
+                <div > <h3 onClick={this.onClick} style={stateStyle}> {this.props.title} </h3> </div>
                 <div style= {isOpen ? openArrow : closedArrow}>
                     <img alt="Arrow head" src="./static/images/listArrow.png" width="10" height="10"/>
-                </div> 
+                </div>
             </div>
             <div> 
                 {this.state.open && this.props.children}

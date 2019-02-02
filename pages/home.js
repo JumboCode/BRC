@@ -1,4 +1,4 @@
-import { InfoBar, MapContainer, PopupContents, NavBar, BurgerMenu } from "../components";
+import { InfoBar, MapContainer, PopupContents, NavBar, BurgerMenu, SearchBar } from "../components";
 import { Component } from "react";
 import fetch from 'isomorphic-fetch'
 import getConfig from "next/config";
@@ -9,7 +9,8 @@ const { publicRuntimeConfig } = getConfig()
 
 const fullpage = {
     display: "block",
-    position: "relative"
+    position: "relative",
+    marginTop: "5%",
 }
 
 const mainContainer = {
@@ -30,6 +31,17 @@ const exitX = {
     left: "750px",
     top: "10px"
 }
+
+const searchStyle = {
+    position: "absolute",
+    top: "10px",
+    left: "100px",
+    margin: "10px",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "left",
+  }
+
 
 /*  Test parameters for the Pop-Up  */
 const popupTest = {
@@ -56,6 +68,7 @@ class Home extends Component {
             show: false
         };
         this.onResourceClicked = this.onResourceClicked.bind(this);
+        this.centerState = this.centerState.bind(this);
         this.handleToggle = this.handleToggle.bind(this)
     }
 
@@ -68,16 +81,22 @@ class Home extends Component {
         this.setState({ show: !this.state.show });
     }
 
+    //region is of the format {lat: null, lng: null, region: string}
+    centerState = (region) => {
+        this.setState({centeredOn: region});
+    }
 
     render () {
         return (
             <>
-                <NavBar />
                 <BurgerMenu />
+                <NavBar />
+                {/* <SearchBar styles={searchStyle}/> */}
                 <div style={fullpage}>
+                    <div></div>
                     <div style={mainContainer}>
-                        <InfoBar
-                            locationData={this.props.locations[0]["states"]}
+                        <InfoBar locationData={this.props.locations[0]["states"]} 
+                            centerState = {this.centerState} 
                             onResourceClick = {this.onResourceClicked}
                         />
                         <div style={map}>
