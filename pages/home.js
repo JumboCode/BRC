@@ -68,6 +68,7 @@ class Home extends Component {
             show: false
         };
         this.onResourceClicked = this.onResourceClicked.bind(this);
+        this.centerState = this.centerState.bind(this);
         this.handleToggle = this.handleToggle.bind(this)
     }
 
@@ -80,6 +81,10 @@ class Home extends Component {
         this.setState({ show: !this.state.show });
     }
 
+    //region is of the format {lat: null, lng: null, region: string}
+    centerState = (region) => {
+        this.setState({centeredOn: region});
+    }
 
     render () {
         return (
@@ -90,8 +95,8 @@ class Home extends Component {
                 <div style={fullpage}>
                     <div></div>
                     <div style={mainContainer}>
-                        <InfoBar
-                            locationData={this.props.locations[0]["states"]}
+                        <InfoBar locationData={this.props.locations[0]["states"]} 
+                            centerState = {this.centerState} 
                             onResourceClick = {this.onResourceClicked}
                         />
                         <div style={map}>

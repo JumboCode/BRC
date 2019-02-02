@@ -124,7 +124,7 @@ class MapContainer extends React.Component {
                             );
                         }
                     },
-                    (error) => console.log(error)
+                    (error) => console.log("Navigator.geolocation failed" + error)
                 );
             }
         });
@@ -135,7 +135,20 @@ class MapContainer extends React.Component {
         if (this.props.centeredOn != null) {
             if (maps != null) {
                 this.state.clicked = true;
-                map.setCenter(new google.maps.LatLng(this.props.centeredOn.lat, this.props.centeredOn.lng));
+                if (this.props.centeredOn.lat === null && this.props.centeredOn.lng === null) {
+                    const Geocoder = new maps.Geocoder(); 
+                    Geocoder.geocode({ "address": this.props.centeredOn.region }, function (results, status) {
+                        if (status == "OK") {
+                            map.setCenter(results[0].geometry.location);
+                        }
+                        else {
+                            console.log("Geocode was not successful for the following reason: " + status);
+                        }
+                    });
+                }
+                else {
+                    map.setCenter(new google.maps.LatLng(this.props.centeredOn.lat, this.props.centeredOn.lng));
+                }
                 return this.props.position;
             }
         }
