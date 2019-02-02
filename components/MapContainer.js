@@ -20,6 +20,7 @@
 */
 
 import React from "react";
+import CustomMarker from "./CustomMarker"
 import getConfig from "next/config";
 const { publicRuntimeConfig } = getConfig();
 import GoogleMap from "google-map-react";
@@ -52,7 +53,9 @@ class MapContainer extends React.Component {
     };
 
     // this may only occur once the the api loads, which only occurs once, despite any changes to the props,etc
-	renderMarkers(map, maps) {
+    // maps is the API object. Allows you to use functions like geocoding
+    // map is our actual map 
+    renderMarkers(map, maps) {
         let MapContainer = this;
         this.state.maps = maps;
         this.state.map = map;
@@ -81,15 +84,17 @@ class MapContainer extends React.Component {
                     infowindow.close()
                 })
 
-                MapContainer.state.markers.push(
-                    currentMarker
+                this.state.markers.push(currentMarker)
+
+                //MapContainer.state.markers.push(
+                //    currentMarker
                     /*new maps.Marker({
                         position: results[0].geometry.location,
                         map: map,
                         title: "Bisexual Resource Center",
                         icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
                     })*/
-                );
+                //);
             }
             else {
                 console.log("Geocode was not successful for the following reason: " + status);
@@ -105,6 +110,7 @@ class MapContainer extends React.Component {
                     if (locationData[region][resource]["lat"] != undefined &&
                         locationData[region][resource]["lng"] != undefined)
                     {
+/*            
                         MapContainer.state.markers.push(
                             new maps.Marker({
                                 position: {lat: locationData[region][resource]["lat"], lng: locationData[region][resource]["lng"]},
@@ -112,6 +118,7 @@ class MapContainer extends React.Component {
                                 title: resource
                             })
                         );
+*/
                     }
                 }
             }
@@ -182,6 +189,29 @@ class MapContainer extends React.Component {
 
 	render() {
         this.getNewCenter(this.state.map, this.state.maps);
+
+    //    const Markers = this.props.markers 
+
+    /*
+    const Markers = this.props.markers &&
+      this.props.markers.filter((m, index) => index >= rowFrom && index <= rowTo)
+      .map((marker, index) => (
+        <MarkerExample
+          // required props
+          key={marker.get('id')}
+          lat={marker.get('lat')}
+          lng={marker.get('lng')}
+          // any user props
+          showBallon={index + rowFrom === this.props.openBallonIndex}
+          onCloseClick={this._onBalloonCloseClick}
+          hoveredAtTable={index + rowFrom === this.props.hoveredRowIndex}
+          scale={getScale(index + rowFrom, this.props.visibleRowFirst, this.props.visibleRowLast, K_SCALE_NORMAL)}
+          {...markerDescriptions[marker.get('type')]}
+          marker={marker} />
+      ));
+        */
+    
+
 		return (
 			<div style={{ height: `400px` }}>
 				<GoogleMap 
