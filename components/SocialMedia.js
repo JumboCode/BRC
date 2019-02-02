@@ -26,8 +26,13 @@ const SocialMedia = () => (
                  width="20" height="20"/>
             </a>
 
+            <a style={indiv} href="mailto:brc@biresource.net" target="_blank">
+                <img src="/static/images/email.png" alt="Email Logo"
+                 width="20" height="20"/>
+            </a>
+
             <a style={indiv} href="https://biresource.org/" target="_blank">
-                <img src="/static/images/brc.png" alt="BRC Logo"
+                <img src="/static/images/bug.png" alt="BRC Logo"
                  width="20" height="20"/>
             </a>
         </div>
