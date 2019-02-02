@@ -25,7 +25,6 @@ Letter.propTypes = {
 
 Letter.defaultProps = {
     letter: "A",
-    onLetterClicked: (letter) => {console.log("Clicked letter")}
 }
 
 const LetterSelectBarStyle = {
@@ -92,7 +91,6 @@ LetterSelectBar.propTypes = {
 
 LetterSelectBar.defaultProps = {
     letter: "A",
-    onLetterClicked: (letter) => {console.log("Returning letter " + letter)},
 }
 
 

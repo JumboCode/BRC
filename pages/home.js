@@ -1,4 +1,4 @@
-import { InfoBar, MapContainer, PopupContents, NavBar, BurgerMenu } from "../components";
+import { InfoBar, MapContainer, PopupContents, NavBar, BurgerMenu, SearchBar } from "../components";
 import { Component } from "react";
 import fetch from 'isomorphic-fetch'
 import getConfig from "next/config";
@@ -9,7 +9,8 @@ const { publicRuntimeConfig } = getConfig()
 
 const fullpage = {
     display: "block",
-    position: "relative"
+    position: "relative",
+    marginTop: "5%",
 }
 
 const mainContainer = {
@@ -30,6 +31,17 @@ const exitX = {
     left: "750px",
     top: "10px"
 }
+
+const searchStyle = {
+    position: "absolute",
+    top: "10px",
+    left: "100px",
+    margin: "10px",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "left",
+  }
+
 
 /*  Test parameters for the Pop-Up  */
 const popupTest = {
@@ -75,18 +87,24 @@ class Home extends Component {
     }
 
     render () {
-        console.log(this.centeredOn);
         return (
             <>
-                <NavBar />
                 <BurgerMenu />
-                <div style={mainContainer}>
-                    <InfoBar locationData={this.props.locations[0]["states"]} centerState = {this.centerState} onResourceClick = {this.onResourceClicked}/>
-                    <div style={map}>
-                    <MapContainer search={this.props.search}
-                                  locations={this.props.locations}
-                                  centeredOn = {this.state.centeredOn}
-                    />
+                <NavBar />
+                <SearchBar styles={searchStyle}/>
+                <div style={fullpage}>
+                    <div></div>
+                    <div style={mainContainer}>
+                        <InfoBar locationData={this.props.locations[0]["states"]} 
+                            centerState = {this.centerState} 
+                            onResourceClick = {this.onResourceClicked}
+                        />
+                        <div style={map}>
+                        <MapContainer search={this.props.search}
+                                      locations={this.props.locations}
+                                      centeredOn = {this.state.centeredOn}
+                        />
+                        </div>
                     </div>
                     {/* Pop up component for on label click */}
                     {/* <Popup

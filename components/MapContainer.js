@@ -124,7 +124,7 @@ class MapContainer extends React.Component {
                             );
                         }
                     },
-                    (error) => console.log(error)
+                    (error) => console.log("Navigator.geolocation failed" + error)
                 );
             }
         });
