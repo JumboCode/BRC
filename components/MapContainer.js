@@ -71,10 +71,11 @@ class MapContainer extends React.Component {
                     title: "Bisexual Resource Center",
                     icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
                 })
-
-                var infowindow = new google.maps.InfoWindow({
-                    content: "test"
-                  });
+                
+                // Google's default info window test. 
+                //var infowindow = new google.maps.InfoWindow({
+                //    content: "test"
+                //  });
 
                 currentMarker.addListener('mouseover', function() {
                     infowindow.open(map, currentMarker);
@@ -124,7 +125,9 @@ class MapContainer extends React.Component {
             }
         }
 
+        
         //get lat/lng of search query
+        /*
         Geocoder.geocode({"address": this.props.search}, function(results, status) {
             //if exists, recenter to searched location
             if (status == "OK") {
@@ -156,7 +159,7 @@ class MapContainer extends React.Component {
                 );
             }
         });    
-        
+        */
         this.getNewCenter(map, maps);
     }
     
@@ -190,7 +193,7 @@ class MapContainer extends React.Component {
 	render() {
         this.getNewCenter(this.state.map, this.state.maps);
 
-    //    const Markers = this.props.markers 
+        const Markers = this.props.markers
 
     /*
     const Markers = this.props.markers &&
@@ -222,8 +225,9 @@ class MapContainer extends React.Component {
                     center = {this.getNewCenter()}
                     onChildMouseEnter = {this._onChildMouseEnter}
                     onChildMouseLeave = {this._onChildMouseLeave}
-					yesIWantToUseGoogleMapApiInternals
+					//yesIWantToUseGoogleMapApiInternals
 				>
+                {Markers}
 				</GoogleMap>
 			</div>
 		);
