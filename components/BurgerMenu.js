@@ -10,8 +10,9 @@ const styles = {
 
 const burger = {
     bmBurgerButton: {
-      justifyContent: 'flex-end',
-      position: 'fixed',
+      position: "absolute",
+      top: "5px",
+      right: "5px",
       width: '30px',
       height: '25px',
       right: '20px',

@@ -3,11 +3,10 @@ import PlacesAutocomplete from 'react-places-autocomplete';
 import Link from 'next/link';
 import Router from 'next/router';
 
-const locationSearchBox = {
+const entryStyle = {
   display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-}
+  flexDirection: "row",
+};
 
 class SearchBar extends React.Component {
   constructor(props) {
@@ -42,8 +41,8 @@ class SearchBar extends React.Component {
         onSelect={this.handleSelect}
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-          <div style={locationSearchBox}>
-            <div style={this.props.style}>
+          <div style={this.props.styles}>
+            <div style={entryStyle}>
               <form>
                 <input
                   {...getInputProps({
@@ -61,7 +60,7 @@ class SearchBar extends React.Component {
                 </div>
               </form>
             </div>
-            <div className="autocomplete-dropdown-container">
+            <div className="autocomplete-dropdown-container" style={{overflow: "visible"}}>
               {loading && <div>Loading...</div>}
               {suggestions.map(suggestion => {
                 const className = suggestion.active
