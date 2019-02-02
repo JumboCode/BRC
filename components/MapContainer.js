@@ -72,11 +72,10 @@ class MapContainer extends React.Component {
                     icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
                 })
                 
-                // Google's default info window test. 
-                //var infowindow = new google.maps.InfoWindow({
-                //    content: "test"
-                //  });
-
+                /* Google's default info window test. 
+                var infowindow = new google.maps.InfoWindow({
+                    content: "test"
+                  });
                 currentMarker.addListener('mouseover', function() {
                     infowindow.open(map, currentMarker);
                   });
@@ -84,8 +83,8 @@ class MapContainer extends React.Component {
                 currentMarker.addListener('mouseout', function(){
                     infowindow.close()
                 })
-
-                this.state.markers.push(currentMarker)
+                */
+                //this.state.markers.push(currentMarker)
 
                 //MapContainer.state.markers.push(
                 //    currentMarker
@@ -193,7 +192,7 @@ class MapContainer extends React.Component {
 	render() {
         this.getNewCenter(this.state.map, this.state.maps);
 
-        const Markers = this.props.markers
+        //const Markers = this.state.markers
 
     /*
     const Markers = this.props.markers &&
@@ -227,7 +226,8 @@ class MapContainer extends React.Component {
                     onChildMouseLeave = {this._onChildMouseLeave}
 					//yesIWantToUseGoogleMapApiInternals
 				>
-                {Markers}
+                {//Markers
+                }
 				</GoogleMap>
 			</div>
 		);
