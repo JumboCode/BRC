@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 
 const info = {
   display: 'flex',
-  flexFlow: 'column wrap',
+  flexFlow: 'column',
   height: '90vh',
   overflow: 'auto',
 };
