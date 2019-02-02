@@ -57,7 +57,7 @@ const burger = {
   const BurgerMenu = () => (
     <Menu right width={ 280 } styles={ burger }>
         <div id="resources" className="menu-item">
-        <Link href={{pathname: "/home", query: { search: "", data: "locations" }}}><a style={styles.link}>List of resources</a></Link>
+        <Link href={{pathname: "/home", query: { search: "*", data: "locations" }}}><a style={styles.link}>List of resources</a></Link>
         </div>
         <div id="events" className="menu-item">
         <Link href={{pathname: "/events", query: { search: "", data: "events" }}}><a style={styles.link}>BRC Events</a></Link>
