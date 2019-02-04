@@ -123,7 +123,7 @@ class Resources extends React.Component {
             }
         }
 
-        //Sort 
+        //Sort Alphabetically
         newResources.sort(function(a, b){
             if(a.props.name < b.props.name) { return -1; }
             if(a.props.name > b.props.name) { return 1; }
