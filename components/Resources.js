@@ -66,6 +66,7 @@ class Resource extends React.Component {
     }
 
     render(){
+
         let blockDivStyle = divStyle;
         let blockLinkStyle = linkStyle;
         if (this.state.isSelected)
@@ -106,9 +107,12 @@ class Resources extends React.Component {
 
     render() {
         var newResources = []
+      
+        
         // Key should be the name of some center
-
+        
         for (var resource in this.props.resources) {
+            console.log("Resource: ", resource);
             if (this.props.resources.hasOwnProperty(resource)) {
                 var resourceInfo = this.props.resources[resource]
                 resourceInfo.Region = this.props.region;
@@ -119,6 +123,14 @@ class Resources extends React.Component {
             }
         }
 
+        //Sort 
+        newResources.sort(function(a, b){
+            if(a.props.name < b.props.name) { return -1; }
+            if(a.props.name > b.props.name) { return 1; }
+            return 0;
+        })
+
+        
         return ( 
             <div>
                 {newResources}
