@@ -34,7 +34,7 @@ class MapContainer extends React.Component {
                 lat: 42.348591,
                 lng: -71.073051
             },
-            zoom: 11,
+            zoom: 12,
             markers: [],
             map: null,
             maps: null,
@@ -181,6 +181,7 @@ class MapContainer extends React.Component {
                     bootstrapURLKeys={{ key: publicRuntimeConfig.MAP_KEY }}
                     defaultCenter={this.state.defaultCenter}
                     defaultZoom={this.state.zoom}
+                    zoom={this.props.zoom}
                     onGoogleApiLoaded={({ map, maps }) => this.renderMarkers(map, maps)}
                     center={this.getNewCenter()}
                     yesIWantToUseGoogleMapApiInternals

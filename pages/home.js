@@ -65,7 +65,8 @@ class Home extends Component {
         super(props);
         this.state = {
             centeredOn : null,
-            show: false
+            show: false,
+            zoom: 11,
         };
         this.onResourceClicked = this.onResourceClicked.bind(this);
         this.centerState = this.centerState.bind(this);
@@ -74,7 +75,7 @@ class Home extends Component {
 
     //position is of the format {lat: lat, lng: lng}
     onResourceClicked(position) {
-        this.setState({centeredOn: position});
+        this.setState({centeredOn: position, zoom: 14});
     }
 
     handleToggle() {
@@ -83,7 +84,7 @@ class Home extends Component {
 
     //region is of the format {lat: null, lng: null, region: string}
     centerState = (region) => {
-        this.setState({centeredOn: region});
+        this.setState({centeredOn: region, zoom: 5.5});
     }
 
     render () {
@@ -103,6 +104,7 @@ class Home extends Component {
                         <MapContainer search={this.props.search}
                                       locations={this.props.locations}
                                       centeredOn = {this.state.centeredOn}
+                                      zoom = {this.state.zoom}
                         />
                         </div>
                     </div>

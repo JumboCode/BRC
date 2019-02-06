@@ -1,4 +1,4 @@
-import { SearchBar, BurgerMenu } from "../components";
+import { SearchBar } from "../components";
 import Link from "next/link";
 
 const styles = {
