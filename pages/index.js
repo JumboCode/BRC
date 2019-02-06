@@ -1,19 +1,11 @@
 import { SearchBar, BurgerMenu, SocialMedia } from "../components";
 import Link from "next/link";
 
-const titleStyle = {
-  textAlign: 'center',
-  fontSize: '40px',
-  fontFamily: 'sans-serif',
-  padding: '150px',
-  paddingBottom: '15px'
-};
-
 const bodyStyle = {
   display: "flex",
   flexDirection: "column",
-  alignItems: "center",
   justifyContent: "center",
+  alignItems: "center",
   minHeight: "87vh",
 }
 
@@ -32,8 +24,8 @@ const linkStyle = {
 
 const searchStyle = {
   display: "flex",
-  flexDirection: "row",
-  justifyContent: "center",
+  flexDirection: "column",
+  alignItems: "center",
 }
 
 const Index = () => (
@@ -43,7 +35,7 @@ const Index = () => (
       <div style={logo}>
         <img alt="BRC logo" src="./static/images/BRC-logo.jpg" width="300" height="110" />
       </div>
-      <SearchBar style={searchStyle} />
+      <SearchBar styles={searchStyle} />
       <div style={linkStyle}>
         <Link href="/events">
           <a textDecoration="none">or click to view BRC events (current month)</a>

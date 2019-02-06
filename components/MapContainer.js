@@ -92,42 +92,60 @@ class MapContainer extends React.Component {
             }
         }
 
-        //get lat/lng of search query
-        Geocoder.geocode({ "address": this.props.search }, function (results, status) {
-            //if exists, recenter to searched location
-            if (status == "OK") {
-                //if one of the listed resources wasn't clicked yet
-                if (!MapContainer.state.clicked)
-                {
-                    map.setCenter(results[0].geometry.location);
-                    MapContainer.state.markers.push(
-                        new maps.Marker({
-                            position: results[0].geometry.location,
-                            map: map
-                        })
+        if (this.props.search !== "*") {
+            //get lat/lng of search query
+            Geocoder.geocode({ "address": this.props.search }, function (results, status) {
+                //if exists, recenter to searched location
+                if (status == "OK") {
+                    //if one of the listed resources wasn't clicked yet
+                    if (!MapContainer.state.clicked)
+                    {
+                        map.setCenter(results[0].geometry.location);
+                        MapContainer.state.markers.push(
+                            new maps.Marker({
+                                position: results[0].geometry.location,
+                                map: map
+                            })
+                        );
+                    }
+                }
+                //if doesn't exist, recenter to user's location
+                else {
+                    alert("Address doesn't exist, using your current position.");
+                    navigator.geolocation.getCurrentPosition(
+                        (position) => {
+                            if (!MapContainer.state.clicked) {
+                                map.setCenter({ lat: position.coords.latitude, lng: position.coords.longitude });
+                                MapContainer.state.markers.push(
+                                    new maps.Marker({
+                                        position: { lat: position.coords.latitude, lng: position.coords.longitude },
+                                        map: map,
+                                        title: "You are here!"
+                                    })
+                                );
+                            }
+                        },
+                        (error) => console.log("Navigator.geolocation failed" + error)
                     );
                 }
-            }
-            //if doesn't exist, recenter to user's location
-            else {
-                alert("Address doesn't exist, using your current position.");
-                navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        if (!MapContainer.state.clicked) {
-                            map.setCenter({ lat: position.coords.latitude, lng: position.coords.longitude });
-                            MapContainer.state.markers.push(
-                                new maps.Marker({
-                                    position: { lat: position.coords.latitude, lng: position.coords.longitude },
-                                    map: map,
-                                    title: "You are here!"
-                                })
-                            );
-                        }
-                    },
-                    (error) => console.log(error)
-                );
-            }
-        });
+            });
+        } else {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    if (!MapContainer.state.clicked) {
+                        map.setCenter({ lat: position.coords.latitude, lng: position.coords.longitude });
+                        MapContainer.state.markers.push(
+                            new maps.Marker({
+                                position: { lat: position.coords.latitude, lng: position.coords.longitude },
+                                map: map,
+                                title: "You are here!"
+                            })
+                        );
+                    }
+                },
+                (error) => console.log("Navigator.geolocation failed" + error)
+            );            
+        }
     }
 
     //create new google maps lat/lng object with passed in position
@@ -135,7 +153,20 @@ class MapContainer extends React.Component {
         if (this.props.centeredOn != null) {
             if (maps != null) {
                 this.state.clicked = true;
-                map.setCenter(new google.maps.LatLng(this.props.centeredOn.lat, this.props.centeredOn.lng));
+                if (this.props.centeredOn.lat === null && this.props.centeredOn.lng === null) {
+                    const Geocoder = new maps.Geocoder(); 
+                    Geocoder.geocode({ "address": this.props.centeredOn.region }, function (results, status) {
+                        if (status == "OK") {
+                            map.setCenter(results[0].geometry.location);
+                        }
+                        else {
+                            console.log("Geocode was not successful for the following reason: " + status);
+                        }
+                    });
+                }
+                else {
+                    map.setCenter(new google.maps.LatLng(this.props.centeredOn.lat, this.props.centeredOn.lng));
+                }
                 return this.props.position;
             }
         }
