@@ -47,7 +47,6 @@ app.prepare()
                                 return result;
                             }, {});
                             results[0].states = sorted_states;
-                            console.log(sorted_states);
                             res.send(results);
                         });
                     }
