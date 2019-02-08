@@ -65,6 +65,7 @@ class MapContainer extends React.Component {
         Geocoder.geocode({"address": "Bisexual Resource Center"}, function(results, status) {
             if (status == "OK") {
                 //console.log("Testing geocode with BRC: " + results[0].geometry.location)
+                /*
                 var currentMarker = new maps.Marker({
                     position: results[0].geometry.location,
                     map: map,
@@ -72,6 +73,13 @@ class MapContainer extends React.Component {
                     icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
                 })
                 
+               */ 
+              var currentMarker = new maps.Marker({
+                position: results[0].geometry.location,
+                title: "Bisexual Resource Center",
+                icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
+              })
+
                 /* Google's default info window test. 
                 var infowindow = new google.maps.InfoWindow({
                     content: "test"
@@ -84,7 +92,7 @@ class MapContainer extends React.Component {
                     infowindow.close()
                 })
                 */
-                //this.state.markers.push(currentMarker)
+                this.state.markers.push(currentMarker)
 
                 //MapContainer.state.markers.push(
                 //    currentMarker
@@ -192,9 +200,18 @@ class MapContainer extends React.Component {
 	render() {
         this.getNewCenter(this.state.map, this.state.maps);
 
-        //const Markers = this.state.markers
+    const Markers = this.state.markers.map((marker, index) => (
+        <CustomMarker
+//        position = {marker.get('position')}
+//        title = {marker.get('title')}
+        key = {1}
+        lat={42.4075}
+        lng={71.1190}
+        ok = {console.log("Trying to make markers")}
 
-    /*
+        />
+    ));
+/*
     const Markers = this.props.markers &&
       this.props.markers.filter((m, index) => index >= rowFrom && index <= rowTo)
       .map((marker, index) => (
@@ -220,14 +237,16 @@ class MapContainer extends React.Component {
 					bootstrapURLKeys={{ key: publicRuntimeConfig.MAP_KEY }}
                     defaultCenter={this.state.defaultCenter}
 					defaultZoom={this.state.zoom}
-                    onGoogleApiLoaded={({map, maps}) => this.renderMarkers(map, maps)}
+                    //onGoogleApiLoaded={({map, maps}) => this.renderMarkers(map, maps)}
                     center = {this.getNewCenter()}
                     onChildMouseEnter = {this._onChildMouseEnter}
                     onChildMouseLeave = {this._onChildMouseLeave}
 					//yesIWantToUseGoogleMapApiInternals
 				>
-                {//Markers
+                { Markers
                 }
+                {console.log("Markers again")}
+
 				</GoogleMap>
 			</div>
 		);
