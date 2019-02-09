@@ -82,13 +82,11 @@ class MapContainer extends React.Component {
                 var currentMarker = new maps.Marker({
                     position: results[0].geometry.location,
                     map: map,
-                    //title: "Bisexual Resource Center",
                     icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
                 })
 
                 // Google's default info window
                 createInfoWindow(map, maps, currentMarker, "Bisexual Resource Center")
-                //this.state.markers.push(currentMarker)
             }
             else {
                 console.log("Geocode was not successful for the following reason: " + status);
@@ -107,12 +105,10 @@ class MapContainer extends React.Component {
                         var currentMarker = new maps.Marker({
                                 position: {lat: locationData[region][resource]["lat"], lng: locationData[region][resource]["lng"]},
                                 map: map,
-                                //title: resource,
                                 icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
                         })
                     
                         createInfoWindow(map, maps, currentMarker, resource)
-                        //this.state.markers.push(currentMarker)
                     }
                 }
             }
@@ -185,9 +181,6 @@ class MapContainer extends React.Component {
 	render() {
         this.getNewCenter(this.state.map, this.state.maps);
 
-    //console.log(this.state.markers)
-
-
 		return (
 			<div style={{ height: `400px` }}>
 				<GoogleMap 
@@ -200,13 +193,6 @@ class MapContainer extends React.Component {
                     onChildMouseLeave = {this._onChildMouseLeave}
 					yesIWantToUseGoogleMapApiInternals
 				>
-                {
-                    //Markers
-                    // This gets triggered before the api is loaded
-                    //this.state.markers
-                }
-                {console.log("Markers again")}
-
 				</GoogleMap>
 			</div>
 		);
