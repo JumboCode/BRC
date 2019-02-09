@@ -47,10 +47,11 @@ const stateStyle = {
 // An individual section of the list, 
 // its contents are collapsible
 class AccordionSection extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             open: false,
+            startedOpen: false, //set to true if gets opened bc matching region
             state: null
         }
     }
@@ -65,7 +66,7 @@ class AccordionSection extends React.Component {
 
       
     closeOpen = () => {
-        this.setState({ open: !this.state.open })
+        this.setState({ open: !this.state.open });
     };
 
     onClick = (e) => {
@@ -73,9 +74,14 @@ class AccordionSection extends React.Component {
         this.props.centerState({ lat: null, lng: null, region: this.props.title });
     }
     
-    render(){
+    render() {
+        //open once only if region matches initial region on map
+        if (this.props.startOpen && !this.state.startedOpen) {
+            this.state.open = true;
+            this.state.startedOpen = true;
+        }
         const isOpen = this.state.open;
-        return(
+        return (
         <div style = {sectionStyle}>
             <div className = "title" onClick={this.closeOpen} style = {titleStyle}>
                 <div > <h3 onClick={this.onClick} style={stateStyle}> {this.props.title} </h3> </div>

@@ -39,9 +39,10 @@ class InfoBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      filterLetter: "all"
+      filterLetter: "all",
+      matchedRegion: false  //set to true when MapContainer gets init region
     };
-    this.onLetterClicked = this.onLetterClicked.bind(this)
+    this.onLetterClicked = this.onLetterClicked.bind(this);
   }
 
 
@@ -49,17 +50,17 @@ class InfoBar extends Component {
     onResourceClick: (region) => {console.log("InfoBar has region: " + region)}
   }
 
-  onLetterClicked(letter){
+  onLetterClicked(letter) {
     if (letter === this.state.filterLetter) {
-      this.setState( { filterLetter: "all" })
+      this.setState( { filterLetter: "all" } );
     } else {
-      this.setState( {filterLetter: letter})
+      this.setState( {filterLetter: letter} );
     }
   }
 
 
   getLetterFilters = () => {
-    let noDuplicates = {}
+    let noDuplicates = {};
     let letters = Object.keys(this.props.locationData).map((word) => {
       noDuplicates[word[0]] = true;
     });
@@ -77,8 +78,15 @@ class InfoBar extends Component {
           var stateResources = locationData[state];
           var resourceRegion = state;
           var startOpen = false;
-          //TODO: check for matching region with this.props.initialRegion,
-          //then edit accordion section to start open if startOpen = true
+
+          //if initial region's matching accordion section wasn't found yet,
+          //check if initial region matches with accordion section region
+          if (this.props.initialRegion != "" && !this.state.matchedRegion &&
+              this.props.initialRegion == state) {
+            startOpen = true;
+            this.state.matchedRegion = true;
+          }
+
           sections.push(<AccordionSection title = {state}
                                           key = {i}
                                           region = {resourceRegion}

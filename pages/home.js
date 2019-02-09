@@ -57,7 +57,7 @@ class Home extends Component {
         //hard coded url for now... need to change later
         const res = await fetch(`${appURL}/locations`);
         const locations = await res.json();
-        const search = props.query.search
+        const search = props.query.search;
         return { locations, search };
     }
 
@@ -67,7 +67,7 @@ class Home extends Component {
             centeredOn : null,
             initialRegion: "",
             show: false,
-            zoom: 11,
+            zoom: 11
         };
         this.onResourceClicked = this.onResourceClicked.bind(this);
         this.onInitialCenter = this.onInitialCenter.bind(this);
