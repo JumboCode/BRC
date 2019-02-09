@@ -107,6 +107,10 @@ class MapContainer extends React.Component {
                                 map: map
                             })
                         );
+                        //set initial region in home
+                        //TODO: get region from navigator.geolocation.getCurrentPosition
+                        //and set initial region in those cases as well
+                        MapContainer.props.onInitialCenter(MapContainer.getRegion(results[0].address_components));
                     }
                 }
                 //if doesn't exist, recenter to user's location
@@ -145,6 +149,17 @@ class MapContainer extends React.Component {
                 },
                 (error) => console.log("Navigator.geolocation failed" + error)
             );            
+        }
+    }
+
+    //get initial location's region (state) as string from results of
+    //google maps geocode data, for example "Massachusetts"
+    getRegion(address_components) {
+        for (let i = 0; i < address_components.length; i++) {
+            //admin area level 1 means state
+            if (address_components[i].types[0] == "administrative_area_level_1") {
+                return address_components[i].long_name;
+            }
         }
     }
 

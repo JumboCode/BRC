@@ -68,16 +68,27 @@ class InfoBar extends Component {
 
   render() {
     let stateInitials = this.getLetterFilters();
-    let locationData = this.props.locationData
-    let sections = []
-    let i = 0
-    for(let state in locationData){
-      if(state[0] == this.state.filterLetter || this.state.filterLetter == "all") {
+    let locationData = this.props.locationData;
+    let sections = [];
+    let i = 0;
+    for (let state in locationData) {
+      if (state[0] == this.state.filterLetter || this.state.filterLetter == "all") {
         if (locationData.hasOwnProperty(state)) {
           var stateResources = locationData[state];
           var resourceRegion = state;
-          sections.push(<AccordionSection title = {state} key = {i} region = {resourceRegion} centerState = {this.props.centerState}> <Resources region = {resourceRegion} resources={stateResources} onResourceClick = {this.props.onResourceClick}/> </AccordionSection>)
-            i++
+          var startOpen = false;
+          //TODO: check for matching region with this.props.initialRegion,
+          //then edit accordion section to start open if startOpen = true
+          sections.push(<AccordionSection title = {state}
+                                          key = {i}
+                                          region = {resourceRegion}
+                                          centerState = {this.props.centerState}
+                                          startOpen = {startOpen}>
+                                          <Resources region = {resourceRegion}
+                                                     resources={stateResources}
+                                                     onResourceClick = {this.props.onResourceClick}/>
+                        </AccordionSection>);
+            i++;
         }
       }
     }
