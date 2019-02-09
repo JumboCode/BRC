@@ -19,8 +19,6 @@
     let maps = this.state.maps;
 */
 
-
-
 import React from "react";
 import CustomMarker from "./CustomMarker"
 import getConfig from "next/config";
@@ -63,13 +61,12 @@ class MapContainer extends React.Component {
         this.state.map = map;
         const Geocoder = new maps.Geocoder();   //converts address to lat/lng
 
+        // Google's default info window
         function createInfoWindow(map, maps, marker, title) {
             console.log("Creating info window")
             var infowindow = new maps.InfoWindow({
                 content: title
             });
-
-            //var infowindow = new Popup(marker.position, title)
 
             marker.addListener('mouseover', function() {
                 infowindow.open(map, marker);
@@ -90,7 +87,6 @@ class MapContainer extends React.Component {
                     icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
                 })
 
-                // Google's default info window
                 createInfoWindow(map, maps, currentMarker, "Bisexual Resource Center")
             }
             else {
@@ -125,14 +121,12 @@ class MapContainer extends React.Component {
             //if exists, recenter to searched location
             if (status == "OK") {
                 map.setCenter(results[0].geometry.location);
-                //MapContainer.state.markers.push(
                     var currentMarker = new maps.Marker({
                         position: results[0].geometry.location,
                         map: map,
                         icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
                     })
                     createInfoWindow(map, maps, currentMarker, this.props.search)
-                //);
             }
             //if doesn't exist, recenter to user's location
             else {
@@ -140,16 +134,12 @@ class MapContainer extends React.Component {
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
                         map.setCenter({lat: position.coords.latitude, lng: position.coords.longitude});
-                        //MapContainer.state.markers.push(
                             var currentMarker = new maps.Marker({
                                 position: {lat: position.coords.latitude, lng: position.coords.longitude},
                                 map: map,
                                 icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
                             })
-                            createInfoWindow(map, maps, currentMarker, "Your location")
-
-                        //);
-                    },
+                            createInfoWindow(map, maps, currentMarker, "Your location")                    },
                     (error) => console.log(error)
                 );
             }
