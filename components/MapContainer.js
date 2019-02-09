@@ -27,7 +27,6 @@ import getConfig from "next/config";
 const { publicRuntimeConfig } = getConfig();
 import GoogleMap from "google-map-react";
 
-var Popup;
 class MapContainer extends React.Component {
 
 	constructor(props) {
@@ -54,9 +53,6 @@ class MapContainer extends React.Component {
         zoom: 9,
     };
 
-
-    
-
     // this may only occur once the the api loads, which only occurs once, despite any changes to the props,etc
     // maps is the API object. Allows you to use functions like geocoding
     // map is our actual map 
@@ -66,13 +62,6 @@ class MapContainer extends React.Component {
         this.state.maps = maps;
         this.state.map = map;
         const Geocoder = new maps.Geocoder();   //converts address to lat/lng
-/*
-        Popup = createPopupClass();
-        var popup = new Popup(     
-            new google.maps.LatLng(-33.866, 151.196),
-            document.getElementById('content'));
-*/        
-
 
         function createInfoWindow(map, maps, marker, title) {
             console.log("Creating info window")
@@ -90,8 +79,6 @@ class MapContainer extends React.Component {
                 infowindow.close()
             })
         }
-
-
 
 		//render marker at bisexual resource center (also the default center)
         Geocoder.geocode({"address": "Bisexual Resource Center"}, function(results, status) {
@@ -138,14 +125,14 @@ class MapContainer extends React.Component {
             //if exists, recenter to searched location
             if (status == "OK") {
                 map.setCenter(results[0].geometry.location);
-                MapContainer.state.markers.push(
-                    new maps.Marker({
+                //MapContainer.state.markers.push(
+                    var currentMarker = new maps.Marker({
                         position: results[0].geometry.location,
                         map: map,
                         icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
-
                     })
-                );
+                    createInfoWindow(map, maps, currentMarker, this.props.search)
+                //);
             }
             //if doesn't exist, recenter to user's location
             else {
@@ -153,14 +140,15 @@ class MapContainer extends React.Component {
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
                         map.setCenter({lat: position.coords.latitude, lng: position.coords.longitude});
-                        MapContainer.state.markers.push(
-                            new maps.Marker({
+                        //MapContainer.state.markers.push(
+                            var currentMarker = new maps.Marker({
                                 position: {lat: position.coords.latitude, lng: position.coords.longitude},
                                 map: map,
-                                title: "You are here!",
                                 icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
                             })
-                        );
+                            createInfoWindow(map, maps, currentMarker, "Your location")
+
+                        //);
                     },
                     (error) => console.log(error)
                 );
