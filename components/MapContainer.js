@@ -107,9 +107,7 @@ class MapContainer extends React.Component {
                                 map: map
                             })
                         );
-                        //set initial region in home
-                        //TODO: get region from navigator.geolocation.getCurrentPosition
-                        //and set initial region in those cases as well
+                        //set initial region in home.js
                         MapContainer.props.onInitialCenter(MapContainer.getRegion(results[0].address_components));
                     }
                 }
@@ -118,15 +116,22 @@ class MapContainer extends React.Component {
                     alert("Address doesn't exist, using your current position.");
                     navigator.geolocation.getCurrentPosition(
                         (position) => {
+                            let latlng = { lat: position.coords.latitude, lng: position.coords.longitude };
                             if (!MapContainer.state.clicked) {
-                                map.setCenter({ lat: position.coords.latitude, lng: position.coords.longitude });
+                                map.setCenter(latlng);
                                 MapContainer.state.markers.push(
                                     new maps.Marker({
-                                        position: { lat: position.coords.latitude, lng: position.coords.longitude },
+                                        position: latlng,
                                         map: map,
                                         title: "You are here!"
                                     })
                                 );
+                                //geocode latlng, then set initial region in home.js
+                                Geocoder.geocode({'location': latlng}, function(results, status) {
+                                    if (status === 'OK') {
+                                        MapContainer.props.onInitialCenter(MapContainer.getRegion(results[0].address_components));
+                                    }
+                                });
                             }
                         },
                         (error) => console.log("Navigator.geolocation failed" + error)
@@ -136,15 +141,22 @@ class MapContainer extends React.Component {
         } else {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
+                    let latlng = { lat: position.coords.latitude, lng: position.coords.longitude };
                     if (!MapContainer.state.clicked) {
-                        map.setCenter({ lat: position.coords.latitude, lng: position.coords.longitude });
+                        map.setCenter(latlng);
                         MapContainer.state.markers.push(
                             new maps.Marker({
-                                position: { lat: position.coords.latitude, lng: position.coords.longitude },
+                                position: latlng,
                                 map: map,
                                 title: "You are here!"
                             })
                         );
+                        //geocode latlng, then set initial region in home.js
+                        Geocoder.geocode({'location': latlng}, function(results, status) {
+                            if (status === 'OK') {
+                                MapContainer.props.onInitialCenter(MapContainer.getRegion(results[0].address_components));
+                            }
+                        });
                     }
                 },
                 (error) => console.log("Navigator.geolocation failed" + error)
