@@ -19,12 +19,13 @@
     let maps = this.state.maps;
 */
 
+
+
 import React from "react";
 import CustomMarker from "./CustomMarker"
 import getConfig from "next/config";
 const { publicRuntimeConfig } = getConfig();
 import GoogleMap from "google-map-react";
-
 
 class MapContainer extends React.Component {
 
@@ -66,6 +67,7 @@ class MapContainer extends React.Component {
             var infowindow = new maps.InfoWindow({
                 content: title
               });
+
             marker.addListener('mouseover', function() {
                 infowindow.open(map, marker);
               });
