@@ -94,7 +94,7 @@ class Home extends Component {
                 <NavBar />
                 <SearchBar styles={searchStyle}/>
                 <div style={fullpage}>
-                    <div></div>
+                    { condition ? <div>Condition exists</div> : <div>Condition doesn't exist</div>}
                     <div style={mainContainer}>
                         <InfoBar locationData={this.props.locations[0]["states"]} 
                             centerState = {this.centerState} 
