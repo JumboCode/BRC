@@ -20,7 +20,6 @@
 */
 
 import React from "react";
-import CustomMarker from "./CustomMarker"
 import getConfig from "next/config";
 const { publicRuntimeConfig } = getConfig();
 import GoogleMap from "google-map-react";
