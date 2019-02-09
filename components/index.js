@@ -11,6 +11,7 @@ import LetterSelectBar from "./LetterSelectBar";
 import Resources from "./Resources";
 import BurgerMenu from "./BurgerMenu";
 import Events from "./Events";
+import WarningMessage from "./WarningMessage"
 
 export {
     InfoBar,
@@ -26,4 +27,5 @@ export {
     Resources,
     BurgerMenu,
     Events,
+    WarningMessage,
 };
