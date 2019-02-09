@@ -21,6 +21,7 @@ class SearchBar extends React.Component {
 
   handleSelect = address => {
     this.setState({ address });
+    this.forceUpdate();
   };
 
   // Allows enter key triggering search

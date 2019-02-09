@@ -59,14 +59,25 @@ class Home extends Component {
         this.handleToggle = this.handleToggle.bind(this)
     }
 
+    // this relates to clicking on a pin
     //position is of the format {lat: lat, lng: lng}
     onResourceClicked(position) {
         this.setState({centeredOn: position});
     }
 
+    // this function will be invoked on a state change
+    // not sure how to do that :/
+    componentWillReceiveProps(nextProps) {
+        // You don't have to do this check first, but it can help prevent an unneeded render
+        if (nextProps.position !== this.state.position) {
+            this.setState({ centeredOn: nextProps.position, zoom: 14 });
+        }
+    }
+
     handleToggle() {
         this.setState({ show: !this.state.show });
     }
+
 
 
     render () {
@@ -82,7 +93,7 @@ class Home extends Component {
                         />
                         <div style={map}>
                         <MapContainer search={this.props.search}
-                                      locations={this.props.locations}
+                                      locations={this.props.locations}  // BRC Locations
                                       centeredOn = {this.state.centeredOn}
                         />
                         </div>

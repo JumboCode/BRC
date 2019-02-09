@@ -36,8 +36,8 @@ class MapContainer extends React.Component {
             },
             zoom: 11,
             markers: [],
-            map: null,
-            maps: null,
+            map: null,  // The "actual map"
+            maps: null, // The API object
             centeredOn: null,   //position to recenter to
             clicked: false      //true when map has recentered to any resource
         }
