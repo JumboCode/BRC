@@ -63,7 +63,6 @@ class MapContainer extends React.Component {
 
         // Google's default info window
         function createInfoWindow(map, maps, marker, title) {
-            console.log("Creating info window")
             var infowindow = new maps.InfoWindow({
                 content: title
             });
