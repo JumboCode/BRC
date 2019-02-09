@@ -77,8 +77,8 @@ class AccordionSection extends React.Component {
     render() {
         //open once only if region matches initial region on map
         if (this.props.startOpen && !this.state.startedOpen) {
-            this.state.open = true;
-            this.state.startedOpen = true;
+            this.setState({open: true});
+            this.setState({startedOpen: true});
         }
         const isOpen = this.state.open;
         return (
