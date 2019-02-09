@@ -61,48 +61,34 @@ class MapContainer extends React.Component {
         this.state.map = map;
         const Geocoder = new maps.Geocoder();   //converts address to lat/lng
 
+        function createInfoWindow(map, maps, marker) {
+            console.log("Creating info window")
+            var infowindow = new maps.InfoWindow({
+                content: marker.title
+              });
+            marker.addListener('mouseover', function() {
+                infowindow.open(map, marker);
+              });
+            
+            marker.addListener('mouseout', function(){
+                infowindow.close()
+            })
+        }
+
 		//render marker at bisexual resource center (also the default center)
         Geocoder.geocode({"address": "Bisexual Resource Center"}, function(results, status) {
             if (status == "OK") {
-                //console.log("Testing geocode with BRC: " + results[0].geometry.location)
-                /*
+
                 var currentMarker = new maps.Marker({
                     position: results[0].geometry.location,
                     map: map,
                     title: "Bisexual Resource Center",
                     icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
                 })
-                
-               */ 
-              var currentMarker = new maps.Marker({
-                position: results[0].geometry.location,
-                title: "Bisexual Resource Center",
-                icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
-              })
 
-                /* Google's default info window test. 
-                var infowindow = new google.maps.InfoWindow({
-                    content: "test"
-                  });
-                currentMarker.addListener('mouseover', function() {
-                    infowindow.open(map, currentMarker);
-                  });
-                
-                currentMarker.addListener('mouseout', function(){
-                    infowindow.close()
-                })
-                */
+                // Google's default info window
+                createInfoWindow(map, maps, currentMarker)
                 this.state.markers.push(currentMarker)
-
-                //MapContainer.state.markers.push(
-                //    currentMarker
-                    /*new maps.Marker({
-                        position: results[0].geometry.location,
-                        map: map,
-                        title: "Bisexual Resource Center",
-                        icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
-                    })*/
-                //);
             }
             else {
                 console.log("Geocode was not successful for the following reason: " + status);
@@ -117,16 +103,16 @@ class MapContainer extends React.Component {
                 {
                     if (locationData[region][resource]["lat"] != undefined &&
                         locationData[region][resource]["lng"] != undefined)
-                    {
-/*            
-                        MapContainer.state.markers.push(
-                            new maps.Marker({
+                    {                                        
+                        var currentMarker = new maps.Marker({
                                 position: {lat: locationData[region][resource]["lat"], lng: locationData[region][resource]["lng"]},
                                 map: map,
-                                title: resource
-                            })
-                        );
-*/
+                                title: resource,
+                                icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
+                        })
+                    
+                        createInfoWindow(map, maps, currentMarker)
+                        this.state.markers.push(currentMarker)
                     }
                 }
             }
@@ -134,7 +120,6 @@ class MapContainer extends React.Component {
 
         
         //get lat/lng of search query
-        /*
         Geocoder.geocode({"address": this.props.search}, function(results, status) {
             //if exists, recenter to searched location
             if (status == "OK") {
@@ -142,7 +127,9 @@ class MapContainer extends React.Component {
                 MapContainer.state.markers.push(
                     new maps.Marker({
                         position: results[0].geometry.location,
-                        map: map
+                        map: map,
+                        icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
+
                     })
                 );
             }
@@ -158,7 +145,6 @@ class MapContainer extends React.Component {
                                 map: map,
                                 title: "You are here!",
                                 icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
-
                             })
                         );
                     },
@@ -166,7 +152,6 @@ class MapContainer extends React.Component {
                 );
             }
         });    
-        */
         this.getNewCenter(map, maps);
     }
     
@@ -200,48 +185,8 @@ class MapContainer extends React.Component {
 	render() {
         this.getNewCenter(this.state.map, this.state.maps);
 
-        /*
-        var currentMarker = new maps.Marker({
-            position: results[0].geometry.location,
-            title: "Bisexual Resource Center",
-            icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
-          })
-*/
-        this.state.markers.push("a")
-
-
     console.log(this.state.markers)
-    const Markers = this.state.markers.map((marker, index) => (
-        console.log("Mapping"),
-        <CustomMarker
-//        position = {marker.get('position')}
-//        title = {marker.get('title')}
-        key = {1}
-        lat={42.4075}
-        lng={71.1190}
-        ok = {console.log("Trying to make markers")}
 
-        />
-    ));
-/*
-    const Markers = this.props.markers &&
-      this.props.markers.filter((m, index) => index >= rowFrom && index <= rowTo)
-      .map((marker, index) => (
-        <MarkerExample
-          // required props
-          key={marker.get('id')}
-          lat={marker.get('lat')}
-          lng={marker.get('lng')}
-          // any user props
-          showBallon={index + rowFrom === this.props.openBallonIndex}
-          onCloseClick={this._onBalloonCloseClick}
-          hoveredAtTable={index + rowFrom === this.props.hoveredRowIndex}
-          scale={getScale(index + rowFrom, this.props.visibleRowFirst, this.props.visibleRowLast, K_SCALE_NORMAL)}
-          {...markerDescriptions[marker.get('type')]}
-          marker={marker} />
-      ));
-        */
-    
 
 		return (
 			<div style={{ height: `400px` }}>
@@ -249,13 +194,16 @@ class MapContainer extends React.Component {
 					bootstrapURLKeys={{ key: publicRuntimeConfig.MAP_KEY }}
                     defaultCenter={this.state.defaultCenter}
 					defaultZoom={this.state.zoom}
-                    //onGoogleApiLoaded={({map, maps}) => this.renderMarkers(map, maps)}
+                    onGoogleApiLoaded={({map, maps}) => this.renderMarkers(map, maps)}
                     center = {this.getNewCenter()}
                     onChildMouseEnter = {this._onChildMouseEnter}
                     onChildMouseLeave = {this._onChildMouseLeave}
-					//yesIWantToUseGoogleMapApiInternals
+					yesIWantToUseGoogleMapApiInternals
 				>
-                { Markers
+                {
+                    //Markers
+                    // This gets triggered before the api is loaded
+                    //this.state.markers
                 }
                 {console.log("Markers again")}
 
