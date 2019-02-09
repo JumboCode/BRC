@@ -200,7 +200,19 @@ class MapContainer extends React.Component {
 	render() {
         this.getNewCenter(this.state.map, this.state.maps);
 
+        /*
+        var currentMarker = new maps.Marker({
+            position: results[0].geometry.location,
+            title: "Bisexual Resource Center",
+            icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
+          })
+*/
+        this.state.markers.push("a")
+
+
+    console.log(this.state.markers)
     const Markers = this.state.markers.map((marker, index) => (
+        console.log("Mapping"),
         <CustomMarker
 //        position = {marker.get('position')}
 //        title = {marker.get('title')}
