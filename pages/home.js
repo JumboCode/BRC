@@ -1,4 +1,4 @@
-import { InfoBar, MapContainer, PopupContents, NavBar, BurgerMenu } from "../components";
+import { InfoBar, MapContainer, PopupContents, NavBar, BurgerMenu, WarningMessage } from "../components";
 import { Component } from "react";
 import fetch from 'isomorphic-fetch'
 import getConfig from "next/config";
@@ -74,6 +74,7 @@ class Home extends Component {
             <>
                 <NavBar />
                 <BurgerMenu />
+                <WarningMessage />
                 <div style={fullpage}>
                     <div style={mainContainer}>
                         <InfoBar
