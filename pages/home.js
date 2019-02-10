@@ -102,7 +102,6 @@ class Home extends Component {
                 <NavBar />
                 {/* <SearchBar styles={searchStyle}/> */}
                 <div style={fullpage}>
-                    <div></div>
                     <div style={mainContainer}>
                         <InfoBar locationData={this.props.locations[0]["states"]} 
                             centerState = {this.centerState} 

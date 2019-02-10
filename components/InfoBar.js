@@ -12,6 +12,7 @@ const info = {
 
 const title = {
   fontWeight: 'bold',
+  color: "#F293C1",
   fontSize: 40,
   fontFamily: 'sans-serif',
   paddingBottom: "5%",
