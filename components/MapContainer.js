@@ -128,6 +128,8 @@ class MapContainer extends React.Component {
                             icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
                         });
                         createInfoWindow(map, maps, currentMarker, MapContainer.props.search);
+                        //set initial region in home.js
+                        MapContainer.props.onInitialCenter(MapContainer.getRegion(results[0].address_components));
                     }
                 }
                 //if doesn't exist, recenter to user's location
@@ -152,6 +154,7 @@ class MapContainer extends React.Component {
             // If in "view all centers" mode, doesn't show error message
             navigator.geolocation.getCurrentPosition(
                 (position) => {
+                    let latlng = { lat: position.coords.latitude, lng: position.coords.longitude };
                     if (!MapContainer.state.clicked) {
                         map.setCenter({lat: position.coords.latitude, lng: position.coords.longitude});
                         var currentMarker = new maps.Marker({
@@ -165,6 +168,17 @@ class MapContainer extends React.Component {
             );        
         }   
         this.getNewCenter(map, maps);
+    }
+
+    //get initial location's region (state) as string from results of
+    //google maps geocode data, for example "Massachusetts"
+    getRegion(address_components) {
+        for (let i = 0; i < address_components.length; i++) {
+            //admin area level 1 means state
+            if (address_components[i].types[0] == "administrative_area_level_1") {
+                return address_components[i].long_name;
+            }
+        }
     }
 
     //create new google maps lat/lng object with passed in position
