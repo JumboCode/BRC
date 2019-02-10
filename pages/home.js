@@ -1,4 +1,4 @@
-import { InfoBar, MapContainer, PopupContents, NavBar, BurgerMenu, SearchBar } from "../components";
+import { InfoBar, MapContainer, PopupContents, NavBar, SearchBar, BurgerMenu, WarningMessage } from "../components";
 import { Component } from "react";
 import fetch from 'isomorphic-fetch'
 import getConfig from "next/config";
@@ -57,7 +57,7 @@ class Home extends Component {
         //hard coded url for now... need to change later
         const res = await fetch(`${appURL}/locations`);
         const locations = await res.json();
-        const search = props.query.search
+        const search = props.query.search;
         return { locations, search };
     }
 
@@ -65,17 +65,25 @@ class Home extends Component {
         super(props);
         this.state = {
             centeredOn : null,
+            initialRegion: "",
             show: false,
-            zoom: 11,
+            zoom: 11
         };
         this.onResourceClicked = this.onResourceClicked.bind(this);
+        this.onInitialCenter = this.onInitialCenter.bind(this);
         this.centerState = this.centerState.bind(this);
-        this.handleToggle = this.handleToggle.bind(this)
+        this.handleToggle = this.handleToggle.bind(this);
     }
 
     //position is of the format {lat: lat, lng: lng}
     onResourceClicked(position) {
         this.setState({centeredOn: position, zoom: 14});
+    }
+
+    //set initial location's region as string (used in MapContainer)
+    //lets corresponding accordion section know to start opened
+    onInitialCenter(region) {
+        this.setState({initialRegion: region});
     }
 
     handleToggle() {
@@ -99,12 +107,14 @@ class Home extends Component {
                         <InfoBar locationData={this.props.locations[0]["states"]} 
                             centerState = {this.centerState} 
                             onResourceClick = {this.onResourceClicked}
+                            initialRegion = {this.state.initialRegion}
                         />
                         <div style={map}>
                         <MapContainer search={this.props.search}
                                       locations={this.props.locations}
                                       centeredOn = {this.state.centeredOn}
                                       zoom = {this.state.zoom}
+                                      onInitialCenter = {this.onInitialCenter}
                         />
                         </div>
                     </div>
