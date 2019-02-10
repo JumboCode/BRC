@@ -36,6 +36,7 @@ class MapContainer extends React.Component {
             },
             zoom: 12,
             markers: [],
+            infowindows: [],
             map: null,
             maps: null,
             centeredOn: null,   //position to recenter to
@@ -51,22 +52,41 @@ class MapContainer extends React.Component {
     };
 
     // this may only occur once the the api loads, which only occurs once, despite any changes to the props,etc
+    // maps is the API object. Allows you to use functions like geocoding
+    // map is our actual map 
+
     renderMarkers(map, maps) {
         let MapContainer = this;
         this.state.maps = maps;
         this.state.map = map;
         const Geocoder = new maps.Geocoder();   //converts address to lat/lng
 
-        //render marker at bisexual resource center (also the default center)
-        Geocoder.geocode({ "address": "Bisexual Resource Center" }, function (results, status) {
+        // Google's default info window
+        function createInfoWindow(map, maps, marker, title) {
+            var infowindow = new maps.InfoWindow({
+                content: title
+            });
+
+            marker.addListener('mouseover', function() {
+                infowindow.open(map, marker);
+            });
+            
+            marker.addListener('mouseout', function(){
+                infowindow.close()
+            })
+        }
+
+		//render marker at bisexual resource center (also the default center)
+        Geocoder.geocode({"address": "Bisexual Resource Center"}, function(results, status) {
             if (status == "OK") {
-                MapContainer.state.markers.push(
-                    new maps.Marker({
-                        position: results[0].geometry.location,
-                        map: map,
-                        title: "Bisexual Resource Center"
-                    })
-                );
+
+                var currentMarker = new maps.Marker({
+                    position: results[0].geometry.location,
+                    map: map,
+                    icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
+                })
+
+                createInfoWindow(map, maps, currentMarker, "Bisexual Resource Center")
             }
             else {
                 console.log("Geocode was not successful for the following reason: " + status);
@@ -79,19 +99,20 @@ class MapContainer extends React.Component {
             if (locationData.hasOwnProperty(region)) {
                 for (let resource in locationData[region]) {
                     if (locationData[region][resource]["lat"] != undefined &&
-                        locationData[region][resource]["lng"] != undefined) {
-                        MapContainer.state.markers.push(
-                            new maps.Marker({
-                                position: { lat: locationData[region][resource]["lat"], lng: locationData[region][resource]["lng"] },
+                        locationData[region][resource]["lng"] != undefined)
+                    {                                        
+                        var currentMarker = new maps.Marker({
+                                position: {lat: locationData[region][resource]["lat"], lng: locationData[region][resource]["lng"]},
                                 map: map,
-                                title: resource
-                            })
-                        );
+                                icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
+                        })
+                    
+                        createInfoWindow(map, maps, currentMarker, resource)
                     }
                 }
             }
         }
-
+        // Check if it's in "view all centers" mode
         if (this.props.search !== "*") {
             //get lat/lng of search query
             Geocoder.geocode({ "address": this.props.search }, function (results, status) {
@@ -101,51 +122,49 @@ class MapContainer extends React.Component {
                     if (!MapContainer.state.clicked)
                     {
                         map.setCenter(results[0].geometry.location);
-                        MapContainer.state.markers.push(
-                            new maps.Marker({
-                                position: results[0].geometry.location,
-                                map: map
-                            })
-                        );
+                        let currentMarker = new maps.Marker({
+                            position: results[0].geometry.location,
+                            map: map,
+                            icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
+                        });
+                        createInfoWindow(map, maps, currentMarker, MapContainer.props.search);
                     }
                 }
                 //if doesn't exist, recenter to user's location
                 else {
                     alert("Address doesn't exist, using your current position.");
-                    navigator.geolocation.getCurrentPosition(
-                        (position) => {
-                            if (!MapContainer.state.clicked) {
-                                map.setCenter({ lat: position.coords.latitude, lng: position.coords.longitude });
-                                MapContainer.state.markers.push(
-                                    new maps.Marker({
-                                        position: { lat: position.coords.latitude, lng: position.coords.longitude },
-                                        map: map,
-                                        title: "You are here!"
-                                    })
-                                );
-                            }
-                        },
-                        (error) => console.log("Navigator.geolocation failed" + error)
-                    );
+                    if (!MapContainer.state.clicked) {
+                        navigator.geolocation.getCurrentPosition(
+                            (position) => {
+                                map.setCenter({lat: position.coords.latitude, lng: position.coords.longitude});
+                                let currentMarker = new maps.Marker({
+                                    position: {lat: position.coords.latitude, lng: position.coords.longitude},
+                                    map: map,
+                                    icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
+                                })
+                                createInfoWindow(map, maps, currentMarker, "Your location");
+                            }, (error) => console.log("Navigator.geolocation failed" + error)
+                        );
+                    }
                 }
             });
         } else {
+            // If in "view all centers" mode, doesn't show error message
             navigator.geolocation.getCurrentPosition(
                 (position) => {
                     if (!MapContainer.state.clicked) {
-                        map.setCenter({ lat: position.coords.latitude, lng: position.coords.longitude });
-                        MapContainer.state.markers.push(
-                            new maps.Marker({
-                                position: { lat: position.coords.latitude, lng: position.coords.longitude },
-                                map: map,
-                                title: "You are here!"
-                            })
-                        );
+                        map.setCenter({lat: position.coords.latitude, lng: position.coords.longitude});
+                        var currentMarker = new maps.Marker({
+                            position: {lat: position.coords.latitude, lng: position.coords.longitude},
+                            map: map,
+                            icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
+                        })
+                        createInfoWindow(map, maps, currentMarker, "Your location")
                     }
-                },
-                (error) => console.log("Navigator.geolocation failed" + error)
-            );            
-        }
+                }, (error) => console.log("Navigator.geolocation failed" + error)
+            );        
+        }   
+        this.getNewCenter(map, maps);
     }
 
     //create new google maps lat/lng object with passed in position
@@ -173,23 +192,35 @@ class MapContainer extends React.Component {
         return this.state.defaultCenter;
     }
 
-    render() {
+    _onChildMouseEnter = (key) => {
+        this.props.onHoverKeyChange(key);
+    }
+
+    _onChildMouseLeave = () => {
+        this.props.onHoverKeyChange(null);
+    }
+
+	render() {
         this.getNewCenter(this.state.map, this.state.maps);
-        return (
-            <div style={{ height: `400px` }}>
-                <GoogleMap
-                    bootstrapURLKeys={{ key: publicRuntimeConfig.MAP_KEY }}
+		return (
+			<div style={{ height: `400px` }}>
+				<GoogleMap 
+					bootstrapURLKeys={{ key: publicRuntimeConfig.MAP_KEY }}
                     defaultCenter={this.state.defaultCenter}
                     defaultZoom={this.state.zoom}
                     zoom={this.props.zoom}
-                    onGoogleApiLoaded={({ map, maps }) => this.renderMarkers(map, maps)}
-                    center={this.getNewCenter()}
-                    yesIWantToUseGoogleMapApiInternals
-                >
-                </GoogleMap>
-            </div>
-        );
-    }
+                    onGoogleApiLoaded={({map, maps}) => this.renderMarkers(map, maps)}
+                    center = {this.getNewCenter()}
+                    onChildMouseEnter = {this._onChildMouseEnter}
+                    onChildMouseLeave = {this._onChildMouseLeave}
+					yesIWantToUseGoogleMapApiInternals
+				>
+				</GoogleMap>
+			</div>
+		);
+	}
 }
+
+
 
 export default MapContainer;
