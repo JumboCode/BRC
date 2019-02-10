@@ -1,4 +1,4 @@
-import { InfoBar, MapContainer, PopupContents, NavBar, BurgerMenu, SearchBar } from "../components";
+import { InfoBar, MapContainer, PopupContents, NavBar, SearchBar, BurgerMenu, WarningMessage } from "../components";
 import { Component } from "react";
 import fetch from 'isomorphic-fetch'
 import getConfig from "next/config";
