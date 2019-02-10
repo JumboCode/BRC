@@ -1,23 +1,30 @@
-import BurgerMenu from "./BurgerMenu";
+import { SearchBar } from "../components";
+import Link from "next/link";
 
 const styles = {
-    navBarContainer: {
-        position: "fixed",
-        top: 0,
-        left: 0,
-        right: 0,
-        backgroundColor: "transparent",
-        padding: "20px",
-        zIndex: "99",
-    },
+  navBarContainer: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  homeButton: {
+    transform: `rotate(${30}deg)`,
+    padding: "5px",
+    cursor: "pointer",
+  }
+}
+
+const searchStyle = {
+  display: "flex",
+  flexDirection: "row",
 }
 
 const NavBar = () => (
-    <>
-        <BurgerMenu />
-        <div style={styles.navBarContainer} /> 
-        <div style={{ marginBottom: "40px" }} />
-    </>
+  <div style={styles.navBarContainer}>
+    <Link href="/">
+      <img alt="Home" src="./static/images/favicon.ico" width="50" height="50" style={styles.homeButton} />
+    </Link>
+  </div>
 );
 
 export default NavBar;

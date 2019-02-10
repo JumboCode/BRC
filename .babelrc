@@ -1,14 +1,35 @@
 {
-    "env": {
-      "development": {
-        "presets": ["next/babel"]
-      },
-      "production": {
-        "presets": ["next/babel"]
-      },
-      "test": {
-        "presets": [["next/babel", { "preset-env": { "modules": "commonjs" } }]]
-      }
+  "env": {
+    "development": {
+      "presets": ["next/babel"]
+    },
+    "build": {
+      "presets": ["next/babel"]
+    },
+    "test": {
+      "presets": [["next/babel", { "preset-env": { "modules": "commonjs" } }]]
     }
+  },
+  "plugins": [
+    [
+      "styled-jsx/babel"
+    ],
+    ["transform-es2015-modules-commonjs", {
+      "allowTopLevelThis": true
+    }]
+  ],
+  "presets": [
+    [
+      "next/babel",
+      {
+        "preset-env": {
+          "modules": "commonjs",
+          "target": "es5"
+        },
+        "env": {
+          "modules": "commonjs"
+        }
+      }
+    ]
+  ]
 }
-  

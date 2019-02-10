@@ -5,8 +5,9 @@ const style = {
     "margin": "12px",
     "border": "1px solid #eee",
     "boxShadow": "0 2px 2px #ccc",
-    "width": "200px",
-    "padding": "20px"
+    "width": "400px",
+    "padding": "20px",
+    "lineHeight": "1",
   },
 }
 //props is an object with keys and values:
@@ -34,9 +35,9 @@ class EventCard extends React.Component {
       <>
         <div style={style.event}>
           <p style={{fontSize: "18px", fontWeight: "bold"}}>{this.props.event}</p>
-          <p>{this.props.host}</p>
-          <p>{this.props.location}</p>
-          <p>{this.props.description}</p>
+          <p style={{fontSize: "14px"}}>{this.props.host}</p>
+          <p style={{fontSize: "14px"}}>{this.props.location}</p>
+          <p style={{fontSize: "14px"}}>{this.props.description}</p>
         </div>
       </>
     );

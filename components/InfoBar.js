@@ -1,9 +1,10 @@
 import { Accordion, AccordionSection, Resources, LetterSelectBar } from ".";
 import { Component } from "react";
+import ReactDOM from 'react-dom';
 
 const info = {
   display: 'flex',
-  flexFlow: 'column wrap',
+  flexFlow: 'column',
   height: '90vh',
   overflow: 'auto',
 };
@@ -15,6 +16,13 @@ const title = {
   paddingBottom: "5%",
 };
 
+const calendar = {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  textAlign: 'center',
+};
+
 const scroll = {
   paddingRight: "10px",
   height: '70%',
@@ -22,13 +30,18 @@ const scroll = {
 }
 
 class InfoBar extends Component {
+  state = {
+    date: new Date(),
+  }
+
+  onChange = date => this.setState({Date})
+
   constructor(props) {
     super(props);
     this.state = {
       filterLetter: "all"
     };
     this.onLetterClicked = this.onLetterClicked.bind(this)
-    this.onClearClicked = this.onClearClicked.bind(this)
   }
 
 
@@ -37,12 +50,13 @@ class InfoBar extends Component {
   }
 
   onLetterClicked(letter){
-    this.setState( { filterLetter: letter })
+    if (letter === this.state.filterLetter) {
+      this.setState( { filterLetter: "all" })
+    } else {
+      this.setState( {filterLetter: letter})
+    }
   }
-  
-  onClearClicked(){
-    this.setState( {filterLetter: "all" })
-  }
+
 
   getLetterFilters = () => {
     let noDuplicates = {}
@@ -62,7 +76,7 @@ class InfoBar extends Component {
         if (locationData.hasOwnProperty(state)) {
           var stateResources = locationData[state];
           var resourceRegion = state;
-          sections.push(<AccordionSection title = {state} key = {i}> <Resources region = {resourceRegion} resources={stateResources} onResourceClick = {this.props.onResourceClick}/> </AccordionSection>)
+          sections.push(<AccordionSection title = {state} key = {i} region = {resourceRegion} centerState = {this.props.centerState}> <Resources region = {resourceRegion} resources={stateResources} onResourceClick = {this.props.onResourceClick}/> </AccordionSection>)
             i++
         }
       }
@@ -71,8 +85,8 @@ class InfoBar extends Component {
     return(
       <div style = {info}>
         <div style = {title}>  Bi Spot: Find a group near you.</div>
-        <LetterSelectBar letters={stateInitials} selected={this.state.filterLetter} onLetterClicked = {this.onLetterClicked} onClearClicked = {this.onClearClicked}/>
-        <div style={scroll}> 
+        <LetterSelectBar letters={stateInitials} selected={this.state.filterLetter} onLetterClicked = {this.onLetterClicked} />
+        <div style={scroll}>
           <Accordion>
             {sections}
           </Accordion>
@@ -81,6 +95,5 @@ class InfoBar extends Component {
     )
   }
 }
-
 
 export default InfoBar;
