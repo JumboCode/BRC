@@ -16,7 +16,6 @@
 		"create-react-class": "^15.6.3",
 		"dotenv": "^6.0.0",
 		"dotenv-webpack": "^1.5.7",
-		"event-stream": "^3.3.2",
 		"express": "^4.16.3",
 		"google-map-react": "^1.0.6",
 		"mongodb": "^3.1.8",

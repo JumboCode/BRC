@@ -37,9 +37,6 @@ const Index = () => (
       </div>
       <SearchBar styles={searchStyle} />
       <div style={linkStyle}>
-        <Link href="/events">
-          <a textDecoration="none">or click to view BRC events (current month)</a>
-        </Link>
       </div>
     </div>
     <SocialMedia />
