@@ -33,7 +33,7 @@ const Index = () => (
     <BurgerMenu />
     <div style={bodyStyle}>
       <div style={logo}>
-        <img alt="BRC logo" src="./static/images/BRC-logo.jpg" width="300" height="110" />
+        <img alt="BRC logo" src="./static/images/bispot.png" width="280" height="100" />
       </div>
       <SearchBar styles={searchStyle} />
       <div style={linkStyle}>
