@@ -54,7 +54,6 @@ class Home extends Component {
     // get list of locations as prop
     static async getInitialProps(props) {
         const appURL = publicRuntimeConfig.APP_URL || "http://localhost:3000";
-        //hard coded url for now... need to change later
         const res = await fetch(`${appURL}/locations`);
         const locations = await res.json();
         const search = props.query.search;
@@ -67,10 +66,12 @@ class Home extends Component {
             centeredOn : null,
             initialRegion: "",
             show: false,
-            zoom: 11
+            zoom: 11,
+            badAddress: false
         };
         this.onResourceClicked = this.onResourceClicked.bind(this);
         this.onInitialCenter = this.onInitialCenter.bind(this);
+        this.onBadAddress = this.onBadAddress.bind(this);
         this.centerState = this.centerState.bind(this);
         this.handleToggle = this.handleToggle.bind(this);
     }
@@ -86,8 +87,13 @@ class Home extends Component {
         this.setState({initialRegion: region});
     }
 
+    //invalid initial searched address
+    onBadAddress() {
+        this.setState({badAddress: true});
+    }
+
     handleToggle() {
-        this.setState({ show: !this.state.show });
+        this.setState({show: !this.state.show});
     }
 
     //region is of the format {lat: null, lng: null, region: string}
@@ -96,11 +102,17 @@ class Home extends Component {
     }
 
     render () {
+        let warning;
+        if (this.state.badAddress) {
+            warning = <WarningMessage />;
+        }
+
         return (
             <>
                 <BurgerMenu />
                 <NavBar />
                 <SearchBar styles={searchStyle}/>
+                {warning}
                 <div style={fullpage}>
                     <div></div>
                     <div style={mainContainer}>
@@ -115,6 +127,7 @@ class Home extends Component {
                                       centeredOn = {this.state.centeredOn}
                                       zoom = {this.state.zoom}
                                       onInitialCenter = {this.onInitialCenter}
+                                      onBadAddress = {this.onBadAddress}
                         />
                         </div>
                     </div>
