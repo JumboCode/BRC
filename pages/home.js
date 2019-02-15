@@ -76,6 +76,19 @@ class Home extends Component {
     //position is of the format {lat: lat, lng: lng}
     onResourceClicked(position) {
         this.setState({centeredOn: position, zoom: 14});
+        console.log(position)
+    }
+
+    // this function will be invoked on a state change
+    // not sure how to do that :/
+    componentWillReceiveProps (nextProps) {
+        // You don't have to do this check first, but it can help prevent an unneeded render
+        if (nextProps.search !== this.state.search) {
+            console.log("Hi James!");
+
+            // this.setState({ centeredOn: {lat: 34.0522342, lng: -118.2436849}, zoom: 14 }); 
+            this.setState({ lat: null, lng: null, region: nextProps.title });
+        }
     }
 
     handleToggle() {
