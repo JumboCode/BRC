@@ -63,8 +63,12 @@ class MapContainer extends React.Component {
 
         // Google's default info window
         function createInfoWindow(map, maps, marker, title) {
+            let contentString = title
+            let contentString2 = '<h1 onclick="console.log(\'clickedWindow\');">title</h1>'
+            //var contentString2 = stores[i].name + '<br/><a href="#" onclick="selectstore(\'test\');">Select Store</a>';
+
             var infowindow = new maps.InfoWindow({
-                content: title
+                content: contentString2
             });
 
             marker.addListener('mouseover', function() {
@@ -77,7 +81,10 @@ class MapContainer extends React.Component {
 
             marker.addListener('click', function(){
                 infowindow.open(map, marker);
-                
+            })
+
+            infowindow.addListener('click', function(){
+                console.log("Clicked on info window")
             })
         }
 
