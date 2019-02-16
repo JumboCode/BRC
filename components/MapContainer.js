@@ -43,7 +43,6 @@ class MapContainer extends React.Component {
             centeredOn: null,   //position to recenter to
             clicked: false      //true when map has recentered to any resource
         }
-        this.getNewCenter = this.getNewCenter.bind(this);
     }
     // new prop, centeredResource: "Region"
 
@@ -183,12 +182,12 @@ class MapContainer extends React.Component {
     }
 
     //create new google maps lat/lng object with passed in position
-    getNewCenter(map, maps) {
+    getNewCenter = (map, maps) => {
         if (this.props.centeredOn != null) {
             if (maps != null) {
                 this.state.clicked = true;
                 if (this.props.centeredOn.lat === null && this.props.centeredOn.lng === null) {
-                    const Geocoder = new maps.Geocoder(); 
+                    const Geocoder = new maps.Geocoder();
                     Geocoder.geocode({ "address": this.props.centeredOn.region }, function (results, status) {
                         if (status == "OK") {
                             map.setCenter(results[0].geometry.location);
@@ -225,7 +224,6 @@ class MapContainer extends React.Component {
                     defaultZoom={this.state.zoom}
                     zoom={this.props.zoom}
                     onGoogleApiLoaded={({map, maps}) => this.renderMarkers(map, maps)}
-                    center = {this.getNewCenter()}
                     onChildMouseEnter = {this._onChildMouseEnter}
                     onChildMouseLeave = {this._onChildMouseLeave}
 					yesIWantToUseGoogleMapApiInternals

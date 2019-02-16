@@ -66,11 +66,7 @@ class Home extends Component {
             centeredOn : null,
             initialRegion: "",
             show: false,
-<<<<<<< HEAD
             zoom: ZoomScale.middle_zoom,
-=======
-            zoom: 11
->>>>>>> 624e699069cb702cb23d605e8126fc88f205aa6b
         };
         this.onResourceClicked = this.onResourceClicked.bind(this);
         this.onInitialCenter = this.onInitialCenter.bind(this);
@@ -80,20 +76,21 @@ class Home extends Component {
 
     //position is of the format {lat: lat, lng: lng}
     onResourceClicked(position) {
-        this.setState({centeredOn: position, zoom: 14});
+        this.setState({centeredOn: position, zoom: ZoomScale.close_zoom});
         console.log(position)
     }
 
     componentWillReceiveProps (nextProps) {
         // You don't have to do this check first, but it can help prevent an unneeded render
         if (nextProps.search !== this.state.search) {
-            this.setState({centeredOn: {lat: null, lng: null, region:nextProps.search}, zoom: ZoomScale.close_zoom});
+            this.setState({centeredOn: {lat: null, lng: null, region:nextProps.search}, zoom: ZoomScale.middle_zoom});
         }
     }
 
     //set initial location's region as string (used in MapContainer)
     //lets corresponding accordion section know to start opened
     onInitialCenter(region) {
+        console.log(region);
         this.setState({initialRegion: region});
     }
 
