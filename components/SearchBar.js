@@ -6,7 +6,13 @@ import Router from 'next/router';
 const entryStyle = {
   display: "flex",
   flexDirection: "row",
+  justifyContent: "center",
+  width: "200%",
 };
+
+const inputStyle = {
+  width: "100%"
+}
 
 class SearchBar extends React.Component {
   constructor(props) {
@@ -43,22 +49,20 @@ class SearchBar extends React.Component {
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
           <div style={this.props.styles}>
             <div style={entryStyle}>
-              <form>
-                <input
+              <div style={inputStyle}>
+                <input style={{width: "100%"}}
                   {...getInputProps({
-                    placeholder: 'Search Places ...',
+                    placeholder: 'Try something like: street address or name of city...',
                     className: 'location-search-input',
                     onKeyDown: (e) => this.onKeyPress(e, suggestions),
                   })}
                 />
-              </form>
-              <form>
-                <div>
-                  <Link href={{ pathname: '/home', query: { search: this.state.address } }}>
-                    <button>Search</button>
-                  </Link>
-                </div>
-              </form>
+              </div>
+              <div>
+                <Link href={{ pathname: '/home', query: { search: this.state.address } }}>
+                  <button>Search</button>
+                </Link>
+              </div>
             </div>
             <div className="autocomplete-dropdown-container" style={{overflow: "visible"}}>
               {loading && <div>Loading...</div>}
