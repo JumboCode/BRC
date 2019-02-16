@@ -3,7 +3,7 @@ import { Component } from "react";
 import fetch from 'isomorphic-fetch'
 import getConfig from "next/config";
 import Popup from 'reactjs-popup'
-
+import ZoomScale from "../static/ZoomScale";
 
 const { publicRuntimeConfig } = getConfig()
 
@@ -42,7 +42,6 @@ const searchStyle = {
     alignItems: "left",
   }
 
-
 /*  Test parameters for the Pop-Up  */
 const popupTest = {
     heading: "Pop-Up Heading",
@@ -66,7 +65,7 @@ class Home extends Component {
         this.state = {
             centeredOn : null,
             show: false,
-            zoom: 11,
+            zoom: ZoomScale.middle_zoom,
         };
         this.onResourceClicked = this.onResourceClicked.bind(this);
         this.centerState = this.centerState.bind(this);
@@ -79,12 +78,10 @@ class Home extends Component {
         console.log(position)
     }
 
-    // this function will be invoked on a state change
-    // not sure how to do that :/
     componentWillReceiveProps (nextProps) {
         // You don't have to do this check first, but it can help prevent an unneeded render
         if (nextProps.search !== this.state.search) {
-            this.setState({centeredOn: {lat: null, lng: null, region:nextProps.search}});
+            this.setState({centeredOn: {lat: null, lng: null, region:nextProps.search}, zoom: ZoomScale.close_zoom});
         }
     }
 
@@ -94,7 +91,7 @@ class Home extends Component {
 
     //region is of the format {lat: null, lng: null, region: string}
     centerState = (region) => {
-        this.setState({centeredOn: region, zoom: 5.5});
+        this.setState({centeredOn: region, zoom: ZoomScale.state_zoom});
     }
 
     render () {

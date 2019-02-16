@@ -23,6 +23,7 @@ import React from "react";
 import getConfig from "next/config";
 const { publicRuntimeConfig } = getConfig();
 import GoogleMap from "google-map-react";
+import ZoomScale from "../static/ZoomScale";
 
 class MapContainer extends React.Component {
 
@@ -34,7 +35,7 @@ class MapContainer extends React.Component {
                 lat: 42.348591,
                 lng: -71.073051
             },
-            zoom: 12,
+            zoom: ZoomScale.middle_zoom,
             markers: [],
             map: null,
             maps: null,
@@ -47,7 +48,7 @@ class MapContainer extends React.Component {
 
     static defaultProps = {
         center: [59.938043, 30.337157],
-        zoom: 9,
+        zoom: ZoomScale.middle_zoom,
     };
 
     // this may only occur once the the api loads, which only occurs once, despite any changes to the props,etc
