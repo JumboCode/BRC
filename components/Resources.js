@@ -112,7 +112,6 @@ class Resources extends React.Component {
         // Key should be the name of some center
         
         for (var resource in this.props.resources) {
-            console.log("Resource: ", resource);
             if (this.props.resources.hasOwnProperty(resource)) {
                 var resourceInfo = this.props.resources[resource]
                 resourceInfo.Region = this.props.region;
