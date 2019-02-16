@@ -74,6 +74,11 @@ class MapContainer extends React.Component {
             marker.addListener('mouseout', function(){
                 infowindow.close()
             })
+
+            marker.addListener('click', function(){
+                infowindow.open(map, marker);
+                
+            })
         }
 
 		//render marker at bisexual resource center (also the default center)
