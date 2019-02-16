@@ -36,11 +36,7 @@ const Index = () => (
         <img alt="BRC logo" src="./static/images/BRC-logo.jpg" width="300" height="110" />
       </div>
       <SearchBar styles={searchStyle} />
-      <div style={linkStyle}>
-        <Link href="/events">
-          <a textDecoration="none">or click to view BRC events (current month)</a>
-        </Link>
-      </div>
+
     </div>
     <SocialMedia />
   </>
