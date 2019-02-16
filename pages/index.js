@@ -36,8 +36,6 @@ const Index = () => (
         <img alt="BRC logo" src="./static/images/bispot.png" width="280" height="100" />
       </div>
       <SearchBar styles={searchStyle} />
-      <div style={linkStyle}>
-      </div>
     </div>
     <SocialMedia />
   </>
