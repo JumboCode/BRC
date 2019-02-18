@@ -44,11 +44,11 @@ app.prepare()
                             states = results[0].states;
                             let sorted_states = Object.keys(states).sort().reduce(function (result, key) {
                                 result[key] = states[key];
-                                var newObj = {};
                                 let sorted_events = Object.keys(result[key]).sort().reduce(function (res, k) {
-                                    newObj[k] = result[key][k]
+                                    res[k] = result[key][k]
+                                    return res;
                                 }, {});
-                                result[key] = newObj;
+                                result[key] = sorted_events;
                                 return result;
                             }, {});
                             results[0].states = sorted_states;
