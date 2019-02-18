@@ -42,8 +42,13 @@ app.prepare()
                             //'results' will be an array (or list)
                             if (err) throw err;
                             states = results[0].states;
-                            sorted_states = Object.keys(states).sort().reduce(function (result, key) {
+                            let sorted_states = Object.keys(states).sort().reduce(function (result, key) {
                                 result[key] = states[key];
+                                var newObj = {};
+                                let sorted_events = Object.keys(result[key]).sort().reduce(function (res, k) {
+                                    newObj[k] = result[key][k]
+                                }, {});
+                                result[key] = newObj;
                                 return result;
                             }, {});
                             results[0].states = sorted_states;
