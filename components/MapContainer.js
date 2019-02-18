@@ -23,6 +23,7 @@ import React from "react";
 import getConfig from "next/config";
 const { publicRuntimeConfig } = getConfig();
 import GoogleMap from "google-map-react";
+import ZoomScale from "../static/ZoomScale";
 
 class MapContainer extends React.Component {
 
@@ -34,7 +35,7 @@ class MapContainer extends React.Component {
                 lat: 42.348591,
                 lng: -71.073051
             },
-            zoom: 12,
+            zoom: ZoomScale.middle_zoom,
             markers: [],
             infowindows: [],
             map: null,
@@ -42,13 +43,12 @@ class MapContainer extends React.Component {
             centeredOn: null,   //position to recenter to
             clicked: false      //true when map has recentered to any resource
         }
-        this.getNewCenter = this.getNewCenter.bind(this);
     }
     // new prop, centeredResource: "Region"
 
     static defaultProps = {
         center: [59.938043, 30.337157],
-        zoom: 9,
+        zoom: ZoomScale.middle_zoom,
     };
 
     // this may only occur once the the api loads, which only occurs once, despite any changes to the props,etc
@@ -194,12 +194,12 @@ class MapContainer extends React.Component {
     }
 
     //create new google maps lat/lng object with passed in position
-    getNewCenter(map, maps) {
+    getNewCenter = (map, maps) => {
         if (this.props.centeredOn != null) {
             if (maps != null) {
                 this.state.clicked = true;
                 if (this.props.centeredOn.lat === null && this.props.centeredOn.lng === null) {
-                    const Geocoder = new maps.Geocoder(); 
+                    const Geocoder = new maps.Geocoder();
                     Geocoder.geocode({ "address": this.props.centeredOn.region }, function (results, status) {
                         if (status == "OK") {
                             map.setCenter(results[0].geometry.location);
@@ -236,7 +236,6 @@ class MapContainer extends React.Component {
                     defaultZoom={this.state.zoom}
                     zoom={this.props.zoom}
                     onGoogleApiLoaded={({map, maps}) => this.renderMarkers(map, maps)}
-                    center = {this.getNewCenter()}
                     onChildMouseEnter = {this._onChildMouseEnter}
                     onChildMouseLeave = {this._onChildMouseLeave}
 					yesIWantToUseGoogleMapApiInternals
