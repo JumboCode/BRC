@@ -7,11 +7,12 @@ const entryStyle = {
   display: "flex",
   flexDirection: "row",
   justifyContent: "center",
-  width: "200%",
+  width: "180%",
 };
 
 const inputStyle = {
-  width: "100%"
+  width: "100%",
+  height: "30px",
 }
 
 class SearchBar extends React.Component {
