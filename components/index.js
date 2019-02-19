@@ -12,6 +12,7 @@ import Resources from "./Resources";
 import BurgerMenu from "./BurgerMenu";
 import Events from "./Events";
 import WarningMessage from "./WarningMessage"
+import DefaultCity from "./DefaultCity"
 
 export {
     InfoBar,
@@ -28,4 +29,5 @@ export {
     BurgerMenu,
     Events,
     WarningMessage,
+    DefaultCity,
 };

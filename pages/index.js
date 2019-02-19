@@ -1,4 +1,4 @@
-import { SearchBar, BurgerMenu, SocialMedia } from "../components";
+import { SearchBar, BurgerMenu, SocialMedia, DefaultCity} from "../components";
 import Link from "next/link";
 
 const bodyStyle = {
@@ -28,6 +28,7 @@ const searchStyle = {
   alignItems: "center",
 }
 
+
 const Index = () => (
   <>
     <BurgerMenu />
@@ -41,6 +42,7 @@ const Index = () => (
           <a textDecoration="none">or click to view BRC events (current month)</a>
         </Link>
       </div>
+      <DefaultCity style={bodyStyle}/>
     </div>
     <SocialMedia />
   </>
