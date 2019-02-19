@@ -1,23 +1,23 @@
-import { SearchBar } from "../components";
-import Link from "next/link";
+import Link from 'next/link';
+import { SearchBar } from '.';
 
 const styles = {
   navBarContainer: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   homeButton: {
     transform: `rotate(${30}deg)`,
-    padding: "5px",
-    cursor: "pointer",
-  }
-}
+    padding: '5px',
+    cursor: 'pointer',
+  },
+};
 
 const searchStyle = {
-  display: "flex",
-  flexDirection: "row",
-}
+  display: 'flex',
+  flexDirection: 'row',
+};
 
 const NavBar = () => (
   <div style={styles.navBarContainer}>
