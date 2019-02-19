@@ -1,24 +1,24 @@
-import React from "react";
+import React from 'react';
 import PlacesAutocomplete from 'react-places-autocomplete';
 import Link from 'next/link';
 import Router from 'next/router';
 
 const entryStyle = {
-  display: "flex",
-  flexDirection: "row",
+  display: 'flex',
+  flexDirection: 'row',
 };
 
 class SearchBar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { address: "" };
+    this.state = { address: '' };
   }
 
-  handleChange = address => {
+  handleChange = (address) => {
     this.setState({ address });
   };
 
-  handleSelect = address => {
+  handleSelect = (address) => {
     this.setState({ address });
   };
 
@@ -28,7 +28,7 @@ class SearchBar extends React.Component {
     if (!suggestionsOpen && event.keyCode === 13) { // if this is enter key, submit form
       Router.push({
         pathname: '/home',
-        query: { search: this.state.address }
+        query: { search: this.state.address },
       });
     }
   }
@@ -40,7 +40,9 @@ class SearchBar extends React.Component {
         onChange={this.handleChange}
         onSelect={this.handleSelect}
       >
-        {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+        {({
+          getInputProps, suggestions, getSuggestionItemProps, loading,
+        }) => (
           <div style={this.props.styles}>
             <div style={entryStyle}>
               <form>
@@ -48,7 +50,7 @@ class SearchBar extends React.Component {
                   {...getInputProps({
                     placeholder: 'Search Places ...',
                     className: 'location-search-input',
-                    onKeyDown: (e) => this.onKeyPress(e, suggestions),
+                    onKeyDown: e => this.onKeyPress(e, suggestions),
                   })}
                 />
               </form>
@@ -60,9 +62,9 @@ class SearchBar extends React.Component {
                 </div>
               </form>
             </div>
-            <div className="autocomplete-dropdown-container" style={{overflow: "visible"}}>
+            <div className="autocomplete-dropdown-container" style={{ overflow: 'visible' }}>
               {loading && <div>Loading...</div>}
-              {suggestions.map(suggestion => {
+              {suggestions.map((suggestion) => {
                 const className = suggestion.active
                   ? 'suggestion-item--active'
                   : 'suggestion-item';
