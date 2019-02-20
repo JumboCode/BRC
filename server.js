@@ -41,6 +41,17 @@ app.prepare()
                             //all results of db.locations.find() will go into...
                             //'results' will be an array (or list)
                             if (err) throw err;
+                            states = results[0].states;
+                            let sorted_states = Object.keys(states).sort().reduce(function (result, key) {
+                                result[key] = states[key];
+                                let sorted_events = Object.keys(result[key]).sort().reduce(function (res, k) {
+                                    res[k] = result[key][k]
+                                    return res;
+                                }, {});
+                                result[key] = sorted_events;
+                                return result;
+                            }, {});
+                            results[0].states = sorted_states;
                             res.send(results);
                         });
                     }

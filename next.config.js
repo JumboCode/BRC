@@ -1,5 +1,5 @@
-//const webpack = require('webpack');
-//require('dotenv').config()
+// const webpack = require('webpack');
+// require('dotenv').config()
 
 const { parsed: localEnv } = require('dotenv').config()
 const webpack = require('webpack')
@@ -24,6 +24,11 @@ module.exports = {
               presets: ['@babel/preset-env']
             }
           }
+        },
+        {
+          test: /\.js$/,
+          exclude: /node_modules/,
+          use: ['babel-loader', 'eslint-loader']
         },
         {
           test: /\.css$/,
