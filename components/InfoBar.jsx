@@ -107,7 +107,7 @@ class InfoBar extends Component {
               resources={stateResources}
               onResourceClick={this.props.onResourceClick}
             />
-                        </AccordionSection>);
+          </AccordionSection>);
           i++;
         }
       }
