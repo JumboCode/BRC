@@ -44,7 +44,8 @@ class MapContainer extends React.Component {
       clicked: false, // true when map has recentered to any resource
     };
   }
-  // this may only occur once the the api loads, which only occurs once, despite any changes to the props,etc
+  // this may only occur once the the api loads, 
+  // which only occurs once, despite any changes to the props,etc
   // maps is the API object. Allows you to use functions like geocoding
   // map is our actual map
 
@@ -71,6 +72,17 @@ class MapContainer extends React.Component {
       return this.state.defaultCenter;
     }
 
+    // get initial location's region (state) as string from results of
+    // google maps geocode data, for example "Massachusetts"
+    getRegion(address_components) {
+      for (let i = 0; i < address_components.length; i++) {
+        // admin area level 1 means state
+        if (address_components[i].types[0] == 'administrative_area_level_1') {
+          return address_components[i].long_name;
+        }
+      }
+    }
+    
     _onChildMouseEnter = (key) => {
       this.props.onHoverKeyChange(key);
     }
@@ -79,7 +91,6 @@ class MapContainer extends React.Component {
       this.props.onHoverKeyChange(null);
     }
 
-    
     renderMarkers(map, maps) {
       const MapContainer = this;
       this.state.maps = maps;
@@ -90,7 +101,7 @@ class MapContainer extends React.Component {
       function createInfoWindow(map, maps, marker, title) {
         const contentString = title;
         const contentString2 = `<h1 onclick="console.log('clickedWindow');">${title}</h1>`;
-      // var contentString2 = stores[i].name + '<br/><a href="#" onclick="selectstore(\'test\');">Select Store</a>';
+        // var contentString2 = stores[i].name + '<br/><a href="#" onclick="selectstore(\'test\');">Select Store</a>';
 
         const infowindow = new maps.InfoWindow({
           content: contentString2,
@@ -162,7 +173,9 @@ class MapContainer extends React.Component {
               });
               createInfoWindow(map, maps, currentMarker, MapContainer.props.search);
               // set initial region in home.js
-              MapContainer.props.onInitialCenter(MapContainer.getRegion(results[0].address_components));
+              MapContainer.props.onInitialCenter(MapContainer.getRegion(
+                results[0].address_components,
+              ));
             }
           } else { // if doesn't exist, recenter to user's location
             alert("Address doesn't exist, using your current position.");
@@ -199,17 +212,6 @@ class MapContainer extends React.Component {
         );
       }
       this.getNewCenter(map, maps);
-    }
-
-    // get initial location's region (state) as string from results of
-    // google maps geocode data, for example "Massachusetts"
-    getRegion(address_components) {
-      for (let i = 0; i < address_components.length; i++) {
-        // admin area level 1 means state
-        if (address_components[i].types[0] == 'administrative_area_level_1') {
-          return address_components[i].long_name;
-        }
-      }
     }
 
     render() {
