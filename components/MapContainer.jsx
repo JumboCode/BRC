@@ -64,7 +64,8 @@ class MapContainer extends React.Component {
               }
             });
           } else {
-            map.setCenter(new google.maps.LatLng(this.props.centeredOn.lat, this.props.centeredOn.lng));
+            map.setCenter(new google.maps.LatLng(
+              this.props.centeredOn.lat, this.props.centeredOn.lng));
           }
           return this.props.position;
         }
@@ -99,29 +100,44 @@ class MapContainer extends React.Component {
 
       // Google's default info window
       function createInfoWindow(map, maps, marker, title) {
-        const contentString = title;
-        const contentString2 = `<h1 onclick="console.log('clickedWindow');">${title}</h1>`;
+        // const contentString = title;
+        // const contentString = `<h1 onclick="console.log('clickedWindow');">${title}</h1>`;
+        const text = 'Second window test';
+        //const contentString = `<h1 onclick="console.log('clickedWindow');">${title}</h1>`;
+
+        const contentString2 = `<h1 onclick="console.log('clickedWindow2');">${text}</h1>`;
+        const infowindow2 = new maps.InfoWindow({
+          content: contentString2,
+        })
+
+        function openWindow2(){
+          infowindow2.open(map, marker);
+        }
+
+        const contentString = `<h2 onclick="openWindow2">${title}</h>`;
         // var contentString2 = stores[i].name + '<br/><a href="#" onclick="selectstore(\'test\');">Select Store</a>';
 
         const infowindow = new maps.InfoWindow({
-          content: contentString2,
+          content: contentString,
         });
+
+
 
         marker.addListener('mouseover', () => {
           infowindow.open(map, marker);
         });
 
         marker.addListener('mouseout', () => {
-          infowindow.close();
+          // infowindow.close();
         });
 
         marker.addListener('click', () => {
           infowindow.open(map, marker);
         });
 
-        infowindow.addListener('click', () => {
-          console.log('Clicked on info window');
-        });
+        //infowindow.addListener('click', () => {
+        //  console.log('Clicked on info window');
+        //});
       }
 
       // render marker at bisexual resource center (also the default center)
