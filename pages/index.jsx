@@ -1,5 +1,5 @@
 import React from 'react';
-import { SearchBar, BurgerMenu, SocialMedia } from '../components';
+import { SearchBar, BurgerMenu, SocialMedia, Footer } from '../components';
 
 const bodyStyle = {
   display: 'flex',
@@ -39,6 +39,7 @@ const Index = () => (
 
     </div>
     <SocialMedia />
+    <Footer />
   </>
 );
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import fetch from 'isomorphic-fetch';
 import getConfig from 'next/config';
 import {
-  InfoBar, MapContainer, PopupContents, NavBar, SearchBar, BurgerMenu, WarningMessage,
+  InfoBar, MapContainer, PopupContents, NavBar, SearchBar, BurgerMenu, WarningMessage, Footer,
 } from '../components';
 import ZoomScale from '../static/ZoomScale';
 
@@ -142,6 +142,7 @@ class Home extends Component {
                         )}
                     </Popup> */}
           </div>
+          <Footer />
         </>
       );
     }
