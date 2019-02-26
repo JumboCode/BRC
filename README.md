@@ -23,6 +23,7 @@ Zimo Lin<br />
 Zhitong Zhang<br />
 <br />
 Designer:<br />
+Camile Calabrese <br />
 Eragon Ma<br />
 
 ## Technology Stack 
