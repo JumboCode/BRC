@@ -68,11 +68,12 @@ class Home extends Component {
       initialRegion: '',
       show: false,
       zoom: ZoomScale.middle_zoom,
-      badAddress: false
+      badAddress: false,
     };
     this.onResourceClicked = this.onResourceClicked.bind(this);
     this.onInitialCenter = this.onInitialCenter.bind(this);
     this.onBadAddress = this.onBadAddress.bind(this);
+    this.onAddressChange = this.onAddressChange.bind(this);
     this.centerState = this.centerState.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
   }
@@ -93,13 +94,16 @@ class Home extends Component {
   // set initial location's region as string (used in MapContainer)
   // lets corresponding accordion section know to start opened
   onInitialCenter(region) {
-    console.log(region);
     this.setState({ initialRegion: region });
   }
 
-  //checks for invalid initial searched address
+  // checks for invalid initial searched address
   onBadAddress() {
-    this.setState({badAddress: true});
+    this.setState({ badAddress: true });
+  }
+
+  onAddressChange() {
+    this.setState({ badAddress: false });
   }
 
   handleToggle() {
@@ -113,17 +117,12 @@ class Home extends Component {
     }
 
     render() {
-      let warning;
-      if (this.state.badAddress) {
-          warning = <WarningMessage />;
-      }
-
       return (
         <>
           <BurgerMenu />
           <NavBar />
           <SearchBar styles={searchStyle} />
-          {warning}
+          { this.state.badAddress ? <WarningMessage /> : null }
           <div style={fullpage}>
             <div />
             <div style={mainContainer}>
@@ -140,7 +139,8 @@ class Home extends Component {
                   centeredOn={this.state.centeredOn}
                   zoom={this.state.zoom}
                   onInitialCenter={this.onInitialCenter}
-                  onBadAddress = {this.onBadAddress}
+                  onBadAddress={this.onBadAddress}
+                  onAddressChange={this.onAddressChange}
                 />
               </div>
             </div>
