@@ -68,9 +68,11 @@ class Home extends Component {
       initialRegion: '',
       show: false,
       zoom: ZoomScale.middle_zoom,
+      badAddress: false
     };
     this.onResourceClicked = this.onResourceClicked.bind(this);
     this.onInitialCenter = this.onInitialCenter.bind(this);
+    this.onBadAddress = this.onBadAddress.bind(this);
     this.centerState = this.centerState.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
   }
@@ -95,6 +97,11 @@ class Home extends Component {
     this.setState({ initialRegion: region });
   }
 
+  //checks for invalid initial searched address
+  onBadAddress() {
+    this.setState({badAddress: true});
+  }
+
   handleToggle() {
     const currShow = this.state.show;
     this.setState({ show: !currShow });
@@ -106,11 +113,17 @@ class Home extends Component {
     }
 
     render() {
+      let warning;
+      if (this.state.badAddress) {
+          warning = <WarningMessage />;
+      }
+
       return (
         <>
           <BurgerMenu />
           <NavBar />
           <SearchBar styles={searchStyle} />
+          {warning}
           <div style={fullpage}>
             <div />
             <div style={mainContainer}>
@@ -127,6 +140,7 @@ class Home extends Component {
                   centeredOn={this.state.centeredOn}
                   zoom={this.state.zoom}
                   onInitialCenter={this.onInitialCenter}
+                  onBadAddress = {this.onBadAddress}
                 />
               </div>
             </div>
