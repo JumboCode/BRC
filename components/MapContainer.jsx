@@ -47,7 +47,6 @@ class MapContainer extends React.Component {
           Geocoder.geocode({ address: this.props.centeredOn.region }, (results, status) => {
             if (status === 'OK') {
               this.props.onAddressChange();
-              this.props.onInitialCenter(this.getRegion(results[0].address_components));
             } else {
               this.props.onBadAddress();
             }
