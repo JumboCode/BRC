@@ -10,13 +10,7 @@ const info = {
   flexFlow: 'column',
   height: '90vh',
   overflow: 'auto',
-};
-
-const title = {
-  fontWeight: 'bold',
-  fontSize: 40,
-  fontFamily: 'sans-serif',
-  paddingBottom: '5%',
+  width: '90vh',
 };
 
 const calendar = {
@@ -115,7 +109,6 @@ class InfoBar extends Component {
 
     return (
       <div style={info}>
-        <div style={title}>  Bi Spot: Find a group near you.</div>
         <LetterSelectBar letters={stateInitials} selected={this.state.filterLetter} onLetterClicked={this.onLetterClicked} />
         <div style={scroll}>
           <Accordion>
