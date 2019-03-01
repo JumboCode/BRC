@@ -62,9 +62,10 @@ class SearchBar extends React.Component {
                 </div>
               </form>
             </div>
-            <div className="autocomplete-dropdown-container" style={{ overflow: 'visible' }}>
+            <div className="autocomplete-dropdown-container" style={{ overflow: 'visible', zIndex: '99'}}>
               {loading && <div>Loading...</div>}
               {suggestions.map((suggestion) => {
+                // This section to be edited
                 const className = suggestion.active
                   ? 'suggestion-item--active'
                   : 'suggestion-item';
