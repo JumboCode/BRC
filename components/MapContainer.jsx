@@ -170,6 +170,48 @@ class MapContainer extends React.Component {
     }
   }
 
+    /* find the nearest center by linear distance
+       Arguments: position, groups
+       return value: distance (miles), group_info */
+    nearest = (position, groups) => {
+      // R = The Earth's radius, in meters
+      const R = 6371000;
+      lat1 = position.coords.latitude;  // this function has (l)attitude ;-P
+      lng1 = position.coords.longitude;
+      bestDist = 40030174;  // the circumference of the Earth; any resource will be closer
+      bestLoc = groups[0][0]
+
+      for (const region in groups) {
+        if (locationData.hasOwnProperty(region)) {
+          for (const resource in groups[region]) {
+            if (groups[region][resource].lat != undefined
+              && groups[region][resource].lng != undefined) {
+              lat2 = groups[region][resource].lat;
+              lng2 = groups[region][resource].lng;
+
+              y = lat2 - lat1;
+              dLat = y.toRad();
+              x = lng2 - lng1;
+              dLng = x.toRad();
+
+              a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                  Math.cos(lat1.toRad()) * Math.cos(lat2.toRad()) *
+                  Math.sin(dLon/2) * Math.sin(dLon/2);
+              c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+              d = R * c;
+
+              if (d < bestDist) {
+                bestDist = d;
+                bestLoc = groups[region][resource];
+              }
+            }
+          }
+        }
+      }
+
+      return bestLoc;
+    }
+
     // create new google maps lat/lng object with passed in position
     getNewCenter = (map, maps) => {
       if (this.props.centeredOn != null) {
