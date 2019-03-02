@@ -57,12 +57,20 @@ class SearchBar extends React.Component {
               <form>
                 <div>
                   <Link href={{ pathname: '/home', query: { search: this.state.address } }}>
-                    <button>Search</button>
+                    <button type="submit">Search</button>
                   </Link>
                 </div>
               </form>
             </div>
-            <div className="autocomplete-dropdown-container" style={{ overflow: 'visible', zIndex: '99'}}>
+            <div
+              className="autocomplete-dropdown-container"
+              style={{
+                backgroundColor: 'white',
+                overflow: 'visible',
+                zIndex: '99',
+                boxShadow: '1px 1px 1px black',
+              }}
+            >
               {loading && <div>Loading...</div>}
               {suggestions.map((suggestion) => {
                 // This section to be edited
@@ -80,7 +88,9 @@ class SearchBar extends React.Component {
                       style,
                     })}
                   >
-                    <span>{suggestion.description}</span>
+                    <div style={{ margin: '10px', borderBottom: '1px dotted grey' }}>
+                      {suggestion.description}
+                    </div>
                   </div>
                 );
               })}
