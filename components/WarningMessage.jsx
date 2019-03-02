@@ -30,6 +30,26 @@ const contactLink = {
 };
 
 class WarningMessage extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit(event) {
+    fetch('/sendEmail', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        //no body for now
+      })
+    })
+  }
+
   render() {
     return (
       <div style={innerContainter}>
@@ -39,7 +59,10 @@ class WarningMessage extends Component {
                     If its address is valid, then it's possible that our database has not updated this resource center yet,
                     please
           {' '}
-          <a href="mailto: brc@biresource.org" style={contactLink}>contact us.</a>
+          //looks ugly and reloads page for now
+          <form onSubmit={this.handleSubmit}>
+            <input type="submit" value="contact us." />
+          </form>
           {' '}
           <br />
           {' '}
