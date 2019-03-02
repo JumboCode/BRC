@@ -11,20 +11,29 @@ const { publicRuntimeConfig } = getConfig();
 const fullpage = {
   display: 'block',
   position: 'relative',
-  marginTop: '5%',
 };
 
 const mainContainer = {
   display: 'flex',
-  flexFlow: 'row wrap',
+  flexFlow: 'row wrap-reverse',
   justifyContent: 'space-around',
   margin: '0 20px 0 20px',
   paddingTop: '50px',
 };
 
+const title = {
+  fontWeight: 'bold',
+  textAlign: 'center',
+  fontSize: 40,
+  fontFamily: 'sans-serif',
+};
+
 const map = {
+  paddingTop: '20px',
+  paddingBottom: '50px',
   width: '500px',
-  height: '600px',
+  height: 'auto',
+  overlflow: 'auto',
 };
 
 const exitX = {
@@ -122,7 +131,7 @@ class Home extends Component {
           <BurgerMenu />
           <NavBar />
           <SearchBar styles={searchStyle} />
-          { this.state.badAddress ? <WarningMessage /> : null }
+          { this.state.badAddress ? <WarningMessage /> : <div style={title}>  Bi Spot: Find a group near you.</div> }
           <div style={fullpage}>
             <div />
             <div style={mainContainer}>

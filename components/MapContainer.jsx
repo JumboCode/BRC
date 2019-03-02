@@ -181,7 +181,7 @@ class MapContainer extends React.Component {
             });
           }
         }, (error) => console.log("Navigator.geolocation failed" + error)
-      );        
+      );
     }
     this.getNewCenter(map, maps);
   }
@@ -231,7 +231,7 @@ class MapContainer extends React.Component {
     render() {
       this.getNewCenter(this.state.map, this.state.maps);
       return (
-        <div style={{ height: '400px' }}>
+        <div style={{ height: '480px' }}>
           <GoogleMap
             bootstrapURLKeys={{ key: publicRuntimeConfig.MAP_KEY }}
             defaultCenter={this.state.defaultCenter}
