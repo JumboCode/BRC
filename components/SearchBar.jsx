@@ -88,9 +88,11 @@ class SearchBar extends React.Component {
                       style,
                     })}
                   >
-                    <div style={{ margin: '10px', borderBottom: '1px dotted grey' }}>
-                      {suggestion.description}
-                    </div>
+                    <Link href={{ pathname: '/home', query: { search: this.state.address } }}>
+                      <div style={{ margin: '10px', borderBottom: '1px dotted grey' }}>
+                        {suggestion.description}
+                      </div>
+                    </Link>
                   </div>
                 );
               })}
