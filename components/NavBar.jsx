@@ -1,22 +1,19 @@
-import Link from "next/link";
+
+import Link from 'next/link';
+import React from 'react';
 
 const styles = {
   navBarContainer: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   homeButton: {
     transform: `rotate(${30}deg)`,
-    padding: "5px",
-    cursor: "pointer",
-  }
-}
-
-const searchStyle = {
-  display: "flex",
-  flexDirection: "row",
-}
+    padding: '5px',
+    cursor: 'pointer',
+  },
+};
 
 const NavBar = () => (
   <div style={styles.navBarContainer}>
