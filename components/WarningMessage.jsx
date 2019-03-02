@@ -7,7 +7,7 @@ const warningTitle = {
 };
 
 
-const innerContainter = {
+const innerContainer = {
   flexDirection: 'column',
   alignItems: 'flex-start',
   marginLeft: '25%',
@@ -51,15 +51,15 @@ class WarningMessage extends Component {
   }
 
   render() {
+    //form submit looks ugly and reloads page for now
     return (
-      <div style={innerContainter}>
+      <div style={innerContainer}>
         <div style={warningTitle}>Oh No!</div>
         <div style={warningMessageContent}>
                     No resource centers seem to be found around you in our database. Make sure its address is valid.
                     If its address is valid, then it's possible that our database has not updated this resource center yet,
                     please
           {' '}
-          //looks ugly and reloads page for now
           <form onSubmit={this.handleSubmit}>
             <input type="submit" value="contact us." />
           </form>

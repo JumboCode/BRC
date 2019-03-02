@@ -43,6 +43,8 @@ class InfoBar extends Component {
     super(props);
     this.state = {
       filterLetter: 'all',
+      gotRegion: false,
+      noMatch: false,
       matchedRegion: false, // set to true when MapContainer gets init region
       movedRegion: false,
       locationData: this.props.locationData,
@@ -69,6 +71,12 @@ class InfoBar extends Component {
   render() {
     const stateInitials = this.getLetterFilters();
     const sections = [];
+
+    // check before loading accordion sections if region data was received
+    if (this.props.initialRegion != '' && !this.state.gotRegion) {
+      this.setState({ gotRegion: true });
+    }
+
     let i = 0;
     for (const state in this.state.locationData) {
       if (state[0] == this.state.filterLetter || this.state.filterLetter == 'all') {
@@ -111,6 +119,12 @@ class InfoBar extends Component {
           i++;
         }
       }
+    }
+
+    //there's no accordion section that matches with user's region
+    if (this.state.gotRegion && !this.state.matchedRegion && !this.state.noMatch) {
+      this.props.onNoMatch();
+      this.setState({ noMatch: true });
     }
 
     return (

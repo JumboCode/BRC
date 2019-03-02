@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import fetch from 'isomorphic-fetch';
 import getConfig from 'next/config';
 import {
-  InfoBar, MapContainer, PopupContents, NavBar, SearchBar, BurgerMenu, WarningMessage, Footer,
+  InfoBar, MapContainer, PopupContents, NavBar, SearchBar, BurgerMenu, WarningMessage, NoMatchWarning, Footer,
 } from '../components';
 import ZoomScale from '../static/ZoomScale';
 
@@ -69,11 +69,13 @@ class Home extends Component {
       show: false,
       zoom: ZoomScale.middle_zoom,
       badAddress: false,
+      noMatch: false,
     };
     this.onResourceClicked = this.onResourceClicked.bind(this);
     this.onInitialCenter = this.onInitialCenter.bind(this);
     this.onBadAddress = this.onBadAddress.bind(this);
     this.onAddressChange = this.onAddressChange.bind(this);
+    this.onNoMatch = this.onNoMatch.bind(this);
     this.centerState = this.centerState.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
   }
@@ -97,13 +99,18 @@ class Home extends Component {
     this.setState({ initialRegion: region });
   }
 
-  // checks for invalid initial searched address
+  // for invalid initial searched address
   onBadAddress() {
     this.setState({ badAddress: true });
   }
 
   onAddressChange() {
     this.setState({ badAddress: false });
+  }
+
+  // for no matching region with accordion section
+  onNoMatch() {
+    this.setState({ noMatch: true });
   }
 
   handleToggle() {
@@ -123,6 +130,7 @@ class Home extends Component {
           <NavBar />
           <SearchBar styles={searchStyle} />
           { this.state.badAddress ? <WarningMessage /> : null }
+          { this.state.noMatch ? <NoMatchWarning /> : null }
           <div style={fullpage}>
             <div />
             <div style={mainContainer}>
@@ -131,6 +139,7 @@ class Home extends Component {
                 centerState={this.centerState}
                 onResourceClick={this.onResourceClicked}
                 initialRegion={this.state.initialRegion}
+                onNoMatch={this.onNoMatch}
               />
               <div style={map}>
                 <MapContainer

@@ -12,6 +12,7 @@ import Resources from './Resources';
 import BurgerMenu from './BurgerMenu';
 import Events from './Events';
 import WarningMessage from './WarningMessage';
+import NoMatchWarning from './NoMatchWarning';
 import Footer from './Footer';
 
 export {
@@ -29,5 +30,6 @@ export {
   BurgerMenu,
   Events,
   WarningMessage,
+  NoMatchWarning,
   Footer,
 };
