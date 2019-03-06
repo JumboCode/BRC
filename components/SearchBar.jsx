@@ -80,7 +80,7 @@ class SearchBar extends React.Component {
               <input
                 style={styles.searchTextStyle}
                 {...getInputProps({
-                  placeholder: 'Try: street address, city name, etc...',
+                  placeholder: 'Try: street address, city name...',
                   className: 'location-search-input',
                   onKeyDown: e => this.onKeyPress(e, suggestions),
                 })}
