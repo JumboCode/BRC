@@ -27,6 +27,7 @@ const title = {
   fontSize: 40,
   fontFamily: 'sans-serif',
   marginTop: '30px',
+  color: '#F293C1',
 };
 
 const map = {
@@ -46,7 +47,7 @@ const exitX = {
 const searchStyle = {
   position: 'absolute',
   top: '10px',
-  left: '100px',
+  left: '80px',
   margin: '10px',
   display: 'flex',
   flexDirection: 'column',
@@ -132,7 +133,10 @@ class Home extends Component {
           <BurgerMenu />
           <NavBar />
           <SearchBar styles={searchStyle} />
-          { this.state.badAddress ? <WarningMessage /> : <div style={title}>  Bi Spot: Find a group near you.</div> }
+          {
+            this.state.badAddress ? <WarningMessage />
+              : <div style={title}>  Bi Spot: Find a group near you.</div>
+          }
           <div style={fullpage}>
             <div />
             <div style={mainContainer}>
