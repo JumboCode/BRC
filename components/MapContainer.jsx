@@ -205,7 +205,7 @@ class MapContainer extends React.Component {
           if (this.props.centeredOn.lat === null && this.props.centeredOn.lng === null) {
             const Geocoder = new maps.Geocoder();
             Geocoder.geocode({ address: this.props.centeredOn.region }, (results, status) => {
-              if (status == 'OK') {
+              if (status === 'OK') {
                 map.setCenter(results[0].geometry.location);
               } else {
                 console.log(`Geocode was not successful for the following reason: ${status}`);

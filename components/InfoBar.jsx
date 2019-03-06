@@ -13,13 +13,6 @@ const info = {
   width: '90vh',
 };
 
-const calendar = {
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  textAlign: 'center',
-};
-
 const scroll = {
   paddingRight: '10px',
   height: '70%',
@@ -54,8 +47,9 @@ class InfoBar extends Component {
 
   getLetterFilters = () => {
     const noDuplicates = {};
-    const letters = Object.keys(this.props.locationData).map((word) => {
+    Object.keys(this.props.locationData).map((word) => {
       noDuplicates[word[0]] = true;
+      return true;
     });
     return Object.keys(noDuplicates);
   }
@@ -65,14 +59,14 @@ class InfoBar extends Component {
     const sections = [];
     let i = 0;
     for (const state in this.state.locationData) {
-      if (state[0] == this.state.filterLetter || this.state.filterLetter == 'all') {
+      if (state[0] === this.state.filterLetter || this.state.filterLetter == 'all') {
         if (this.state.locationData.hasOwnProperty(state)) {
           const stateResources = this.state.locationData[state];
           const resourceRegion = state;
           let startOpen = false;
 
           // open region accordion section after moving section to top
-          if (i == 0 && this.state.matchedRegion && !this.state.movedRegion) {
+          if (i === 0 && this.state.matchedRegion && !this.state.movedRegion) {
             startOpen = true;
             this.setState({ movedRegion: true });
           }

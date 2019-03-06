@@ -26,6 +26,7 @@ const title = {
   textAlign: 'center',
   fontSize: 40,
   fontFamily: 'sans-serif',
+  marginTop: '30px',
 };
 
 const map = {

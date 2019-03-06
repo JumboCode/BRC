@@ -3,9 +3,41 @@ import PlacesAutocomplete from 'react-places-autocomplete';
 import Link from 'next/link';
 import Router from 'next/router';
 
-const entryStyle = {
-  display: 'flex',
-  flexDirection: 'row',
+const styles = {
+  entryStyle: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  searchBoxStyle: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    borderRadius: '30px',
+    width: '60vw',
+  },
+  searchTextStyle: {
+    fontSize: '14px',
+    lineHeight: '35px',
+    width: '90%',
+    border: 'none',
+    boxShadow: '1px 1px 1px grey',
+    paddingLeft: '10px',
+  },
+  searchBtnStyle: {
+    backgroundColor: '#F293C1',
+    border: 'none',
+    textDecoration: 'none',
+    color: 'white',
+    boxShadow: '1px 1px 1px grey',
+  },
+  dropDownStyle: {
+    backgroundColor: 'white',
+    overflow: 'visible',
+    zIndex: '99',
+    boxShadow: '1px 1px 1px grey',
+    width: '60vw',
+  },
 };
 
 class SearchBar extends React.Component {
@@ -44,33 +76,20 @@ class SearchBar extends React.Component {
           getInputProps, suggestions, getSuggestionItemProps, loading,
         }) => (
           <div style={this.props.styles}>
-            <div style={entryStyle}>
-              <form>
-                <input
-                  {...getInputProps({
-                    placeholder: 'Search Places ...',
-                    className: 'location-search-input',
-                    onKeyDown: e => this.onKeyPress(e, suggestions),
-                  })}
-                />
-              </form>
-              <form>
-                <div>
-                  <Link href={{ pathname: '/home', query: { search: this.state.address } }}>
-                    <button type="submit">Search</button>
-                  </Link>
-                </div>
-              </form>
+            <div style={styles.searchBoxStyle}>
+              <input
+                style={styles.searchTextStyle}
+                {...getInputProps({
+                  placeholder: 'Try: street address, city name, etc...',
+                  className: 'location-search-input',
+                  onKeyDown: e => this.onKeyPress(e, suggestions),
+                })}
+              />
+              <Link href={{ pathname: '/home', query: { search: this.state.address } }}>
+                <button style={styles.searchBtnStyle} type="submit">Search</button>
+              </Link>
             </div>
-            <div
-              className="autocomplete-dropdown-container"
-              style={{
-                backgroundColor: 'white',
-                overflow: 'visible',
-                zIndex: '99',
-                boxShadow: '1px 1px 1px black',
-              }}
-            >
+            <div style={styles.dropDownStyle} className="autocomplete-dropdown-container">
               {loading && <div>Loading...</div>}
               {suggestions.map((suggestion) => {
                 // This section to be edited
