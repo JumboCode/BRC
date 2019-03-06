@@ -27,6 +27,7 @@ const title = {
   fontSize: 40,
   fontFamily: 'sans-serif',
   marginTop: '30px',
+  color: '#F293C1',
 };
 
 const map = {
