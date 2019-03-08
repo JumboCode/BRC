@@ -83,7 +83,7 @@ class Resource extends React.Component {
         <p style={blockLinkStyle}>{this.props.name}</p>
       </div>
     );
-    }
+  }
 }
 
 

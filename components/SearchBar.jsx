@@ -43,7 +43,7 @@ const styles = {
 class SearchBar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { address: '' };
+    this.state = { address: this.props.address ? this.props.address : '' };
   }
 
   handleChange = (address) => {
@@ -80,7 +80,7 @@ class SearchBar extends React.Component {
               <input
                 style={styles.searchTextStyle}
                 {...getInputProps({
-                  placeholder: 'Try: street address, city name...',
+                  placeholder: this.props.address ? this.props.address : 'Try: street address, city name...',
                   className: 'location-search-input',
                   onKeyDown: e => this.onKeyPress(e, suggestions),
                 })}

@@ -1,6 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
-import { SearchBar, BurgerMenu, SocialMedia, Footer } from '../components';
+import {
+  SearchBar, BurgerMenu, SocialMedia, Footer,
+} from '../components';
 
 const bodyStyle = {
   display: 'flex',

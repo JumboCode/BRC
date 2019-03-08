@@ -128,11 +128,12 @@ class Home extends Component {
     }
 
     render() {
+      const searchAddress = this.props.search === '*' ? null : this.props.search;
       return (
         <>
           <BurgerMenu />
           <NavBar />
-          <SearchBar styles={searchStyle} />
+          <SearchBar styles={searchStyle} address={searchAddress} />
           {
             this.state.badAddress ? <WarningMessage />
               : <div style={title}>  Bi Spot: Find a group near you.</div>
