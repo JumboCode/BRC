@@ -42,6 +42,7 @@ class MapContainer extends React.Component {
       maps: null,
       centeredOn: null, // position to recenter to
       clicked: false, // true when map has recentered to any resource
+      closest: null, null
     };
   }
   // this may only occur once the the api loads, which only occurs once, despite any changes to the props,etc
@@ -49,6 +50,8 @@ class MapContainer extends React.Component {
   // map is our actual map
 
   renderMarkers(map, maps) {
+    console.log("Point 3");
+    
     const MapContainer = this;
     this.state.maps = maps;
     this.state.map = map;
@@ -104,6 +107,7 @@ class MapContainer extends React.Component {
     }
     // Check if it's in "view all centers" mode
     if (this.props.search !== '*') {
+      console.log("Point 1");
       // get lat/lng of search query
       Geocoder.geocode({ address: this.props.search }, (results, status) => {
         // if exists, recenter to searched location
@@ -120,6 +124,9 @@ class MapContainer extends React.Component {
             // set initial region in home.js
             MapContainer.props.onInitialCenter(MapContainer.getRegion(results[0].address_components));
           }
+          // sets the props for the closest resource center
+          console.log("Calling nearest...\n")
+          this.props.closest = nearest(this.props.centeredOn, results)
         }
         // if doesn't exist, recenter to user's location
         else {
@@ -140,6 +147,7 @@ class MapContainer extends React.Component {
         }
       });
     } else {
+      console.log("Point 2");
       // If in "view all centers" mode, doesn't show error message
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -175,10 +183,11 @@ class MapContainer extends React.Component {
        return value: distance (miles), group_info */
     nearest = (position, groups) => {
       // R = The Earth's radius, in meters
+      console.log("The nearest function is func'ing sh** up B-)")
       const R = 6371000;
       lat1 = position.coords.latitude;  // this function has (l)attitude ;-P
       lng1 = position.coords.longitude;
-      bestDist = 40030174;  // the circumference of the Earth; any resource will be closer
+      bestDist = 40030174;  // the circumference of the Earth; any resource will be closer (hopefully)
       bestLoc = groups[0][0]
 
       for (const region in groups) {
@@ -209,7 +218,7 @@ class MapContainer extends React.Component {
         }
       }
 
-      return bestLoc;
+      this.props.closest = { bestDist, bestLoc };
     }
 
     // create new google maps lat/lng object with passed in position
@@ -245,6 +254,7 @@ class MapContainer extends React.Component {
 
     render() {
       this.getNewCenter(this.state.map, this.state.maps);
+      console.log("Rendering...\n");
       return (
         <div style={{ height: '400px' }}>
           <GoogleMap

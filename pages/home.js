@@ -45,6 +45,7 @@ class Home extends Component {
         //hard coded url for now... need to change later
         const res = await fetch(`${appURL}/locations`);
         const locations = await res.json();
+        // here?
         const search = props.query.search
         return { locations, search };
     }
@@ -66,7 +67,6 @@ class Home extends Component {
     }
 
     // this function will be invoked on a state change
-    // not sure how to do that :/
     componentWillReceiveProps(nextProps) {
         // You don't have to do this check first, but it can help prevent an unneeded render
         if (nextProps.position !== this.state.position) {
@@ -95,6 +95,7 @@ class Home extends Component {
                         <MapContainer search={this.props.search}
                                       locations={this.props.locations}  // BRC Locations
                                       centeredOn = {this.state.centeredOn}
+                                      closest = {this.props.closet}
                         />
                         </div>
                     </div>
