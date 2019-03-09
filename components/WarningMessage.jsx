@@ -70,9 +70,7 @@ class WarningMessage extends Component {
                       If its address is valid, then it's possible that our database has not updated this resource center yet,
                       please
             {' '}
-            <form onSubmit={this.handleSubmit}>
-              <input type="submit" value="contact us." />
-            </form>
+            <a style={contactLink} href="#" onClick={this.handleSubmit}>contact us.</a>
             {' '}
             <br />
             {' '}
@@ -91,9 +89,7 @@ class WarningMessage extends Component {
                       It lookes like there are no Bi groups in your state. If you know any around you and would like to
                       add it to our website, please
             {' '}
-            <form onSubmit={this.handleSubmit}>
-              <input type="submit" value="suggest it to us" />
-            </form>
+            <a style={contactLink} href="#" onClick={this.handleSubmit}>suggest it to us</a>
             {' '}
             and we'll update our database!
             <br />
