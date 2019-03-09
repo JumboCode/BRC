@@ -1,5 +1,5 @@
-import React from "react";
-import { SearchBar, BurgerMenu, SocialMedia, DefaultCity} from "../components";
+import React from 'react';
+import { SearchBar, BurgerMenu, SocialMedia, Footer, DefaultCity } from '../components';
 
 const bodyStyle = {
   display: 'flex',
@@ -28,6 +28,11 @@ const searchStyle = {
   alignItems: 'center',
 };
 
+const ButtonSyle = {
+  display: 'flex',
+  alignItems: 'center',
+  paddingLeft: '10px',
+};
 
 const Index = () => (
   <>
@@ -37,8 +42,10 @@ const Index = () => (
         <img alt="BRC logo" src="./static/images/BRC-logo.jpg" width="300" height="110" />
       </div>
       <SearchBar styles={searchStyle} />
+      <DefaultCity styles={ButtonSyle} />
     </div>
     <SocialMedia />
+    <Footer />
   </>
 );
 

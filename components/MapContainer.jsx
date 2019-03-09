@@ -1,5 +1,4 @@
-/*
- * notes for directly using google maps api with google-map-react library:
+/* notes for directly using google maps api with google-map-react library:
 
  * if google maps api variables "map" and "maps" are needed outside of
    renderMarkers function, then the following should be added to this.state:
@@ -11,12 +10,6 @@
 
     this.state.map = map;
     this.state.maps = maps;
-
- * and every time map and maps need to be used outside of renderMarkers,
-   declare them as temporary local variables like so:
-
-    let map = this.state.map;
-    let maps = this.state.maps;
 */
 
 import React from 'react';
@@ -44,6 +37,25 @@ class MapContainer extends React.Component {
       clicked: false, // true when map has recentered to any resource
     };
   }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.centeredOn !== this.props.centeredOn) {
+      if (this.props.centeredOn === null) return;
+      if (this.state.maps != null) {
+        if (this.props.centeredOn.lat === null && this.props.centeredOn.lng === null) {
+          const Geocoder = new this.state.maps.Geocoder();
+          Geocoder.geocode({ address: this.props.centeredOn.region }, (results, status) => {
+            if (status === 'OK') {
+              this.props.onAddressChange();
+            } else {
+              this.props.onBadAddress();
+            }
+          });
+        }
+      }
+    }
+  }
+
   // this may only occur once the the api loads, which only occurs once, despite any changes to the props,etc
   // maps is the API object. Allows you to use functions like geocoding
   // map is our actual map
@@ -71,7 +83,7 @@ class MapContainer extends React.Component {
 
     // render marker at bisexual resource center (also the default center)
     Geocoder.geocode({ address: 'Bisexual Resource Center' }, (results, status) => {
-      if (status == 'OK') {
+      if (status === 'OK') {
         const currentMarker = new maps.Marker({
           position: results[0].geometry.location,
           map,
@@ -107,7 +119,7 @@ class MapContainer extends React.Component {
       // get lat/lng of search query
       Geocoder.geocode({ address: this.props.search }, (results, status) => {
         // if exists, recenter to searched location
-        if (status == 'OK') {
+        if (status === 'OK') {
           // if one of the listed resources wasn't clicked yet
           if (!MapContainer.state.clicked) {
             map.setCenter(results[0].geometry.location);
@@ -123,18 +135,26 @@ class MapContainer extends React.Component {
         }
         // if doesn't exist, recenter to user's location
         else {
-          alert("Address doesn't exist, using your current position.");
+          MapContainer.props.onBadAddress();  //show warning message
           if (!MapContainer.state.clicked) {
             navigator.geolocation.getCurrentPosition(
               (position) => {
-                map.setCenter({ lat: position.coords.latitude, lng: position.coords.longitude });
-                const currentMarker = new maps.Marker({
-                  position: { lat: position.coords.latitude, lng: position.coords.longitude },
-                  map,
-                  icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png',
+                let latlng = {lat: position.coords.latitude, lng: position.coords.longitude};
+                map.setCenter(latlng);
+                let currentMarker = new maps.Marker({
+                  position: latlng,
+                  map: map,
+                  icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
                 });
-                createInfoWindow(map, maps, currentMarker, 'Your location');
-              }, error => console.log(`Navigator.geolocation failed${error}`),
+                createInfoWindow(map, maps, currentMarker, "Your location");
+
+                // geocode latlng, then set initial region in home.js
+                Geocoder.geocode({'location': latlng}, function(results, status) {
+                  if (status === 'OK') {
+                    MapContainer.props.onInitialCenter(MapContainer.getRegion(results[0].address_components));
+                  }
+                });
+              }, (error) => console.log("Navigator.geolocation failed" + error)
             );
           }
         }
@@ -143,18 +163,25 @@ class MapContainer extends React.Component {
       // If in "view all centers" mode, doesn't show error message
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          const latlng = { lat: position.coords.latitude, lng: position.coords.longitude };
+          let latlng = { lat: position.coords.latitude, lng: position.coords.longitude };
           if (!MapContainer.state.clicked) {
-            map.setCenter({ lat: position.coords.latitude, lng: position.coords.longitude });
-            const currentMarker = new maps.Marker({
-              position: { lat: position.coords.latitude, lng: position.coords.longitude },
-              map,
-              icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png',
+            map.setCenter(latlng);
+            var currentMarker = new maps.Marker({
+              position: latlng,
+              map: map,
+              icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
+            })
+            createInfoWindow(map, maps, currentMarker, "Your location");
+
+            // geocode latlng, then set initial region in home.js
+            Geocoder.geocode({'location': latlng}, function(results, status) {
+              if (status === 'OK') {
+                MapContainer.props.onInitialCenter(MapContainer.getRegion(results[0].address_components));
+              }
             });
-            createInfoWindow(map, maps, currentMarker, 'Your location');
           }
-        }, error => console.log(`Navigator.geolocation failed${error}`),
-      );
+        }, (error) => console.log("Navigator.geolocation failed" + error)
+      );        
     }
     this.getNewCenter(map, maps);
   }
