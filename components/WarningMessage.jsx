@@ -6,12 +6,21 @@ const warningTitle = {
   fontWeight: 'bold',
 };
 
+const title = {
+  fontWeight: 'bold',
+  textAlign: 'center',
+  fontSize: 40,
+  fontFamily: 'sans-serif',
+  marginTop: '30px',
+  color: '#F293C1',
+};
 
 const innerContainer = {
   flexDirection: 'column',
   alignItems: 'flex-start',
-  marginLeft: '25%',
-  marginRight: '25%',
+  marginTop: '20px',
+  marginLeft: '15%',
+  marginRight: '15%',
 };
 
 const warningMessageContent = {
@@ -51,26 +60,54 @@ class WarningMessage extends Component {
   }
 
   render() {
-    //form submit looks ugly and reloads page for now
-    return (
-      <div style={innerContainer}>
-        <div style={warningTitle}>Oh No!</div>
-        <div style={warningMessageContent}>
-                    No resource centers seem to be found around you in our database. Make sure its address is valid.
-                    If its address is valid, then it's possible that our database has not updated this resource center yet,
-                    please
-          {' '}
-          <form onSubmit={this.handleSubmit}>
-            <input type="submit" value="contact us." />
-          </form>
-          {' '}
-          <br />
-          {' '}
-          <br />
-                    Here is the list of all the resource centers we currently have:
+    // warning message for invalid address
+    if (this.props.badAddress) {
+      return (
+        <div style={innerContainer}>
+          <div style={warningTitle}>Oh No!</div>
+          <div style={warningMessageContent}>
+                      No resource centers seem to be found around you in our database. Make sure its address is valid.
+                      If its address is valid, then it's possible that our database has not updated this resource center yet,
+                      please
+            {' '}
+            <form onSubmit={this.handleSubmit}>
+              <input type="submit" value="contact us." />
+            </form>
+            {' '}
+            <br />
+            {' '}
+            <br />
+                      Here is the list of all the resource centers we currently have:
+          </div>
         </div>
-      </div>
-    );
+      );
+    }
+    // warning message for no state matches address
+    else if (this.props.noMatch) {
+      return (
+        <div style={innerContainer}>
+          <div style={warningTitle}>Oh No!</div>
+          <div style={warningMessageContent}>
+                      It lookes like there are no Bi groups in your state. If you know any around you and would like to
+                      add it to our website, please
+            {' '}
+            <form onSubmit={this.handleSubmit}>
+              <input type="submit" value="suggest it to us" />
+            </form>
+            {' '}
+            and we'll update our database!
+            <br />
+            {' '}
+            <br />
+                      Here is the nearest resource center from you:
+          </div>
+        </div>
+      );
+    }
+    //regular title
+    else {
+      return (<div style={title}>  Bi Spot: Find a group near you.</div>);
+    }
   }
 }
 

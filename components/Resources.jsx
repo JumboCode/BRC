@@ -36,6 +36,26 @@ const selectLinkStyle = {
 // Accept some object info
 // Accept some string name
 class Resource extends React.Component {
+  static propTypes = {
+    name: React.PropTypes.string.isRequired,
+    info: React.PropTypes.object.isRequired,
+    // region: React.PropTypes.string.isRequired,
+    isSelected: React.PropTypes.bool.isRequired,
+    url: React.PropTypes.string.isRequired,
+    summary: React.PropTypes.string.isRequired,
+  }
+
+  static defaultProps = {
+    info: {
+      Email: 'mail', Website: 'web', Location: 'loc', Meetup: '', Region: 'Unknown', lat: -1, lng: -1,
+    },
+    url: 'url',
+    name: 'centerName',
+    summary: '',
+    // region: 'United States of America',
+    isSelected: false,
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -44,46 +64,26 @@ class Resource extends React.Component {
     this.onClick = this.onClick.bind(this);
   }
 
-    static propTypes = {
-      name: React.PropTypes.string.isRequired,
-      info: React.PropTypes.object.isRequired,
-      // region: React.PropTypes.string.isRequired,
-      isSelected: React.PropTypes.bool.isRequired,
-      url: React.PropTypes.string.isRequired,
-      summary: React.PropTypes.string.isRequired,
-    }
+  onClick() {
+    this.props.onResourceClicked(this.props.info.Region);
+    this.props.onResourceClicked({ lat: this.props.info.lat, lng: this.props.info.lng });
+    this.state.isSelected = true;
+  }
 
-    static defaultProps = {
-      info: {
-        Email: 'mail', Website: 'web', Location: 'loc', Meetup: '', Region: 'Unknown', lat: -1, lng: -1,
-      },
-      url: 'url',
-      name: 'centerName',
-      summary: '',
-      // region: 'United States of America',
-      isSelected: false,
-    };
-
-    onClick() {
-      this.props.onResourceClicked(this.props.info.Region);
-      this.props.onResourceClicked({ lat: this.props.info.lat, lng: this.props.info.lng });
-      this.state.isSelected = true;
+  render() {
+    let blockDivStyle = divStyle;
+    let blockLinkStyle = linkStyle;
+    if (this.state.isSelected) {
+      blockDivStyle = selectDivStyle;
+      blockLinkStyle = selectLinkStyle;
     }
-
-    render() {
-      let blockDivStyle = divStyle;
-      let blockLinkStyle = linkStyle;
-      if (this.state.isSelected) {
-        blockDivStyle = selectDivStyle;
-        blockLinkStyle = selectLinkStyle;
-      }
-      this.state.isSelected = this.props.isSelected;
-      return (
-        <div onClick={this.onClick} style={blockDivStyle}>
-          <p style={blockLinkStyle}>{this.props.name}</p>
-        </div>
-      );
-    }
+    this.state.isSelected = this.props.isSelected;
+    return (
+      <div onClick={this.onClick} style={blockDivStyle} onKeyDown={this.onClick}>
+        <p style={blockLinkStyle}>{this.props.name}</p>
+      </div>
+    );
+  }
 }
 
 

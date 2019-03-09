@@ -11,20 +11,22 @@ const { publicRuntimeConfig } = getConfig();
 const fullpage = {
   display: 'block',
   position: 'relative',
-  marginTop: '5%',
 };
 
 const mainContainer = {
   display: 'flex',
-  flexFlow: 'row wrap',
+  flexFlow: 'row wrap-reverse',
   justifyContent: 'space-around',
   margin: '0 20px 0 20px',
   paddingTop: '50px',
 };
 
 const map = {
+  paddingTop: '20px',
+  paddingBottom: '50px',
   width: '500px',
-  height: '600px',
+  height: 'auto',
+  overlflow: 'auto',
 };
 
 const exitX = {
@@ -36,7 +38,7 @@ const exitX = {
 const searchStyle = {
   position: 'absolute',
   top: '10px',
-  left: '100px',
+  left: '60px',
   margin: '10px',
   display: 'flex',
   flexDirection: 'column',
@@ -124,13 +126,18 @@ class Home extends Component {
     }
 
     render() {
+      const searchAddress = this.props.search === '*' ? null : this.props.search;
       return (
         <>
           <BurgerMenu />
           <NavBar />
-          <SearchBar styles={searchStyle} />
-          { this.state.badAddress ? <WarningMessage /> : null }
-          { this.state.noMatch ? <NoMatchWarning /> : null }
+          <SearchBar styles={searchStyle} address={searchAddress} />
+          {
+            <WarningMessage
+              badAddress={this.state.badAddress}
+              noMatch={this.state.noMatch}
+            />
+          }
           <div style={fullpage}>
             <div />
             <div style={mainContainer}>

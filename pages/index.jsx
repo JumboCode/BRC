@@ -1,5 +1,8 @@
 import React from 'react';
-import { SearchBar, BurgerMenu, SocialMedia, Footer } from '../components';
+import Link from 'next/link';
+import {
+  SearchBar, BurgerMenu, SocialMedia, Footer,
+} from '../components';
 
 const bodyStyle = {
   display: 'flex',
@@ -15,17 +18,18 @@ const logo = {
   paddingBottom: '50px',
 };
 
-const linkStyle = {
-  textAlign: 'center',
-  fontSize: '15px',
-  fontFamily: 'sans-serif',
-  padding: '10px',
-};
-
 const searchStyle = {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
+};
+
+const linkStyle = {
+  textDecoration: 'none',
+  fontFamily: 'sans-serif',
+  fontSize: '15px',
+  color: 'grey',
+  cursor: 'pointer',
 };
 
 const Index = () => (
@@ -33,10 +37,12 @@ const Index = () => (
     <BurgerMenu />
     <div style={bodyStyle}>
       <div style={logo}>
-        <img alt="BRC logo" src="./static/images/BRC-logo.jpg" width="300" height="110" />
+        <img alt="BRC logo" src="./static/images/bispot.png" width="280" height="100" />
       </div>
       <SearchBar styles={searchStyle} />
-
+      <Link href={{ pathname: '/home', query: { search: '*', data: 'locations' } }}>
+        <p style={linkStyle}>or click to view the full list of Bi groups</p>
+      </Link>
     </div>
     <SocialMedia />
     <Footer />
