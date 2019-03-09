@@ -10,8 +10,9 @@ const warningTitle = {
 const innerContainter = {
   flexDirection: 'column',
   alignItems: 'flex-start',
-  marginLeft: '25%',
-  marginRight: '25%',
+  marginTop: '20px',
+  marginLeft: '15%',
+  marginRight: '15%',
 };
 
 const warningMessageContent = {

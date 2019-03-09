@@ -10,20 +10,7 @@ const info = {
   flexFlow: 'column',
   height: '90vh',
   overflow: 'auto',
-};
-
-const title = {
-  fontWeight: 'bold',
-  fontSize: 40,
-  fontFamily: 'sans-serif',
-  paddingBottom: '5%',
-};
-
-const calendar = {
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  textAlign: 'center',
+  width: '90vh',
 };
 
 const scroll = {
@@ -60,8 +47,9 @@ class InfoBar extends Component {
 
   getLetterFilters = () => {
     const noDuplicates = {};
-    const letters = Object.keys(this.props.locationData).map((word) => {
+    Object.keys(this.props.locationData).map((word) => {
       noDuplicates[word[0]] = true;
+      return true;
     });
     return Object.keys(noDuplicates);
   }
@@ -71,14 +59,14 @@ class InfoBar extends Component {
     const sections = [];
     let i = 0;
     for (const state in this.state.locationData) {
-      if (state[0] == this.state.filterLetter || this.state.filterLetter == 'all') {
+      if (state[0] === this.state.filterLetter || this.state.filterLetter == 'all') {
         if (this.state.locationData.hasOwnProperty(state)) {
           const stateResources = this.state.locationData[state];
           const resourceRegion = state;
           let startOpen = false;
 
           // open region accordion section after moving section to top
-          if (i == 0 && this.state.matchedRegion && !this.state.movedRegion) {
+          if (i === 0 && this.state.matchedRegion && !this.state.movedRegion) {
             startOpen = true;
             this.setState({ movedRegion: true });
           }
@@ -115,7 +103,6 @@ class InfoBar extends Component {
 
     return (
       <div style={info}>
-        <div style={title}>  Bi Spot: Find a group near you.</div>
         <LetterSelectBar letters={stateInitials} selected={this.state.filterLetter} onLetterClicked={this.onLetterClicked} />
         <div style={scroll}>
           <Accordion>

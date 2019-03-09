@@ -135,26 +135,26 @@ class MapContainer extends React.Component {
         }
         // if doesn't exist, recenter to user's location
         else {
-          MapContainer.props.onBadAddress();  //show warning message
+          MapContainer.props.onBadAddress(); // show warning message
           if (!MapContainer.state.clicked) {
             navigator.geolocation.getCurrentPosition(
               (position) => {
-                let latlng = {lat: position.coords.latitude, lng: position.coords.longitude};
+                const latlng = { lat: position.coords.latitude, lng: position.coords.longitude };
                 map.setCenter(latlng);
-                let currentMarker = new maps.Marker({
+                const currentMarker = new maps.Marker({
                   position: latlng,
-                  map: map,
-                  icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
+                  map,
+                  icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png',
                 });
-                createInfoWindow(map, maps, currentMarker, "Your location");
+                createInfoWindow(map, maps, currentMarker, 'Your location');
 
                 // geocode latlng, then set initial region in home.js
-                Geocoder.geocode({'location': latlng}, function(results, status) {
+                Geocoder.geocode({ location: latlng }, (results, status) => {
                   if (status === 'OK') {
                     MapContainer.props.onInitialCenter(MapContainer.getRegion(results[0].address_components));
                   }
                 });
-              }, (error) => console.log("Navigator.geolocation failed" + error)
+              }, error => console.log(`Navigator.geolocation failed${error}`),
             );
           }
         }
@@ -163,25 +163,25 @@ class MapContainer extends React.Component {
       // If in "view all centers" mode, doesn't show error message
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          let latlng = { lat: position.coords.latitude, lng: position.coords.longitude };
+          const latlng = { lat: position.coords.latitude, lng: position.coords.longitude };
           if (!MapContainer.state.clicked) {
             map.setCenter(latlng);
-            var currentMarker = new maps.Marker({
+            const currentMarker = new maps.Marker({
               position: latlng,
-              map: map,
-              icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
-            })
-            createInfoWindow(map, maps, currentMarker, "Your location");
+              map,
+              icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png',
+            });
+            createInfoWindow(map, maps, currentMarker, 'Your location');
 
             // geocode latlng, then set initial region in home.js
-            Geocoder.geocode({'location': latlng}, function(results, status) {
+            Geocoder.geocode({ location: latlng }, (results, status) => {
               if (status === 'OK') {
                 MapContainer.props.onInitialCenter(MapContainer.getRegion(results[0].address_components));
               }
             });
           }
-        }, (error) => console.log("Navigator.geolocation failed" + error)
-      );        
+        }, error => console.log(`Navigator.geolocation failed${error}`),
+      );
     }
     this.getNewCenter(map, maps);
   }
@@ -205,7 +205,7 @@ class MapContainer extends React.Component {
           if (this.props.centeredOn.lat === null && this.props.centeredOn.lng === null) {
             const Geocoder = new maps.Geocoder();
             Geocoder.geocode({ address: this.props.centeredOn.region }, (results, status) => {
-              if (status == 'OK') {
+              if (status === 'OK') {
                 map.setCenter(results[0].geometry.location);
               } else {
                 console.log(`Geocode was not successful for the following reason: ${status}`);
@@ -231,7 +231,7 @@ class MapContainer extends React.Component {
     render() {
       this.getNewCenter(this.state.map, this.state.maps);
       return (
-        <div style={{ height: '400px' }}>
+        <div style={{ height: '480px' }}>
           <GoogleMap
             bootstrapURLKeys={{ key: publicRuntimeConfig.MAP_KEY }}
             defaultCenter={this.state.defaultCenter}

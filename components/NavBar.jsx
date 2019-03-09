@@ -1,5 +1,6 @@
+
 import Link from 'next/link';
-import { SearchBar } from '.';
+import React from 'react';
 
 const styles = {
   navBarContainer: {
@@ -12,11 +13,6 @@ const styles = {
     padding: '5px',
     cursor: 'pointer',
   },
-};
-
-const searchStyle = {
-  display: 'flex',
-  flexDirection: 'row',
 };
 
 const NavBar = () => (

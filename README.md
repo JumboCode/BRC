@@ -19,9 +19,11 @@ James Garijo-Garde<br />
 Naoki Okada<br />
 Sabrina Wen<br />
 Jingqi Yang<br />
+Zimo Lin<br />
 Zhitong Zhang<br />
 <br />
 Designer:<br />
+Camile Calabrese <br />
 Eragon Ma<br />
 
 ## Technology Stack 
