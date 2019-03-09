@@ -13,6 +13,7 @@ import BurgerMenu from './BurgerMenu';
 import Events from './Events';
 import WarningMessage from './WarningMessage';
 import Footer from './Footer';
+import DefaultCity from './DefaultCity';
 
 export {
   InfoBar,
@@ -30,4 +31,5 @@ export {
   Events,
   WarningMessage,
   Footer,
+  DefaultCity,
 };
