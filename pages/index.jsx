@@ -1,5 +1,8 @@
 import React from 'react';
-import { SearchBar, BurgerMenu, SocialMedia, Footer, DefaultCity } from '../components';
+import Link from 'next/link';
+import {
+  SearchBar, BurgerMenu, SocialMedia, Footer, DefaultCity,
+} from '../components';
 
 const bodyStyle = {
   display: 'flex',
@@ -37,7 +40,7 @@ const Index = () => (
         <img alt="BRC logo" src="./static/images/bispot.png" width="280" height="100" />
       </div>
       <SearchBar styles={searchStyle} />
-      <DefaultCity styles={ButtonSyle} />
+      <DefaultCity />
       <Link href={{ pathname: '/home', query: { search: '*', data: 'locations' } }}>
         <p style={linkStyle}>or click to view the full list of Bi groups</p>
       </Link>
