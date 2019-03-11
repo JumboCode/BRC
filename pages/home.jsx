@@ -47,7 +47,7 @@ const exitX = {
 const searchStyle = {
   position: 'absolute',
   top: '10px',
-  left: '80px',
+  left: '60px',
   margin: '10px',
   display: 'flex',
   flexDirection: 'column',
