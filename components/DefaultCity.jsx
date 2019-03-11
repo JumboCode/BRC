@@ -9,6 +9,7 @@ const buttonStyle = {
   textAlign: 'center',
   padding: '6px 18px',
   marginRight: '13px',
+  cursor: 'pointer',
 };
 
 const myLocationStyle = {
@@ -19,11 +20,12 @@ const myLocationStyle = {
   textAlign: 'center',
   padding: '6px 18px',
   marginRight: '13px',
+  cursor: 'pointer',
 };
 
 const areaStyle = {
   marginTop: '13px',
-}
+};
 
 class DefaultCity extends React.Component {
   setRedirectNYC = () => {
