@@ -103,29 +103,12 @@ class MapContainer extends React.Component {
 
       // Google's default info window
       function createInfoWindow(map, maps, marker, title, info) {
-        console.log('In Create InfoWindow');
-        console.log(title);
-        console.log('Finished printing title');
-        // console.log(info)
-        // console.log('Finished printing info')
-
-        // const contentString = title;
-        // const contentString = `<h1 onclick="console.log('clickedWindow');">${title}</h1>`;
-        const text = 'Second window test';
-
-        // if (info != null) {
-        //   console.log('Have info');
-        //   const websiteURL = info.Website;
-        //   console.log(websiteURL);
-        // }
-
-        // const contentString = `<h1 onclick="console.log('clickedWindow');">${title}</h1>`;
-        // const contentString2 = `<h1 onclick="console.log('clickedWindow2');">${text}</h1>`;
-        // const contentString = `<h2 onclick="openWindow2">${title}</h>`;
-
-        const contentString = `<a href = ${info.Website}>${title}</a>`;
-
-
+        let contentString;
+        if (info != null && (typeof (info.Website) !== 'undefined')) {
+          contentString = `<a href = ${info.Website}>${title}</a>`;
+        } else {
+          contentString = title;
+        }
         const infowindow = new maps.InfoWindow({
           content: contentString,
         });
@@ -141,20 +124,6 @@ class MapContainer extends React.Component {
         marker.addListener('click', () => {
           infowindow.open(map, marker);
         });
-
-/*
-        infowindow.addListener('click', () => {
-          console.log('Clicked on info window');
-
-          if (info != null) {
-            console.log('Have info');
-            const websiteURL = info.Website;
-            console.log(websiteURL);
-            infowindow.setContent(`<h1 onclick="console.log('clickedWindow');">${websiteURL}</h1>`);
-          }
-        });
-*/
-
       }
 
       // render marker at bisexual resource center (also the default center)
@@ -177,18 +146,8 @@ class MapContainer extends React.Component {
       for (const region in locationData) {
         if (locationData.hasOwnProperty(region)) {
           for (const resource in locationData[region]) {
-            console.log(locationData)
-            console.log(resource)
-
-            const websiteURL = null;
-            if (locationData[region][resource].Website != undefined){
-              websiteURL = locationData[region][resource].Website;
-              console.log(websiteURL)
-            };
-
             const resourceInfo = locationData[region][resource];
             console.log(resourceInfo)
-
             if (locationData[region][resource].lat != undefined
                         && locationData[region][resource].lng != undefined) {
               const currentMarker = new maps.Marker({
