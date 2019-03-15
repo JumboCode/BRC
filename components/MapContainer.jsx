@@ -23,6 +23,7 @@ import React from 'react';
 import getConfig from 'next/config';
 import GoogleMap from 'google-map-react';
 import ZoomScale from '../static/ZoomScale';
+import { PassThrough } from 'stream';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -72,7 +73,7 @@ class MapContainer extends React.Component {
       }
       return this.state.defaultCenter;
     }
-
+    
     // get initial location's region (state) as string from results of
     // google maps geocode data, for example "Massachusetts"
     getRegion(address_components) {
@@ -98,30 +99,36 @@ class MapContainer extends React.Component {
       this.state.map = map;
       const Geocoder = new maps.Geocoder(); // converts address to lat/lng
 
+
+
       // Google's default info window
-      function createInfoWindow(map, maps, marker, title) {
+      function createInfoWindow(map, maps, marker, title, info) {
+        console.log('In Create InfoWindow');
+        console.log(title);
+        console.log('Finished printing title');
+        // console.log(info)
+        // console.log('Finished printing info')
+
         // const contentString = title;
         // const contentString = `<h1 onclick="console.log('clickedWindow');">${title}</h1>`;
         const text = 'Second window test';
-        //const contentString = `<h1 onclick="console.log('clickedWindow');">${title}</h1>`;
 
-        const contentString2 = `<h1 onclick="console.log('clickedWindow2');">${text}</h1>`;
-        const infowindow2 = new maps.InfoWindow({
-          content: contentString2,
-        })
+        // if (info != null) {
+        //   console.log('Have info');
+        //   const websiteURL = info.Website;
+        //   console.log(websiteURL);
+        // }
 
-        function openWindow2(){
-          infowindow2.open(map, marker);
-        }
+        // const contentString = `<h1 onclick="console.log('clickedWindow');">${title}</h1>`;
+        // const contentString2 = `<h1 onclick="console.log('clickedWindow2');">${text}</h1>`;
+        // const contentString = `<h2 onclick="openWindow2">${title}</h>`;
 
-        const contentString = `<h2 onclick="openWindow2">${title}</h>`;
-        // var contentString2 = stores[i].name + '<br/><a href="#" onclick="selectstore(\'test\');">Select Store</a>';
+        const contentString = `<a href = ${info.Website}>${title}</a>`;
+
 
         const infowindow = new maps.InfoWindow({
           content: contentString,
         });
-
-
 
         marker.addListener('mouseover', () => {
           infowindow.open(map, marker);
@@ -135,9 +142,19 @@ class MapContainer extends React.Component {
           infowindow.open(map, marker);
         });
 
-        //infowindow.addListener('click', () => {
-        //  console.log('Clicked on info window');
-        //});
+/*
+        infowindow.addListener('click', () => {
+          console.log('Clicked on info window');
+
+          if (info != null) {
+            console.log('Have info');
+            const websiteURL = info.Website;
+            console.log(websiteURL);
+            infowindow.setContent(`<h1 onclick="console.log('clickedWindow');">${websiteURL}</h1>`);
+          }
+        });
+*/
+
       }
 
       // render marker at bisexual resource center (also the default center)
@@ -160,6 +177,18 @@ class MapContainer extends React.Component {
       for (const region in locationData) {
         if (locationData.hasOwnProperty(region)) {
           for (const resource in locationData[region]) {
+            console.log(locationData)
+            console.log(resource)
+
+            const websiteURL = null;
+            if (locationData[region][resource].Website != undefined){
+              websiteURL = locationData[region][resource].Website;
+              console.log(websiteURL)
+            };
+
+            const resourceInfo = locationData[region][resource];
+            console.log(resourceInfo)
+
             if (locationData[region][resource].lat != undefined
                         && locationData[region][resource].lng != undefined) {
               const currentMarker = new maps.Marker({
@@ -168,7 +197,9 @@ class MapContainer extends React.Component {
                 icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png',
               });
 
-              createInfoWindow(map, maps, currentMarker, resource);
+//                createInfoWindow(map, maps, currentMarker, resourceInfo);
+              createInfoWindow(map, maps, currentMarker, resource, resourceInfo);
+//                createInfoWindow(map, maps, currentMarker, resource, websiteURL);
            }
           }
         }
@@ -187,7 +218,7 @@ class MapContainer extends React.Component {
                 map,
                 icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png',
               });
-              createInfoWindow(map, maps, currentMarker, MapContainer.props.search);
+              createInfoWindow(map, maps, currentMarker, MapContainer.props.search, null);
               // set initial region in home.js
               MapContainer.props.onInitialCenter(MapContainer.getRegion(
                 results[0].address_components,
@@ -204,7 +235,7 @@ class MapContainer extends React.Component {
                     map,
                     icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png',
                   });
-                  createInfoWindow(map, maps, currentMarker, 'Your location');
+                  createInfoWindow(map, maps, currentMarker, 'Your location', null);
                 }, error => console.log(`Navigator.geolocation failed${error}`),
               );
             }
@@ -222,7 +253,7 @@ class MapContainer extends React.Component {
                 map,
                 icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png',
               });
-              createInfoWindow(map, maps, currentMarker, 'Your location');
+              createInfoWindow(map, maps, currentMarker, 'Your location', null);
             }
           }, error => console.log(`Navigator.geolocation failed${error}`),
         );
