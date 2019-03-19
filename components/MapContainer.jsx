@@ -42,7 +42,7 @@ class MapContainer extends React.Component {
       maps: null,
       centeredOn: null, // position to recenter to
       clicked: false, // true when map has recentered to any resource
-      closest: null, null
+      closest: { "distance": null, "groupInfo": {}}
     };
   }
   // this may only occur once the the api loads, which only occurs once, despite any changes to the props,etc
@@ -125,8 +125,11 @@ class MapContainer extends React.Component {
             MapContainer.props.onInitialCenter(MapContainer.getRegion(results[0].address_components));
           }
           // sets the props for the closest resource center
+          // old parameter 1: MapContainer.props.centeredOn
           console.log("Calling nearest...\n")
-          this.props.closest = nearest(this.props.centeredOn, results)
+          console.log(locationData);
+          MapContainer.props.closest = MapContainer.nearest(results[0].geometry.location, locationData);
+          console.log(this.props.closest["distance"]);
         }
         // if doesn't exist, recenter to user's location
         else {
@@ -183,42 +186,48 @@ class MapContainer extends React.Component {
        return value: distance (miles), group_info */
     nearest = (position, groups) => {
       // R = The Earth's radius, in meters
-      console.log("The nearest function is func'ing sh** up B-)")
       const R = 6371000;
-      lat1 = position.coords.latitude;  // this function has (l)attitude ;-P
-      lng1 = position.coords.longitude;
-      bestDist = 40030174;  // the circumference of the Earth; any resource will be closer (hopefully)
-      bestLoc = groups[0][0]
+      const lat1 = position.lat();  // this function has (l)attitude ;-P
+      const lng1 = position.lng();
+      let bestDist = 40030174;  // the circumference of the Earth; any resource will be closer (hopefully)
+      // console.log(groups[0].states[0]);
+      let bestLoc = null
+      console.log("After initial setup");
 
-      for (const region in groups) {
-        if (locationData.hasOwnProperty(region)) {
-          for (const resource in groups[region]) {
-            if (groups[region][resource].lat != undefined
-              && groups[region][resource].lng != undefined) {
-              lat2 = groups[region][resource].lat;
-              lng2 = groups[region][resource].lng;
+      const locationData = this.props.locations[0].states;
+      // for (const region in groups) {
+      Object.keys(groups).map((outerKey) => {
+        if (locationData.hasOwnProperty(outerKey)) {
+          // for (const resource in groups[region]) {
+          Object.keys(groups[outerKey]).map((innerKey) => {
+            console.log("Checkpoint B");
+            let lat2 = groups[outerKey][innerKey].lat;
+            let lng2 = groups[outerKey][innerKey].lng;
+            if (lat2 != undefined && lng2 != undefined) {
+              console.log("Checkpoint C");
 
-              y = lat2 - lat1;
-              dLat = y.toRad();
-              x = lng2 - lng1;
-              dLng = x.toRad();
+              let y = lat2 - lat1;
+              let dLat = y * Math.PI / 180;
+              let x = lng2 - lng1;
+              let dLng = x * Math.PI / 180;
 
-              a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-                  Math.cos(lat1.toRad()) * Math.cos(lat2.toRad()) *
-                  Math.sin(dLon/2) * Math.sin(dLon/2);
-              c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-              d = R * c;
+              let a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                Math.sin(dLng/2) * Math.sin(dLng/2);
+              let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+              let d = R * c;
 
               if (d < bestDist) {
                 bestDist = d;
-                bestLoc = groups[region][resource];
+                bestLoc = groups[outerKey][innerKey];
               }
             }
-          }
+          });
         }
-      }
+      });
 
-      this.props.closest = { bestDist, bestLoc };
+      this.props.closest = { "distance": bestDist, "groupInfo": bestLoc };
+      console.log("Finished!");
     }
 
     // create new google maps lat/lng object with passed in position
