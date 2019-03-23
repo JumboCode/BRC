@@ -119,10 +119,14 @@ class MapContainer extends React.Component {
         let cont = document.createElement("div");
         //cont.innerText = `<p>${title}</p>`;
         cont.innerHTML = `<p>${title}</p>`;
-        cont.addEventListener('click', function(){
+        cont.addEventListener('click', function () {
           console.log("Added Listener to cont");
           //cont.innerHTML = "Changed cont";
-          cont.innerHTML = `<h1>${title}</h1>`;
+          if (info != null && (typeof (info.Website) !== 'undefined')) {
+            cont.innerHTML = `<a href = ${info.Website}>${title}</a><p>${info.Location}</p>`;
+          } else{
+            cont.innerHTML = `<p>${title}</p>`;
+          }
         });
 
 
