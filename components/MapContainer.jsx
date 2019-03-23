@@ -99,19 +99,31 @@ class MapContainer extends React.Component {
       this.state.map = map;
       const Geocoder = new maps.Geocoder(); // converts address to lat/lng
 
-
-
       // Google's default info window
       function createInfoWindow(map, maps, marker, title, info) {
         let contentString;
-        if (info != null && (typeof (info.Website) !== 'undefined')) {
+/*        if (info != null && (typeof (info.Website) !== 'undefined')) {
           contentString = `<a href = ${info.Website}>${title}</a>`;
         } else {
           contentString = title;
         }
+*/
+        let para = document.createElement("P");
+        para.innerText = title;
+        para.addEventListener('click', function(){
+          console.log('Added Listener to para')
+          para.innerText = "Changed"
+        })
+
+        //contentString = `<h1 onclick="changeContent">${title}</h1>`;
+
         const infowindow = new maps.InfoWindow({
-          content: contentString,
+          content: para,
         });
+
+        function changeContent(map, maps, infowindow){
+          console.log("Called changeContent")
+        }
 
         marker.addListener('mouseover', () => {
           infowindow.open(map, marker);
