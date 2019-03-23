@@ -101,44 +101,22 @@ class MapContainer extends React.Component {
 
       // Google's default info window
       function createInfoWindow(map, maps, marker, title, info) {
-        let contentString;
-/*        if (info != null && (typeof (info.Website) !== 'undefined')) {
-          contentString = `<a href = ${info.Website}>${title}</a>`;
-        } else {
-          contentString = title;
-        }
-*/
-/*         let para = document.createElement("P");
-        para.innerText = title;
-        para.addEventListener('click', function(){
-          console.log('Added Listener to para')
-          para.innerText = "Changed"
-        })
- */
-
-        let cont = document.createElement("div");
-        //cont.innerText = `<p>${title}</p>`;
+        const cont = document.createElement('div');
+        let expanded = false;
         cont.innerHTML = `<p>${title}</p>`;
         cont.addEventListener('click', function () {
-          console.log("Added Listener to cont");
-          //cont.innerHTML = "Changed cont";
-          if (info != null && (typeof (info.Website) !== 'undefined')) {
+          if (info != null && (typeof (info.Website) !== 'undefined') && !expanded) {
             cont.innerHTML = `<a href = ${info.Website}>${title}</a><p>${info.Location}</p>`;
+            expanded = true;
           } else{
             cont.innerHTML = `<p>${title}</p>`;
+            expanded = false;
           }
         });
-
-
-        //contentString = `<h1 onclick="changeContent">${title}</h1>`;
 
         const infowindow = new maps.InfoWindow({
           content: cont,
         });
-
-        function changeContent(map, maps, infowindow){
-          console.log("Called changeContent")
-        }
 
         marker.addListener('mouseover', () => {
           infowindow.open(map, marker);
