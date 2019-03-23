@@ -108,17 +108,28 @@ class MapContainer extends React.Component {
           contentString = title;
         }
 */
-        let para = document.createElement("P");
+/*         let para = document.createElement("P");
         para.innerText = title;
         para.addEventListener('click', function(){
           console.log('Added Listener to para')
           para.innerText = "Changed"
         })
+ */
+
+        let cont = document.createElement("div");
+        //cont.innerText = `<p>${title}</p>`;
+        cont.innerHTML = `<p>${title}</p>`;
+        cont.addEventListener('click', function(){
+          console.log("Added Listener to cont");
+          //cont.innerHTML = "Changed cont";
+          cont.innerHTML = `<h1>${title}</h1>`;
+        });
+
 
         //contentString = `<h1 onclick="changeContent">${title}</h1>`;
 
         const infowindow = new maps.InfoWindow({
-          content: para,
+          content: cont,
         });
 
         function changeContent(map, maps, infowindow){
