@@ -58,7 +58,7 @@ class MapContainer extends React.Component {
           if (this.props.centeredOn.lat === null && this.props.centeredOn.lng === null) {
             const Geocoder = new maps.Geocoder();
             Geocoder.geocode({ address: this.props.centeredOn.region }, (results, status) => {
-              if (status == 'OK') {
+              if (status === 'OK') {
                 map.setCenter(results[0].geometry.location);
               } else {
                 console.log(`Geocode was not successful for the following reason: ${status}`);
@@ -103,43 +103,31 @@ class MapContainer extends React.Component {
 
       // Google's default info window
       function createInfoWindow(map, maps, marker, title, info) {
+
         let contentString;
+        const contentStyle = 'text-decoration:none;color:#F293C1;';
+        const titleString = (title === null || title === 'undefined') ? 'loading...' : title;
         if (info != null && (typeof (info.Website) !== 'undefined')) {
-          contentString = `<a href = ${info.Website}>${title}</a>`;
+          contentString = `<a style=${contentStyle} href=${info.Website} target='_blank'>${titleString}</a>`;
         } else {
-          contentString = title;
+          contentString = `<span style=${contentStyle}>${titleString}</span>`;
         }
         const infowindow = new maps.InfoWindow({
           content: contentString,
         });
 
-        marker.addListener('mouseover', () => {
-          infowindow.open(map, marker);
-        });
+        // marker.addListener('mouseover', () => {
+        //   infowindow.open(map, marker);
+        // });
 
-        marker.addListener('mouseout', () => {
-          // infowindow.close();
-        });
+        // marker.addListener('mouseout', () => {
+        //   infowindow.close();
+        // });
 
         marker.addListener('click', () => {
           infowindow.open(map, marker);
         });
       }
-
-      // render marker at bisexual resource center (also the default center)
-      Geocoder.geocode({ address: 'Bisexual Resource Center' }, (results, status) => {
-        if (status == 'OK') {
-          const currentMarker = new maps.Marker({
-            position: results[0].geometry.location,
-            map,
-            icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png',
-          });
-
-          createInfoWindow(map, maps, currentMarker, 'Bisexual Resource Center');
-        } else {
-          console.log(`Geocode was not successful for the following reason: ${status}`);
-        }
-      });
 
       // get lat/lng of all resources, add markers for each resource
       const locationData = this.props.locations[0].states;
@@ -147,7 +135,6 @@ class MapContainer extends React.Component {
         if (locationData.hasOwnProperty(region)) {
           for (const resource in locationData[region]) {
             const resourceInfo = locationData[region][resource];
-            console.log(resourceInfo)
             if (locationData[region][resource].lat != undefined
                         && locationData[region][resource].lng != undefined) {
               const currentMarker = new maps.Marker({
