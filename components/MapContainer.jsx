@@ -253,7 +253,7 @@ class MapContainer extends React.Component {
       function createInfoWindow(map, maps, marker, title, info) {
 
         let contentString;
-        const contentStyle = 'text-decoration:none;color:#F293C1;';
+        const contentStyle = 'text-decoration:underline;color:#F293C1;';
         const titleString = (title === null || title === 'undefined') ? 'loading...' : title;
         if (info != null && (typeof (info.Website) !== 'undefined')) {
           contentString = `<a style=${contentStyle} href=${info.Website} target='_blank'>${titleString}</a>`;
