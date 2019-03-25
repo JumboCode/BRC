@@ -1,57 +1,27 @@
-import { Component } from 'react';
-
-class Letter extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
-  }
-
-    onClick = () => {
-      this.props.onLetterClicked(this.props.letter);
-    }
-
-    render() {
-      return (
-        <p style={this.props.styleLetter} onClick={this.onClick}>{this.props.letter}</p>
-      );
-    }
-}
-
-Letter.propTypes = {
-  letter: React.PropTypes.string.isRequired,
-  letterClicked: React.PropTypes.function.isRequired,
-};
-
-Letter.defaultProps = {
-  letter: 'A',
-};
+import React, { Component } from 'react';
+import Letter from './Letter';
 
 const LetterSelectBarStyle = {
   display: 'flex',
   flexDirection: 'row wrap',
   justifyContent: 'center',
-  fontSize: '20px',
+  fontSize: '18px',
   fontFamily: 'sans-serif', // find out if a different font is needed
 };
 
 const LetterStyle = {
-  paddingRight: '10px',
+  marginLeft: '5px',
+  marginRight: '5px',
   color: '#707070',
   cursor: 'pointer',
 };
 
 const ActiveLetter = {
-  paddingRight: '4px',
-  paddingLeft: '4px',
-  paddingTop: '1px',
-  paddingBottom: '1px',
-  marginRight: '10px',
+  padding: '1px 7px 1px 7px',
   color: '#FFFFFF',
   backgroundColor: '#F293C1',
   cursor: 'pointer',
 };
-
 
 class LetterSelectBar extends Component {
   constructor(props) {
@@ -67,13 +37,20 @@ class LetterSelectBar extends Component {
   render() {
     const sections = [];
     const filters = this.props.letters;
-    for (let i = 0; i < filters.length; i++) {
+    for (let i = 0; i < filters.length; i += 1) {
       const character = filters[i];
       let letterStyle = LetterStyle;
       if (character === this.props.selected) {
         letterStyle = ActiveLetter;
       }
-      sections.push(<Letter key={i} letter={character} styleLetter={letterStyle} onLetterClicked={this.onLetterClicked} />);
+      sections.push(
+        <Letter
+          key={i}
+          letter={character}
+          styleLetter={letterStyle}
+          onLetterClicked={this.onLetterClicked}
+        />,
+      );
     }
 
     return (
@@ -83,11 +60,6 @@ class LetterSelectBar extends Component {
     );
   }
 }
-
-LetterSelectBar.propTypes = {
-  letters: React.PropTypes.array.isRequired,
-  letterClicked: React.PropTypes.function.isRequired,
-};
 
 LetterSelectBar.defaultProps = {
   letter: 'A',

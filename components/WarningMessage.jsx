@@ -13,11 +13,12 @@ const innerContainter = {
   marginTop: '20px',
   marginLeft: '15%',
   marginRight: '15%',
+  fontFamily: 'sans-serif',
 };
 
 const warningMessageContent = {
   color: 'black',
-  fontSize: '21px',
+  fontSize: '18px',
   marginTop: '10px',
   borderTop: '5px solid #F293C1',
   paddingTop: '10px',

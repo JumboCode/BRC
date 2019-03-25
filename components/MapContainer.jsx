@@ -15,8 +15,8 @@
 import React from 'react';
 import getConfig from 'next/config';
 import GoogleMap from 'google-map-react';
-import ZoomScale from '../static/ZoomScale';
 import { PassThrough } from 'stream';
+import ZoomScale from '../static/ZoomScale';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -214,14 +214,15 @@ class MapContainer extends React.Component {
             });
           } else {
             map.setCenter(new google.maps.LatLng(
-              this.props.centeredOn.lat, this.props.centeredOn.lng));
+              this.props.centeredOn.lat, this.props.centeredOn.lng,
+            ));
           }
           return this.props.position;
         }
       }
       return this.state.defaultCenter;
     }
-    
+
     // get initial location's region (state) as string from results of
     // google maps geocode data, for example "Massachusetts"
     getRegion(address_components) {
@@ -232,7 +233,7 @@ class MapContainer extends React.Component {
         }
       }
     }
-    
+
     _onChildMouseEnter = (key) => {
       this.props.onHoverKeyChange(key);
     }
@@ -256,16 +257,14 @@ class MapContainer extends React.Component {
         cont.style.cssText = (info !== null && (typeof (info.Website) !== 'undefined'))
           ? 'color:#F293C1;cursor:pointer;height:100%;' : 'color:#F293C1;';
         cont.innerHTML = `<p>${titleString}</p>`;
-        cont.addEventListener('click', function() {
+        cont.addEventListener('click', () => {
           if (info !== null && (typeof (info.Website) !== 'undefined') && !expanded) {
             cont.innerHTML = `<a style=${linkStyle} href=${info.Website} target='_blank'>${titleString}</a><p>${info.Location}</p>`;
             expanded = true;
-          } else {
-            cont.innerHTML = `<p>${titleString}</p>`;
-            expanded = false;
+            cont.style.cssText = 'color:#F293C1;height:100%;';
           }
         });
-        
+
         const infoBubble = new maps.InfoWindow({
           content: cont,
         });
@@ -297,10 +296,10 @@ class MapContainer extends React.Component {
                 icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png',
               });
 
-//                createInfoWindow(map, maps, currentMarker, resourceInfo);
+              //                createInfoWindow(map, maps, currentMarker, resourceInfo);
               createInfoWindow(map, maps, currentMarker, resource, resourceInfo);
-//                createInfoWindow(map, maps, currentMarker, resource, websiteURL);
-           }
+              //                createInfoWindow(map, maps, currentMarker, resource, websiteURL);
+            }
           }
         }
       }

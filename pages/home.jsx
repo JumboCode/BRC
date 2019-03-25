@@ -38,12 +38,6 @@ const map = {
   overlflow: 'auto',
 };
 
-const exitX = {
-  position: 'relative',
-  left: '750px',
-  top: '10px',
-};
-
 const searchStyle = {
   position: 'absolute',
   top: '10px',

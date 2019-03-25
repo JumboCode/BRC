@@ -5,6 +5,7 @@ const divStyle = {
   backgroundColor: '#FFFFFF',
   paddingLeft: '7px',
   paddingBottom: '0.3px',
+  fontFamily: 'sans-serif',
 };
 
 const selectDivStyle = {
@@ -13,6 +14,7 @@ const selectDivStyle = {
   boxSizing: 'border-box',
   paddingLeft: '7px',
   paddingBottom: '0.3px',
+  fontFamily: 'sans-serif',
 };
 
 const linkStyle = {

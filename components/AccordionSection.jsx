@@ -11,14 +11,6 @@ const titleStyle = {
   paddingLeft: '10px',
   padding: '0 15px 0 10px',
 };
-const closedTitle = {
-  display: 'flex',
-  alignItems: 'center',
-  backgroundColor: '#F0F0F0',
-  color: '#757575',
-  marginBottom: '5.5px',
-  padding: '0 15px 0 10px',
-};
 
 const sectionStyle = {
   backgroundColor: '#FFFFFF', // #F0F0F0
