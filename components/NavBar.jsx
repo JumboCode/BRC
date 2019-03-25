@@ -18,7 +18,7 @@ const styles = {
 const NavBar = () => (
   <div style={styles.navBarContainer}>
     <Link href="/">
-      <img alt="Home" src="./static/images/favicon.ico" width="50" height="50" style={styles.homeButton} />
+      <img alt="Home" src="./static/images/bug.png" width="50" height="50" style={styles.homeButton} />
     </Link>
   </div>
 );
