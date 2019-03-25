@@ -15,8 +15,15 @@
 import React from 'react';
 import getConfig from 'next/config';
 import GoogleMap from 'google-map-react';
-import { PassThrough } from 'stream';
 import ZoomScale from '../static/ZoomScale';
+import PopupContents from './PopupContents';
+
+/*  Test parameters for the Pop-Up  */
+const popupTest = {
+  heading: 'Pop-Up Heading',
+  address: '123 Address Ave, AZ 01234',
+  description: "This is a test of the pop-up. Doesn't it look nice?",
+};
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -213,7 +220,7 @@ class MapContainer extends React.Component {
               }
             });
           } else {
-            map.setCenter(new google.maps.LatLng(
+            map.setCenter(new maps.LatLng(
               this.props.centeredOn.lat, this.props.centeredOn.lng,
             ));
           }
@@ -249,24 +256,33 @@ class MapContainer extends React.Component {
       const Geocoder = new maps.Geocoder(); // converts address to lat/lng
 
       // Google's default info window
-      function createInfoWindow(map, maps, marker, title, info) {
+      function createInfoWindow(myMap, myMaps, marker, title, info) {
         const titleString = (title === null || title === 'undefined') ? 'loading...' : title;
-        const linkStyle = 'text-decoration:underline;color:inherit;font-size:16px;';
         const cont = document.createElement('div');
         let expanded = false;
+
+        const titleStyle = 'color:#F293C1;cursor:pointer;height:100%;text-decoration:underline;';
+        const expandedStyle = 'color:#F293C1;cursor:pointer;height:100%;';
+        const expandedTitleStyle = 'font-weight:bold;color:inherit;text-decoration:none';
+
         cont.style.cssText = (info !== null && (typeof (info.Website) !== 'undefined'))
-          ? 'color:#F293C1;cursor:pointer;height:100%;' : 'color:#F293C1;';
+          ? titleStyle : 'color:#F293C1;';
         cont.innerHTML = `<p>${titleString}</p>`;
+
         cont.addEventListener('click', () => {
           if (info !== null && (typeof (info.Website) !== 'undefined') && !expanded) {
-            cont.innerHTML = `<a style=${linkStyle} href=${info.Website} target='_blank'>${titleString}</a><p>${info.Location}</p>`;
+            cont.style.cssText = expandedStyle;
+            cont.innerHTML = `<a style=${expandedTitleStyle} href=${info.Website} target='_blank'>${titleString}</a><p>${info.Location}</p>`;
             expanded = true;
-            cont.style.cssText = 'color:#F293C1;height:100%;';
+          } else {
+            cont.innerHTML = `<p>${titleString}</p>`;
+            expanded = false;
           }
         });
 
-        const infoBubble = new maps.InfoWindow({
+        const infoBubble = new myMaps.InfoWindow({
           content: cont,
+          backgroundColor: '#0',
         });
 
         // marker.addListener('mouseover', () => {
@@ -278,31 +294,31 @@ class MapContainer extends React.Component {
         // });
 
         marker.addListener('click', () => {
-          infoBubble.open(map, marker);
+          infoBubble.open(myMap, marker);
         });
       }
 
       // get lat/lng of all resources, add markers for each resource
       const locationData = this.props.locations[0].states;
-      for (const region in locationData) {
-        if (locationData.hasOwnProperty(region)) {
-          for (const resource in locationData[region]) {
-            const resourceInfo = locationData[region][resource];
-            if (locationData[region][resource].lat != undefined
-                        && locationData[region][resource].lng != undefined) {
-              const currentMarker = new maps.Marker({
-                position: { lat: locationData[region][resource].lat, lng: locationData[region][resource].lng },
-                map,
-                icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png',
-              });
-
-              //                createInfoWindow(map, maps, currentMarker, resourceInfo);
-              createInfoWindow(map, maps, currentMarker, resource, resourceInfo);
-              //                createInfoWindow(map, maps, currentMarker, resource, websiteURL);
-            }
+      Object.keys(locationData).map((region) => {
+        Object.keys(locationData[region]).map((resource) => {
+          const resourceInfo = locationData[region][resource];
+          if (locationData[region][resource].lat != undefined
+                      && locationData[region][resource].lng != undefined) {
+            const currentMarker = new maps.Marker({
+              position: {
+                lat: locationData[region][resource].lat,
+                lng: locationData[region][resource].lng,
+              },
+              map,
+              icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png',
+            });
+            createInfoWindow(map, maps, currentMarker, resource, resourceInfo);
           }
-        }
-      }
+          return null;
+        });
+        return null;
+      });
       // Check if it's in "view all centers" mode
       if (this.props.search !== '*') {
         // get lat/lng of search query
