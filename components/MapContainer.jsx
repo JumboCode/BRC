@@ -114,7 +114,7 @@ class MapContainer extends React.Component {
 
       // Styles for infoWindow
       const titleStyle = 'color:#F293C1;cursor:pointer;height:100%;text-decoration:underline;';
-      const expandedStyle = 'color:#F293C1;cursor:pointer;height:100%;';
+      const expandedStyle = 'color:#F293C1;cursor:pointer;height:100%;padding-bottom:12px;';
       const expandedTitleStyle = 'font-weight:bold;text-decoration:none;font-size:15px;';
       const expandedDetailStyle = 'color:grey;font-style:italic;';
       const linkStyle = 'color:#F293C1;';
@@ -137,24 +137,40 @@ class MapContainer extends React.Component {
         } else {
           cont.innerHTML = `<p>${titleString}</p>`;
           expanded = false;
+          cont.style.cssText = titleStyle;
         }
+      });
+
+      cont.addEventListener('mouseenter', () => {
+        if (info !== null && (typeof (info.Website) !== 'undefined') && !expanded) {
+          cont.style.cssText = expandedStyle;
+          cont.innerHTML = `
+            <div style=${expandedTitleStyle}>${titleString}</div>
+            <p style=${expandedDetailStyle}>${info.Location}</p>
+            <a id='link' style=${linkStyle} href=${info.Website} target='_blank'>View Website</a>
+            `;
+          expanded = true;
+          const link = document.getElementById('link');
+          if (link) link.addEventListener('click', (e) => { e.stopImmediatePropagation(); });
+        }
+      });
+
+      cont.addEventListener('mouseleave', () => {
+        cont.innerHTML = `<p>${titleString}</p>`;
+        expanded = false;
+        cont.style.cssText = titleStyle;
       });
 
       const infoBubble = new myMaps.InfoWindow({
         content: cont,
-        backgroundColor: '#0',
       });
 
-      // marker.addListener('mouseover', () => {
-      //   infowindow.open(map, marker);
-      // });
-
-      // marker.addListener('mouseout', () => {
-      //   infowindow.close();
-      // });
-
+      // Toggle infoWindow on marker click
+      let open = false;
       marker.addListener('click', () => {
-        infoBubble.open(myMap, marker);
+        if (!open) infoBubble.open(myMap, marker);
+        else infoBubble.close();
+        open = !open;
       });
     }
 
