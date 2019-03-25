@@ -261,9 +261,12 @@ class MapContainer extends React.Component {
         const cont = document.createElement('div');
         let expanded = false;
 
+        // Styles for infoWindow
         const titleStyle = 'color:#F293C1;cursor:pointer;height:100%;text-decoration:underline;';
         const expandedStyle = 'color:#F293C1;cursor:pointer;height:100%;';
-        const expandedTitleStyle = 'font-weight:bold;color:inherit;text-decoration:none';
+        const expandedTitleStyle = 'font-weight:bold;text-decoration:none;font-size:18px;';
+        const expandedDetailStyle = 'color:grey;font-style:italic;';
+        const linkStyle = 'color:#F293C1;';
 
         cont.style.cssText = (info !== null && (typeof (info.Website) !== 'undefined'))
           ? titleStyle : 'color:#F293C1;';
@@ -272,13 +275,19 @@ class MapContainer extends React.Component {
         cont.addEventListener('click', () => {
           if (info !== null && (typeof (info.Website) !== 'undefined') && !expanded) {
             cont.style.cssText = expandedStyle;
-            cont.innerHTML = `<a style=${expandedTitleStyle} href=${info.Website} target='_blank'>${titleString}</a><p>${info.Location}</p>`;
+            cont.innerHTML = `
+              <div style=${expandedTitleStyle}>${titleString}</div>
+              <p style=${expandedDetailStyle}>${info.Location}</p>
+              <a id='link' style=${linkStyle} href=${info.Website} target='_blank'>View Website</a>
+              `;
             expanded = true;
           } else {
             cont.innerHTML = `<p>${titleString}</p>`;
             expanded = false;
           }
         });
+        const link = document.getElementById('link');
+        if (link) link.addEventListener('click', (e) => { e.stopPropagation(); });
 
         const infoBubble = new myMaps.InfoWindow({
           content: cont,
