@@ -17,7 +17,7 @@ const innerContainter = {
 };
 
 const warningMessageContent = {
-  color: 'black',
+  color: '#707070',
   fontSize: '18px',
   marginTop: '10px',
   borderTop: '5px solid #F293C1',
