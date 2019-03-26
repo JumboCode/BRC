@@ -233,20 +233,9 @@ class MapContainer extends React.Component {
         }
       });
     } else {
-    // If in "view all centers" mode, doesn't show error message
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          if (!myContainer.state.clicked) {
-            map.setCenter({ lat: position.coords.latitude, lng: position.coords.longitude });
-            const currentMarker = new maps.Marker({
-              position: { lat: position.coords.latitude, lng: position.coords.longitude },
-              map,
-              // icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png',
-            });
-            createInfoWindow(map, maps, currentMarker, 'Your location', null);
-          }
-        }, error => console.log(`Navigator.geolocation failed${error}`),
-      );
+      // Set center as United States
+      map.setCenter(new maps.LatLng(41.850033, -87.6500523));
+      this.props.setZoom(ZoomScale.country_zoom);
     }
     this.getNewCenter(map, maps);
   }

@@ -48,13 +48,6 @@ const searchStyle = {
   alignItems: 'left',
 };
 
-/*  Test parameters for the Pop-Up  */
-const popupTest = {
-  heading: 'Pop-Up Heading',
-  address: '123 Address Ave, AZ 01234',
-  description: "This is a test of the pop-up. Doesn't it look nice?",
-};
-
 class Home extends Component {
   // get list of locations as prop
   static async getInitialProps(props) {
@@ -92,7 +85,10 @@ class Home extends Component {
   componentWillReceiveProps(nextProps) {
     // You don't have to do this check first, but it can help prevent an unneeded render
     if (nextProps.search !== this.state.search) {
-      this.setState({ centeredOn: { lat: null, lng: null, region: nextProps.search }, zoom: ZoomScale.middle_zoom });
+      this.setState({
+        centeredOn: { lat: null, lng: null, region: nextProps.search },
+        zoom: ZoomScale.middle_zoom,
+      });
     }
   }
 
@@ -119,6 +115,10 @@ class Home extends Component {
     // region is of the format {lat: null, lng: null, region: string}
     centerState = (region) => {
       this.setState({ centeredOn: region, zoom: ZoomScale.state_zoom });
+    }
+
+    setMapZoom = (zoom) => {
+      this.setState({ zoom });
     }
 
     render() {
@@ -150,6 +150,7 @@ class Home extends Component {
                   onInitialCenter={this.onInitialCenter}
                   onBadAddress={this.onBadAddress}
                   onAddressChange={this.onAddressChange}
+                  setZoom={this.setMapZoom}
                 />
               </div>
             </div>
