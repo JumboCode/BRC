@@ -60,7 +60,7 @@ class DefaultCity extends React.Component {
   setRedirectMyLocation = () => {
     Router.push({
       pathname: '/home',
-      query: { search: '*' },
+      query: { search: 'mylocation' },
     });
   }
 

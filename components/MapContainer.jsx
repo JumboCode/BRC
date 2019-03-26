@@ -124,20 +124,22 @@ class MapContainer extends React.Component {
       cont.innerHTML = `<p>${titleString}</p>`;
 
       cont.addEventListener('click', () => {
-        if (info !== null && (typeof (info.Website) !== 'undefined') && !expanded) {
-          cont.style.cssText = expandedStyle;
-          cont.innerHTML = `
-            <div style=${expandedTitleStyle}>${titleString}</div>
-            <p style=${expandedDetailStyle}>${info.Location}</p>
-            <a id='link' style=${linkStyle} href=${info.Website} target='_blank'>View Website</a>
-            `;
-          expanded = true;
-          const link = document.getElementById('link');
-          if (link) link.addEventListener('click', (e) => { e.stopImmediatePropagation(); });
-        } else {
-          cont.innerHTML = `<p>${titleString}</p>`;
-          expanded = false;
-          cont.style.cssText = titleStyle;
+        if (info !== null && (typeof (info.Website) !== 'undefined')) {
+          if (!expanded) {
+            cont.style.cssText = expandedStyle;
+            cont.innerHTML = `
+              <div style=${expandedTitleStyle}>${titleString}</div>
+              <p style=${expandedDetailStyle}>${info.Location}</p>
+              <a id='link' style=${linkStyle} href=${info.Website} target='_blank'>View Website</a>
+              `;
+            expanded = true;
+            const link = document.getElementById('link');
+            if (link) link.addEventListener('click', (e) => { e.stopImmediatePropagation(); });
+          } else {
+            cont.innerHTML = `<p>${titleString}</p>`;
+            expanded = false;
+            cont.style.cssText = titleStyle;
+          }
         }
       });
 
@@ -156,9 +158,11 @@ class MapContainer extends React.Component {
       });
 
       cont.addEventListener('mouseleave', () => {
-        cont.innerHTML = `<p>${titleString}</p>`;
-        expanded = false;
-        cont.style.cssText = titleStyle;
+        if (info !== null && (typeof (info.Website) !== 'undefined')) {
+          cont.innerHTML = `<p>${titleString}</p>`;
+          expanded = false;
+          cont.style.cssText = titleStyle;
+        }
       });
 
       const infoBubble = new myMaps.InfoWindow({
@@ -195,43 +199,49 @@ class MapContainer extends React.Component {
       });
       return null;
     });
-    // Check if it's in "view all centers" mode
+    // Check if in "view all centers" mode
     if (this.props.search !== '*') {
-      // get lat/lng of search query
-      Geocoder.geocode({ address: this.props.search }, (results, status) => {
-        // if exists, recenter to searched location
-        if (status === 'OK') {
-          // if one of the listed resources wasn't clicked yet
-          if (!myContainer.state.clicked) {
-            map.setCenter(results[0].geometry.location);
-            const currentMarker = new maps.Marker({
-              position: results[0].geometry.location,
-              map,
-              icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png',
-            });
-            createInfoWindow(map, maps, currentMarker, myContainer.props.search, null);
-            // set initial region in home.js
-            myContainer.props.onInitialCenter(myContainer.getRegion(
-              results[0].address_components,
-            ));
-          }
-        } else { // if doesn't exist, recenter to user's location
-          myContainer.props.onBadAddress(); // show warning message
-          if (!myContainer.state.clicked) {
-            navigator.geolocation.getCurrentPosition(
-              (position) => {
-                map.setCenter({ lat: position.coords.latitude, lng: position.coords.longitude });
-                const currentMarker = new maps.Marker({
-                  position: { lat: position.coords.latitude, lng: position.coords.longitude },
-                  map,
-                  icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png',
-                });
-                createInfoWindow(map, maps, currentMarker, 'Your location', null);
-              }, error => console.log(`Navigator.geolocation failed${error}`),
-            );
-          }
+      if (this.props.search === 'mylocation') {
+        if (!myContainer.state.clicked) {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              map.setCenter({ lat: position.coords.latitude, lng: position.coords.longitude });
+              const currentMarker = new maps.Marker({
+                position: { lat: position.coords.latitude, lng: position.coords.longitude },
+                map,
+                icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png',
+              });
+              createInfoWindow(map, maps, currentMarker, 'Your location', null);
+            }, error => console.log(`Navigator.geolocation failed${error}`),
+          );
         }
-      });
+      } else {
+        // get lat/lng of search query
+        Geocoder.geocode({ address: this.props.search }, (results, status) => {
+          // if exists, recenter to searched location
+          if (status === 'OK') {
+            // if one of the listed resources wasn't clicked yet
+            if (!myContainer.state.clicked) {
+              map.setCenter(results[0].geometry.location);
+              const currentMarker = new maps.Marker({
+                position: results[0].geometry.location,
+                map,
+                icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png',
+              });
+              createInfoWindow(map, maps, currentMarker, myContainer.props.search, null);
+              // set initial region in home.js
+              myContainer.props.onInitialCenter(myContainer.getRegion(
+                results[0].address_components,
+              ));
+            }
+          } else { // if doesn't exist, center to US
+            myContainer.props.onBadAddress(); // show warning message
+            // Set center as United States
+            map.setCenter(new maps.LatLng(41.850033, -87.6500523));
+            this.props.setZoom(ZoomScale.country_zoom);
+          }
+        });
+      }
     } else {
       // Set center as United States
       map.setCenter(new maps.LatLng(41.850033, -87.6500523));
