@@ -44,9 +44,6 @@ class AccordionSection extends React.Component {
     this.state = {
       open: this.props.startOpen,
     };
-    // console.log(this.props.startOpen);
-    // console.log(this.state.open);
-    // console.log(this.props.title);
   }
 
     static propTypes = {
