@@ -234,10 +234,14 @@ class MapContainer extends React.Component {
               const currentMarker = new maps.Marker({
                 position: { lat: position.coords.latitude, lng: position.coords.longitude },
                 map,
-                // icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
+                icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
               });
-              const infoWindow = createInfoWindow(map, maps, currentMarker, 'Your location', null);
-              infoWindow.open(map, currentMarker);
+              createInfoWindow(map, maps, currentMarker, 'Your location', null);
+              // set initial region in home.js
+              // myContainer.props.onInitialCenter(myContainer.getRegion(
+              //   position[0].address_components,
+              // ));
+              console.log(position);
             }, error => console.log(`Navigator.geolocation failed${error}`),
           );
         }
@@ -249,12 +253,12 @@ class MapContainer extends React.Component {
             // if one of the listed resources wasn't clicked yet
             if (!myContainer.state.clicked) {
               map.setCenter(results[0].geometry.location);
-              const currentMarker = new maps.Marker({
-                position: results[0].geometry.location,
-                map,
-                // icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
-              });
-              createInfoWindow(map, maps, currentMarker, myContainer.props.search, null);
+              // const currentMarker = new maps.Marker({
+              //   position: results[0].geometry.location,
+              //   map,
+              //   icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+              // });
+              // createInfoWindow(map, maps, currentMarker, myContainer.props.search, null);
               // set initial region in home.js
               myContainer.props.onInitialCenter(myContainer.getRegion(
                 results[0].address_components,

@@ -122,7 +122,8 @@ class Home extends Component {
     }
 
     render() {
-      const searchAddress = this.props.search === '*' ? null : this.props.search;
+      const searchAddress = (this.props.search === '*' || this.props.search === 'mylocation')
+        ? null : this.props.search;
       return (
         <>
           <BurgerMenu />
