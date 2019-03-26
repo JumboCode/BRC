@@ -63,6 +63,7 @@ class Home extends Component {
     super(props);
     this.state = {
       centeredOn: null,
+      centeredGroup: null,
       initialRegion: '',
       show: false,
       zoom: ZoomScale.middle_zoom,
@@ -77,9 +78,8 @@ class Home extends Component {
   }
 
   // position is of the format {lat: lat, lng: lng}
-  onResourceClicked(position) {
-    this.setState({ centeredOn: position, zoom: ZoomScale.close_zoom });
-    console.log(position);
+  onResourceClicked(position, groupName) {
+    this.setState({ centeredOn: position, zoom: ZoomScale.close_zoom, centeredGroup: groupName });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -146,6 +146,7 @@ class Home extends Component {
                   search={this.props.search}
                   locations={this.props.locations}
                   centeredOn={this.state.centeredOn}
+                  group={this.state.centeredGroup}
                   zoom={this.state.zoom}
                   onInitialCenter={this.onInitialCenter}
                   onBadAddress={this.onBadAddress}

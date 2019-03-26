@@ -67,8 +67,7 @@ class Resource extends React.Component {
   }
 
   onClick() {
-    this.props.onResourceClicked(this.props.info.Region);
-    this.props.onResourceClicked({ lat: this.props.info.lat, lng: this.props.info.lng });
+    this.props.onResourceClicked({ lat: this.props.info.lat, lng: this.props.info.lng }, this.props.name);
     this.state.isSelected = true;
   }
 

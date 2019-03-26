@@ -35,6 +35,7 @@ class MapContainer extends React.Component {
       maps: null,
       clicked: false, // true when map has recentered to any resource
     };
+    this.markers = {};
   }
 
   componentDidUpdate(prevProps) {
@@ -52,6 +53,17 @@ class MapContainer extends React.Component {
           });
         }
       }
+    }
+
+    if (this.props.group !== prevProps.group) {
+      console.log(this.markers);
+      console.log(prevProps);
+      if (prevProps.group !== null) {
+        const prevWindow = this.markers[prevProps.group][1];
+        prevWindow.close();
+      }
+      const currWindow = this.markers[this.props.group][1];
+      currWindow.open(this.state.map, this.markers[this.props.group][0]);
     }
   }
 
@@ -113,7 +125,7 @@ class MapContainer extends React.Component {
       let expanded = false;
 
       // Styles for infoWindow
-      const titleStyle = 'color:#F293C1;cursor:pointer;height:100%;text-decoration:underline;';
+      const titleStyle = 'color:#F293C1;cursor:pointer;height:100%;text-decoration:underline;padding:';
       const expandedStyle = 'color:#F293C1;cursor:pointer;height:100%;padding-bottom:12px;';
       const expandedTitleStyle = 'font-weight:bold;text-decoration:none;font-size:15px;';
       const expandedDetailStyle = 'color:grey;font-style:italic;';
@@ -121,7 +133,7 @@ class MapContainer extends React.Component {
 
       cont.style.cssText = (info !== null && (typeof (info.Website) !== 'undefined'))
         ? titleStyle : 'color:#grey;';
-      cont.innerHTML = `<p>${titleString}</p>`;
+      cont.innerHTML = `<div>${titleString}</div>`;
 
       cont.addEventListener('click', () => {
         if (info !== null && (typeof (info.Website) !== 'undefined')) {
@@ -136,7 +148,7 @@ class MapContainer extends React.Component {
             const link = document.getElementById('link');
             if (link) link.addEventListener('click', (e) => { e.stopImmediatePropagation(); });
           } else {
-            cont.innerHTML = `<p>${titleString}</p>`;
+            cont.innerHTML = `<div>${titleString}</div>`;
             expanded = false;
             cont.style.cssText = titleStyle;
           }
@@ -159,7 +171,7 @@ class MapContainer extends React.Component {
 
       cont.addEventListener('mouseleave', () => {
         if (info !== null && (typeof (info.Website) !== 'undefined')) {
-          cont.innerHTML = `<p>${titleString}</p>`;
+          cont.innerHTML = `<div>${titleString}</div>`;
           expanded = false;
           cont.style.cssText = titleStyle;
         }
@@ -176,12 +188,15 @@ class MapContainer extends React.Component {
         else infoBubble.close();
         open = !open;
       });
+
+      return infoBubble;
     }
 
     // get lat/lng of all resources, add markers for each resource
     const locationData = this.props.locations[0].states;
-    Object.keys(locationData).map((region) => {
-      Object.keys(locationData[region]).map((resource) => {
+    let windows = {};
+    const infoWindows = Object.keys(locationData).map((region) => {
+      return Object.keys(locationData[region]).map((resource) => {
         const resourceInfo = locationData[region][resource];
         if (locationData[region][resource].lat != undefined
                     && locationData[region][resource].lng != undefined) {
@@ -193,12 +208,12 @@ class MapContainer extends React.Component {
             map,
             icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png',
           });
-          createInfoWindow(map, maps, currentMarker, resource, resourceInfo);
+          const currentWindow = createInfoWindow(map, maps, currentMarker, resource, resourceInfo);
+          windows[resource] = [currentMarker, currentWindow];
         }
-        return null;
       });
-      return null;
     });
+    this.markers = windows;
     // Check if in "view all centers" mode
     if (this.props.search !== '*') {
       if (this.props.search === 'mylocation') {
@@ -211,7 +226,8 @@ class MapContainer extends React.Component {
                 map,
                 icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png',
               });
-              createInfoWindow(map, maps, currentMarker, 'Your location', null);
+              const infoWindow = createInfoWindow(map, maps, currentMarker, 'Your location', null);
+              infoWindow.open(map, currentMarker);
             }, error => console.log(`Navigator.geolocation failed${error}`),
           );
         }
