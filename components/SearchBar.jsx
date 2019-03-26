@@ -66,6 +66,7 @@ class SearchBar extends React.Component {
   }
 
   render() {
+    const placeholderText = this.props.address ? this.props.address : 'Try: street address, city name...';
     return (
       <PlacesAutocomplete
         value={this.state.address}
@@ -80,7 +81,7 @@ class SearchBar extends React.Component {
               <input
                 style={styles.searchTextStyle}
                 {...getInputProps({
-                  placeholder: this.props.address ? this.props.address : 'Try: street address, city name...',
+                  placeholder: placeholderText,
                   className: 'location-search-input',
                   onKeyDown: e => this.onKeyPress(e, suggestions),
                 })}

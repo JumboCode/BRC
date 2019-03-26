@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import fetch from 'isomorphic-fetch';
 import getConfig from 'next/config';
 import {
-  InfoBar, MapContainer, PopupContents, NavBar, SearchBar, BurgerMenu, WarningMessage, NoMatchWarning, Footer,
+  InfoBar, MapContainer, NavBar, SearchBar, BurgerMenu, NoMatchWarning, WarningMessage, Footer,
 } from '../components';
 import ZoomScale from '../static/ZoomScale';
 
@@ -29,12 +29,6 @@ const map = {
   overlflow: 'auto',
 };
 
-const exitX = {
-  position: 'relative',
-  left: '750px',
-  top: '10px',
-};
-
 const searchStyle = {
   position: 'absolute',
   top: '10px',
@@ -43,13 +37,6 @@ const searchStyle = {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'left',
-};
-
-/*  Test parameters for the Pop-Up  */
-const popupTest = {
-  heading: 'Pop-Up Heading',
-  address: '123 Address Ave, AZ 01234',
-  description: "This is a test of the pop-up. Doesn't it look nice?",
 };
 
 class Home extends Component {
@@ -67,6 +54,7 @@ class Home extends Component {
     super(props);
     this.state = {
       centeredOn: null,
+      centeredGroup: null,
       initialRegion: '',
       show: false,
       zoom: ZoomScale.middle_zoom,
@@ -74,30 +62,59 @@ class Home extends Component {
       noMatch: false,
     };
     this.onResourceClicked = this.onResourceClicked.bind(this);
-    this.onInitialCenter = this.onInitialCenter.bind(this);
     this.onBadAddress = this.onBadAddress.bind(this);
     this.onAddressChange = this.onAddressChange.bind(this);
-    this.onNoMatch = this.onNoMatch.bind(this);
+    this.checkStateMatch = this.checkStateMatch.bind(this);
     this.centerState = this.centerState.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
   }
 
   // position is of the format {lat: lat, lng: lng}
-  onResourceClicked(position) {
-    this.setState({ centeredOn: position, zoom: ZoomScale.close_zoom });
-    console.log(position);
+  onResourceClicked(position, groupName) {
+    this.setState({ centeredOn: position, zoom: ZoomScale.close_zoom, centeredGroup: groupName });
   }
 
   componentWillReceiveProps(nextProps) {
     // You don't have to do this check first, but it can help prevent an unneeded render
-    if (nextProps.search !== this.state.search) {
-      this.setState({ centeredOn: { lat: null, lng: null, region: nextProps.search }, zoom: ZoomScale.middle_zoom });
+    if (nextProps.search !== this.props.search) {
+      this.setState({
+        centeredOn: { lat: null, lng: null, region: nextProps.search },
+        zoom: ZoomScale.middle_zoom,
+      });
+      const Geocoder = new google.maps.Geocoder();
+      Geocoder.geocode({ address: nextProps.search }, (results, status) => {
+        // if exists, recenter to searched location
+        if (status === 'OK') {
+          console.log(this.props.locations[0].states);
+          const adminRegion = this.getRegion(results[0].address_components);
+          if (this.checkStateMatch(Object.keys(this.props.locations[0].states), adminRegion)) {
+            console.log('region matched');
+            this.onSearchChange(adminRegion);
+          } else {
+            console.log('no region matched');
+          }
+        }
+      });
     }
+  }
+
+  // get initial location's region (state) as string from results of
+  // google maps geocode data, for example "Massachusetts"
+  getRegion = (addressComponents) => {
+    console.log(addressComponents);
+    for (let i = 0; i < addressComponents.length; i += 1) {
+      // admin area level 1 means state
+      if (addressComponents[i].types[0] === 'administrative_area_level_1') {
+        console.log(addressComponents[i].long_name);
+        return addressComponents[i].long_name;
+      }
+    }
+    return undefined;
   }
 
   // set initial location's region as string (used in MapContainer)
   // lets corresponding accordion section know to start opened
-  onInitialCenter(region) {
+  onSearchChange = (region) => {
     this.setState({ initialRegion: region });
   }
 
@@ -110,9 +127,11 @@ class Home extends Component {
     this.setState({ badAddress: false });
   }
 
-  // for no matching region with accordion section
-  onNoMatch() {
-    this.setState({ noMatch: true });
+  // check if matching region exists accordion section, return true if there's a match
+  checkStateMatch(regions, region) {
+    const match = regions.includes(region);
+    this.setState({ noMatch: !match });
+    return match;
   }
 
   handleToggle() {
@@ -125,18 +144,29 @@ class Home extends Component {
       this.setState({ centeredOn: region, zoom: ZoomScale.state_zoom });
     }
 
+    setMapZoom = (zoom) => {
+      this.setState({ zoom });
+    }
+
     render() {
-      const searchAddress = this.props.search === '*' ? null : this.props.search;
+      const searchAddress = (this.props.search === '*' || this.props.search === 'mylocation')
+        ? null : this.props.search;
+
+      let warningMessage = null;
+
+      if (this.state.badAddress) {
+        warningMessage = 'We cannot seem to find the address you entered! Please make sure it is valid. ';
+      } else if (this.state.noMatch) {
+        warningMessage = 'No resource centers seem to be found around you in our database. ';
+      }
+
       return (
         <>
           <BurgerMenu />
           <NavBar />
           <SearchBar styles={searchStyle} address={searchAddress} />
           {
-            <WarningMessage
-              badAddress={this.state.badAddress}
-              noMatch={this.state.noMatch}
-            />
+            warningMessage ? <WarningMessage message={warningMessage} /> : null
           }
           <div style={fullpage}>
             <div />
@@ -146,17 +176,19 @@ class Home extends Component {
                 centerState={this.centerState}
                 onResourceClick={this.onResourceClicked}
                 initialRegion={this.state.initialRegion}
-                onNoMatch={this.onNoMatch}
               />
               <div style={map}>
                 <MapContainer
                   search={this.props.search}
                   locations={this.props.locations}
                   centeredOn={this.state.centeredOn}
+                  group={this.state.centeredGroup}
                   zoom={this.state.zoom}
-                  onInitialCenter={this.onInitialCenter}
+                  onInitialCenter={this.onSearchChange}
                   onBadAddress={this.onBadAddress}
                   onAddressChange={this.onAddressChange}
+                  checkStateMatch={this.checkStateMatch}
+                  setZoom={this.setMapZoom}
                 />
               </div>
             </div>

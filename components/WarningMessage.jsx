@@ -1,8 +1,8 @@
-import { Component } from 'react';
+import React from 'react';
 
 const warningTitle = {
   color: '#F293C1',
-  fontSize: '50px',
+  fontSize: '40px',
   fontWeight: 'bold',
 };
 
@@ -15,96 +15,48 @@ const title = {
   color: '#F293C1',
 };
 
-const innerContainer = {
+const innerContainter = {
   flexDirection: 'column',
   alignItems: 'flex-start',
-  marginTop: '20px',
+  marginTop: '15px',
   marginLeft: '15%',
   marginRight: '15%',
+  fontFamily: 'sans-serif',
 };
 
 const warningMessageContent = {
-  color: 'black',
-  fontSize: '21px',
+  color: '#707070',
+  fontSize: '15px',
   marginTop: '10px',
   borderTop: '5px solid #F293C1',
   paddingTop: '10px',
 };
 
 const contactLink = {
-  fontSize: '21px',
+  fontSize: '16px',
   color: '#F293C1',
   fontWeight: 'bold',
   textDecoration: 'none',
 };
 
-class WarningMessage extends Component {
+const WarningMessage = ({ message }) => (
+  <div style={innerContainter}>
+    <div style={warningTitle}>Oh No!</div>
+    <div style={warningMessageContent}>
+      { message }
+        <br/><br />
+        If you belong to a group that you would like to have listed here, please
+      {' '}
+      <a href="mailto: brc@biresource.org" style={contactLink}>drop us an email</a>
+      {' '}
+      at brc@biresource.org with information about your group and the URL or email contact to use.
+      <br />
+      {' '}
+      <br />
+                Here is the list of all the resource centers we currently have:
+    </div>
+  </div>
+);
 
-  constructor(props) {
-    super(props);
-
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleSubmit(event) {
-    fetch('/sendEmail', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        //no body for now
-      })
-    })
-  }
-
-  render() {
-    // warning message for invalid address
-    if (this.props.badAddress) {
-      return (
-        <div style={innerContainer}>
-          <div style={warningTitle}>Oh No!</div>
-          <div style={warningMessageContent}>
-                      No resource centers seem to be found around you in our database. Make sure its address is valid.
-                      If its address is valid, then it's possible that our database has not updated this resource center yet,
-                      please
-            {' '}
-            <a style={contactLink} href="#" onClick={this.handleSubmit}>contact us.</a>
-            {' '}
-            <br />
-            {' '}
-            <br />
-                      Here is the list of all the resource centers we currently have:
-          </div>
-        </div>
-      );
-    }
-    // warning message for no state matches address
-    else if (this.props.noMatch) {
-      return (
-        <div style={innerContainer}>
-          <div style={warningTitle}>Oh No!</div>
-          <div style={warningMessageContent}>
-                      It lookes like there are no Bi groups in your state. If you know any around you and would like to
-                      add it to our website, please
-            {' '}
-            <a style={contactLink} href="#" onClick={this.handleSubmit}>suggest it to us</a>
-            {' '}
-            and we'll update our database!
-            <br />
-            {' '}
-            <br />
-                      Here is the nearest resource center from you:
-          </div>
-        </div>
-      );
-    }
-    //regular title
-    else {
-      return (<div style={title}>  Bi Spot: Find a group near you.</div>);
-    }
-  }
-}
 
 export default WarningMessage;

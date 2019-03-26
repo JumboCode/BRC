@@ -2,6 +2,7 @@ import React from 'react';
 import Router from 'next/router';
 
 const buttonStyle = {
+  marginTop: '7px',
   backgroundColor: '#C9C9C9',
   color: 'white',
   borderRadius: '6px',
@@ -9,9 +10,11 @@ const buttonStyle = {
   textAlign: 'center',
   padding: '6px 18px',
   marginRight: '13px',
+  cursor: 'pointer',
 };
 
 const myLocationStyle = {
+  marginTop: '7px',
   backgroundColor: '#F293C1',
   color: 'white',
   borderRadius: '6px',
@@ -19,11 +22,15 @@ const myLocationStyle = {
   textAlign: 'center',
   padding: '6px 18px',
   marginRight: '13px',
+  cursor: 'pointer',
 };
 
 const areaStyle = {
-  marginTop: '13px',
-}
+  display: 'block',
+  margin: 'auto',
+  marginTop: '10px',
+  marginBottom: '10px',
+};
 
 class DefaultCity extends React.Component {
   setRedirectNYC = () => {
@@ -58,18 +65,18 @@ class DefaultCity extends React.Component {
   setRedirectMyLocation = () => {
     Router.push({
       pathname: '/home',
-      query: { search: '*' },
+      query: { search: 'mylocation' },
     });
   }
 
   render() {
     return (
       <div style={areaStyle}>
-        <button onClick={this.setRedirectNYC} style={buttonStyle}> New York, NY </button>
-        <button onClick={this.setRedirectLA} style={buttonStyle}>Los Angeles, CA</button>
-        <button onClick={this.setRedirectBoston} style={buttonStyle}>Boston, MA</button>
-        <button onClick={this.setRedirectSeattle} style={buttonStyle}>Seattle, WA</button>
-        <button onClick={this.setRedirectMyLocation} style={myLocationStyle}>Use My Location</button>
+        <button type="submit" onClick={this.setRedirectNYC} style={buttonStyle}> New York, NY </button>
+        <button type="submit" onClick={this.setRedirectLA} style={buttonStyle}>Los Angeles, CA</button>
+        <button type="submit" onClick={this.setRedirectBoston} style={buttonStyle}>Boston, MA</button>
+        <button type="submit" onClick={this.setRedirectSeattle} style={buttonStyle}>Seattle, WA</button>
+        <button type="submit" onClick={this.setRedirectMyLocation} style={myLocationStyle}>Use My Location</button>
       </div>
     );
   }
