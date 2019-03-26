@@ -66,7 +66,12 @@ class SearchBar extends React.Component {
   }
 
   render() {
-    const placeholderText = this.props.address ? this.props.address : 'Try: street address, city name...';
+    let pathname = '/home';
+    if (this.state.address === '' && this.props.onLanding) {
+      pathname = '/';
+    }
+    const query = this.state.address !== '' ? { search: this.state.address } : null;
+    const placeholderText = this.props.address && this.state.address !== '' ? this.props.address : 'Try: street address, city name...';
     return (
       <PlacesAutocomplete
         value={this.state.address}
@@ -86,7 +91,7 @@ class SearchBar extends React.Component {
                   onKeyDown: e => this.onKeyPress(e, suggestions),
                 })}
               />
-              <Link href={{ pathname: '/home', query: { search: this.state.address } }}>
+              <Link href={{ pathname, query }}>
                 <button style={styles.searchBtnStyle} type="submit">Search</button>
               </Link>
             </div>

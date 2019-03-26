@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import fetch from 'isomorphic-fetch';
 import getConfig from 'next/config';
 import {
-  InfoBar, MapContainer, NavBar, SearchBar, BurgerMenu, NoMatchWarning, WarningMessage, Footer,
+  InfoBar, MapContainer, NavBar, SearchBar, BurgerMenu, WarningMessage, Footer,
 } from '../components';
 import ZoomScale from '../static/ZoomScale';
 
@@ -146,9 +146,10 @@ class Home extends Component {
       const searchAddress = (this.props.search === '*' || this.props.search === 'mylocation')
         ? null : this.props.search;
 
-      let warningMessage = null;
-
-      if (this.state.badAddress) {
+      let warningMessage;
+      if (typeof (this.props.search) === 'undefined') {
+        warningMessage = null;
+      } else if (this.state.badAddress) {
         warningMessage = 'We cannot seem to find the address you entered! Please make sure it is valid. ';
       } else if (this.state.noMatch) {
         warningMessage = 'No resource centers seem to be found around you in our database. ';
