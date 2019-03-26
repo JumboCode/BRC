@@ -1,6 +1,4 @@
-import { Component } from 'react';
-import ReactDOM from 'react-dom';
-import merge from 'lodash';
+import React, { Component } from 'react';
 import {
   Accordion, AccordionSection, Resources, LetterSelectBar,
 } from '.';
@@ -17,6 +15,14 @@ const scroll = {
   paddingRight: '10px',
   height: '70%',
   overflow: 'scroll',
+};
+
+const footer = {
+  color: '#707070',
+  lineHeight: '18px',
+  paddingTop: '20px',
+  fontFamily: 'sans-serif', // find out if a different font is needed
+  fontSize: '13px',
 };
 
 class InfoBar extends Component {
@@ -108,6 +114,18 @@ class InfoBar extends Component {
           <Accordion>
             {sections}
           </Accordion>
+        </div>
+        <div style={footer}>
+          If you are interested in starting your own bi+ group, check out our free resource here:
+          {' '}
+          <a
+            style={{ textDecoration: 'underline', color: '#F293C1' }}
+            rel="noopener noreferrer"
+            target="_blank"
+            href="http://biresource.org/wp-content/uploads/2019/01/Growing-Bi-Community.pdf"
+          >
+              Growing Bi+ Community
+          </a>
         </div>
       </div>
     );
