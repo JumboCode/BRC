@@ -46,7 +46,7 @@ class Home extends Component {
     // hard coded url for now... need to change later
     const res = await fetch(`${appURL}/locations`);
     const locations = await res.json();
-    const search = props.query.search ? props.query.search : '';
+    const { search } = props.query;
     return { locations, search };
   }
 
@@ -146,9 +146,10 @@ class Home extends Component {
       const searchAddress = (this.props.search === '*' || this.props.search === 'mylocation')
         ? null : this.props.search;
 
-      let warningMessage = null;
-
-      if (this.state.badAddress) {
+      let warningMessage;
+      if (typeof (this.props.search) === 'undefined') {
+        warningMessage = null;
+      } else if (this.state.badAddress) {
         warningMessage = 'We cannot seem to find the address you entered! Please make sure it is valid. ';
       } else if (this.state.noMatch) {
         warningMessage = 'No resource centers seem to be found around you in our database. ';
