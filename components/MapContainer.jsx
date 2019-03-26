@@ -236,12 +236,13 @@ class MapContainer extends React.Component {
                 map,
                 icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
               });
-              createInfoWindow(map, maps, currentMarker, 'Your location', null);
+              const currWindow = createInfoWindow(map, maps, currentMarker, 'Your location', null);
+              currWindow.open(map, currentMarker);
               // set initial region in home.js
               // myContainer.props.onInitialCenter(myContainer.getRegion(
               //   position[0].address_components,
               // ));
-              console.log(position);
+              /* NEED TO GEOCODE FOR SET INTIIAL CENTER */
             }, error => console.log(`Navigator.geolocation failed${error}`),
           );
         }
@@ -298,6 +299,5 @@ class MapContainer extends React.Component {
     );
   }
 }
-
 
 export default MapContainer;
