@@ -39,7 +39,7 @@ const Index = () => (
       <div style={logo}>
         <img alt="BRC logo" src="./static/images/bispot.png" width="280" height="100" />
       </div>
-      <SearchBar styles={searchStyle} />
+      <SearchBar styles={searchStyle} onLanding />
       <DefaultCity />
       <Link href={{ pathname: '/home', query: { search: '*', data: 'locations' } }}>
         <p style={linkStyle}>or click to view the full list of Bi groups</p>

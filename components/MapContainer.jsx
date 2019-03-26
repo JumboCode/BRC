@@ -225,7 +225,7 @@ class MapContainer extends React.Component {
     });
     this.markers = windows;
     // Check if in "view all centers" mode
-    if (this.props.search !== '*') {
+    if (this.props.search !== '*' && this.props.search !== '' && typeof (this.props.search !== undefined)) {
       if (this.props.search === 'mylocation') {
         if (!myContainer.state.clicked) {
           navigator.geolocation.getCurrentPosition(
@@ -277,7 +277,7 @@ class MapContainer extends React.Component {
           }
         });
       }
-    } else {
+    } else if (this.props.search !== '' && typeof (this.props.search !== undefined)) {
       // Set center as United States
       map.setCenter(new maps.LatLng(41.850033, -87.6500523));
       this.props.setZoom(ZoomScale.country_zoom);
