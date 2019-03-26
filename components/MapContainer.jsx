@@ -120,60 +120,72 @@ class MapContainer extends React.Component {
     function createInfoWindow(myMap, myMaps, marker, title, info) {
       const titleString = (title === null || title === 'undefined') ? 'loading...' : title;
       const cont = document.createElement('div');
-      let expanded = false;
+      // let expanded = false;
 
       // Styles for infoWindow
-      const titleStyle = 'color:#F293C1;cursor:pointer;height:100%;text-decoration:underline;padding:';
-      const expandedStyle = 'color:#F293C1;cursor:pointer;height:100%;padding-bottom:12px;';
+      // const titleStyle = 'color:#F293C1;cursor:pointer;height:100%;text-decoration:underline;padding:';
+      // const expandedStyle = 'color:#F293C1;cursor:pointer;height:100%;padding-bottom:12px;';
+      const expandedStyle = 'color:#F293C1;height:100%;padding-bottom:12px;padding-right:5px;';
       const expandedTitleStyle = 'font-weight:bold;text-decoration:none;font-size:15px;';
       const expandedDetailStyle = 'color:grey;font-style:italic;';
       const linkStyle = 'color:#F293C1;';
 
-      cont.style.cssText = (info !== null && (typeof (info.Website) !== 'undefined'))
-        ? titleStyle : 'color:#grey;';
+      cont.style.cssText = 'color:#grey;';
+
+      // cont.style.cssText = (info !== null && (typeof (info.Website) !== 'undefined'))
+      //   ? titleStyle : 'color:#grey;';
+
       cont.innerHTML = `<div>${titleString}</div>`;
+      if (info !== null && (typeof (info.Website) !== 'undefined')) {
+        cont.style.cssText = expandedStyle;
+        cont.innerHTML = `
+          <div style=${expandedTitleStyle}>${titleString}</div>
+          <p style=${expandedDetailStyle}>${info.Location}</p>
+          <a id='link' style=${linkStyle} href=${info.Website} target='_blank'>View Website</a>
+          `;
+      }
 
-      cont.addEventListener('click', () => {
-        if (info !== null && (typeof (info.Website) !== 'undefined')) {
-          if (!expanded) {
-            cont.style.cssText = expandedStyle;
-            cont.innerHTML = `
-              <div style=${expandedTitleStyle}>${titleString}</div>
-              <p style=${expandedDetailStyle}>${info.Location}</p>
-              <a id='link' style=${linkStyle} href=${info.Website} target='_blank'>View Website</a>
-              `;
-            expanded = true;
-            const link = document.getElementById('link');
-            if (link) link.addEventListener('click', (e) => { e.stopImmediatePropagation(); });
-          } else {
-            cont.innerHTML = `<div>${titleString}</div>`;
-            expanded = false;
-            cont.style.cssText = titleStyle;
-          }
-        }
-      });
+      // cont.addEventListener('click', () => {
+      //   if (info !== null && (typeof (info.Website) !== 'undefined')) {
+      //     if (!expanded) {
+      //       cont.style.cssText = expandedStyle;
+      //       cont.innerHTML = `
+      //         <div style=${expandedTitleStyle}>${titleString}</div>
+      //         <p style=${expandedDetailStyle}>${info.Location}</p>
+      //         <a id='link' style=${linkStyle} href=${info.Website} target='_blank'>View Website</a>
+      //         `;
+      //       expanded = true;
+      //       const link = document.getElementById('link');
+      //       if (link) link.addEventListener('click', (e) => { e.stopImmediatePropagation(); });
+      //     } else {
+      //       cont.innerHTML = `<div>${titleString}</div>`;
+      //       expanded = false;
+      //       cont.style.cssText = titleStyle;
+      //     }
+      //   }
+      // });
 
-      cont.addEventListener('mouseenter', () => {
-        if (info !== null && (typeof (info.Website) !== 'undefined') && !expanded) {
-          cont.style.cssText = expandedStyle;
-          cont.innerHTML = `
-            <div style=${expandedTitleStyle}>${titleString}</div>
-            <p style=${expandedDetailStyle}>${info.Location}</p>
-            <a id='link' style=${linkStyle} href=${info.Website} target='_blank'>View Website</a>
-            `;
-          expanded = true;
-          const link = document.getElementById('link');
-          if (link) link.addEventListener('click', (e) => { e.stopImmediatePropagation(); });
-        }
-      });
+      // cont.addEventListener('mouseenter', () => {
+      //   if (info !== null && (typeof (info.Website) !== 'undefined') && !expanded) {
+      //     cont.style.cssText = expandedStyle;
+      //     cont.innerHTML = `
+      //       <div style=${expandedTitleStyle}>${titleString}</div>
+      //       <p style=${expandedDetailStyle}>${info.Location}</p>
+      //       <a id='link' style=${linkStyle} href=${info.Website} target='_blank'>View Website</a>
+      //       `;
+      //     expanded = true;
+      //     const link = document.getElementById('link');
+      //     if (link) link.addEventListener('click', (e) => { e.stopImmediatePropagation(); });
+      //   }
+      // });
 
-      cont.addEventListener('mouseleave', () => {
-        if (info !== null && (typeof (info.Website) !== 'undefined')) {
-          cont.innerHTML = `<div>${titleString}</div>`;
-          expanded = false;
-          cont.style.cssText = titleStyle;
-        }
-      });
+      // cont.addEventListener('mouseleave', () => {
+      //   if (info !== null && (typeof (info.Website) !== 'undefined')) {
+      //     cont.innerHTML = `<div>${titleString}</div>`;
+      //     expanded = false;
+      //     cont.style.cssText = titleStyle;
+      //   }
+      // });
 
       const infoBubble = new myMaps.InfoWindow({
         content: cont,
@@ -192,8 +204,8 @@ class MapContainer extends React.Component {
 
     // get lat/lng of all resources, add markers for each resource
     const locationData = this.props.locations[0].states;
-    let windows = {};
-    const infoWindows = Object.keys(locationData).map((region) => {
+    const windows = {};
+    Object.keys(locationData).map((region) => {
       return Object.keys(locationData[region]).map((resource) => {
         const resourceInfo = locationData[region][resource];
         if (locationData[region][resource].lat != undefined
@@ -222,7 +234,7 @@ class MapContainer extends React.Component {
               const currentMarker = new maps.Marker({
                 position: { lat: position.coords.latitude, lng: position.coords.longitude },
                 map,
-                icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png',
+                // icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
               });
               const infoWindow = createInfoWindow(map, maps, currentMarker, 'Your location', null);
               infoWindow.open(map, currentMarker);
@@ -240,7 +252,7 @@ class MapContainer extends React.Component {
               const currentMarker = new maps.Marker({
                 position: results[0].geometry.location,
                 map,
-                icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png',
+                // icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
               });
               createInfoWindow(map, maps, currentMarker, myContainer.props.search, null);
               // set initial region in home.js
