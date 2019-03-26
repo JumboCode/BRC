@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import merge from 'lodash';
 import {
   Accordion, AccordionSection, Resources, LetterSelectBar,
 } from '.';
