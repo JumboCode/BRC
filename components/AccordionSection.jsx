@@ -42,10 +42,11 @@ class AccordionSection extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false,
-      startedOpen: false, // set to true if gets opened bc matching region
-      state: null,
+      open: this.props.startOpen,
     };
+    // console.log(this.props.startOpen);
+    // console.log(this.state.open);
+    // console.log(this.props.title);
   }
 
     static propTypes = {
@@ -56,9 +57,15 @@ class AccordionSection extends React.Component {
       title: 'TITLE',
     };
 
+    componentWillReceiveProps(nextProps) {
+      if (nextProps.startOpen !== this.props.startOpen) {
+        this.setState({ open: nextProps.startOpen });
+      }
+    }
 
     closeOpen = () => {
-      this.setState({ open: !this.state.open });
+      const isOpen = this.state.open;
+      this.setState({ open: !isOpen });
     };
 
     onClick = (e) => {
@@ -67,25 +74,19 @@ class AccordionSection extends React.Component {
     }
 
     render() {
-      // open once only if region matches initial region on map
-      if (this.props.startOpen && !this.state.startedOpen) {
-        this.setState({ open: true });
-        this.setState({ startedOpen: true });
-      }
-      const isOpen = this.state.open;
       return (
         <div style={sectionStyle}>
-          <div className="title" onClick={this.closeOpen} style={titleStyle}>
+          <div className="title" onKeyDown={this.closeOpen} onClick={this.closeOpen} style={titleStyle}>
             <div>
               {' '}
-              <h3 onClick={this.onClick} style={stateStyle}>
+              <h3 onClick={this.onClick} onKeyDown={this.onClick} style={stateStyle}>
                 {' '}
                 {this.props.title}
                 {' '}
               </h3>
               {' '}
             </div>
-            <div style={isOpen ? openArrow : closedArrow}>
+            <div style={this.state.open ? openArrow : closedArrow}>
               <img alt="Arrow head" src="./static/images/listArrow.png" width="10" height="10" />
             </div>
           </div>

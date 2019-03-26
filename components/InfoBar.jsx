@@ -38,9 +38,6 @@ class InfoBar extends Component {
     super(props);
     this.state = {
       filterLetter: 'all',
-      matchedRegion: false, // set to true when MapContainer gets init region
-      movedRegion: false,
-      locationData: this.props.locationData,
     };
     this.onLetterClicked = this.onLetterClicked.bind(this);
   }
@@ -63,55 +60,56 @@ class InfoBar extends Component {
   }
 
   render() {
+    console.log("dups?");
     const stateInitials = this.getLetterFilters();
     const sections = [];
-    let i = 0;
-    for (const state in this.state.locationData) {
-      if (state[0] === this.state.filterLetter || this.state.filterLetter == 'all') {
-        if (this.state.locationData.hasOwnProperty(state)) {
-          const stateResources = this.state.locationData[state];
-          const resourceRegion = state;
-          let startOpen = false;
 
-          // open region accordion section after moving section to top
-          if (i === 0 && this.state.matchedRegion && !this.state.movedRegion) {
-            startOpen = true;
-            this.setState({ movedRegion: true });
-          }
-
-          // check for region match if wasn't found yet
-          if (this.props.initialRegion != '' && !this.state.matchedRegion
-              && this.props.initialRegion == state) {
-            this.setState({ matchedRegion: true });
-
-            // remove from middle of locationData object, then add at front
-            delete this.state.locationData[state];
-            const sectionToMove = {};
-            sectionToMove[state] = stateResources;
-            this.setState({ locationData: _.merge(sectionToMove, this.state.locationData) });
-          }
-
-          sections.push(<AccordionSection
-            title={state}
-            key={i}
-            region={resourceRegion}
-            centerState={this.props.centerState}
-            startOpen={startOpen}
-          >
-            <Resources
-              region={resourceRegion}
-              resources={stateResources}
-              onResourceClick={this.props.onResourceClick}
-            />
-          </AccordionSection>);
-          i++;
+    Object.keys(this.props.locationData).map((state) => {
+      if (state[0] === this.state.filterLetter || this.state.filterLetter === 'all') {
+        const stateResources = this.props.locationData[state];
+        if (this.props.initialRegion === state) {
+          sections.unshift(
+            <AccordionSection
+              title={state}
+              key={state}
+              region={state}
+              centerState={this.props.centerState}
+              startOpen
+            >
+              <Resources
+                region={state}
+                resources={stateResources}
+                onResourceClick={this.props.onResourceClick}
+              />
+            </AccordionSection>,
+          );
+        } else {
+          sections.push(
+            <AccordionSection
+              title={state}
+              key={state}
+              region={state}
+              centerState={this.props.centerState}
+              startOpen={false}
+            >
+              <Resources
+                region={state}
+                resources={stateResources}
+                onResourceClick={this.props.onResourceClick}
+              />
+            </AccordionSection>,
+          );
         }
       }
-    }
-
+    });
+    console.log(sections);
     return (
       <div style={info}>
-        <LetterSelectBar letters={stateInitials} selected={this.state.filterLetter} onLetterClicked={this.onLetterClicked} />
+        <LetterSelectBar
+          letters={stateInitials}
+          selected={this.state.filterLetter}
+          onLetterClicked={this.onLetterClicked}
+        />
         <div style={scroll}>
           <Accordion>
             {sections}

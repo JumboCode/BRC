@@ -70,7 +70,6 @@ class Home extends Component {
       badAddress: false,
     };
     this.onResourceClicked = this.onResourceClicked.bind(this);
-    this.onInitialCenter = this.onInitialCenter.bind(this);
     this.onBadAddress = this.onBadAddress.bind(this);
     this.onAddressChange = this.onAddressChange.bind(this);
     this.centerState = this.centerState.bind(this);
@@ -84,17 +83,40 @@ class Home extends Component {
 
   componentWillReceiveProps(nextProps) {
     // You don't have to do this check first, but it can help prevent an unneeded render
-    if (nextProps.search !== this.state.search) {
+    if (nextProps.search !== this.props.search) {
       this.setState({
         centeredOn: { lat: null, lng: null, region: nextProps.search },
         zoom: ZoomScale.middle_zoom,
       });
+      const Geocoder = new google.maps.Geocoder();
+      Geocoder.geocode({ address: nextProps.search }, (results, status) => {
+        // if exists, recenter to searched location
+        if (status === 'OK') {
+          this.onSearchChange(this.getRegion(
+            results[0].address_components,
+          ));
+        } else { // if doesn't exist, center to US
+          this.onBadAddress(); // show warning message
+        }
+      });
     }
+  }
+
+  // get initial location's region (state) as string from results of
+  // google maps geocode data, for example "Massachusetts"
+  getRegion = (addressComponents) => {
+    for (let i = 0; i < addressComponents.length; i += 1) {
+      // admin area level 1 means state
+      if (addressComponents[i].types[0] === 'administrative_area_level_1') {
+        return addressComponents[i].long_name;
+      }
+    }
+    return undefined;
   }
 
   // set initial location's region as string (used in MapContainer)
   // lets corresponding accordion section know to start opened
-  onInitialCenter(region) {
+  onSearchChange = (region) => {
     this.setState({ initialRegion: region });
   }
 
@@ -149,7 +171,7 @@ class Home extends Component {
                   centeredOn={this.state.centeredOn}
                   group={this.state.centeredGroup}
                   zoom={this.state.zoom}
-                  onInitialCenter={this.onInitialCenter}
+                  onInitialCenter={this.onSearchChange}
                   onBadAddress={this.onBadAddress}
                   onAddressChange={this.onAddressChange}
                   setZoom={this.setMapZoom}
