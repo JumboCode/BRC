@@ -62,7 +62,6 @@ class InfoBar extends Component {
   render() {
     const stateInitials = this.getLetterFilters();
     const sections = [];
-
     Object.keys(this.props.locationData).map((state) => {
       if (state[0] === this.state.filterLetter || this.state.filterLetter === 'all') {
         const stateResources = this.props.locationData[state];
@@ -101,6 +100,7 @@ class InfoBar extends Component {
         }
       }
     });
+
     return (
       <div style={info}>
         <LetterSelectBar

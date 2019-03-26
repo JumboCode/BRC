@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import fetch from 'isomorphic-fetch';
 import getConfig from 'next/config';
 import {
-  InfoBar, MapContainer, NavBar, SearchBar, BurgerMenu, WarningMessage, Footer,
+  InfoBar, MapContainer, NavBar, SearchBar, BurgerMenu, NoMatchWarning, WarningMessage, Footer,
 } from '../components';
 import ZoomScale from '../static/ZoomScale';
 
@@ -19,15 +19,6 @@ const mainContainer = {
   justifyContent: 'space-around',
   margin: '0 20px 0 20px',
   paddingTop: '50px',
-};
-
-const title = {
-  fontWeight: 'bold',
-  textAlign: 'center',
-  fontSize: 40,
-  fontFamily: 'sans-serif',
-  marginTop: '30px',
-  color: '#F293C1',
 };
 
 const map = {
@@ -68,10 +59,12 @@ class Home extends Component {
       show: false,
       zoom: ZoomScale.middle_zoom,
       badAddress: false,
+      noMatch: false,
     };
     this.onResourceClicked = this.onResourceClicked.bind(this);
     this.onBadAddress = this.onBadAddress.bind(this);
     this.onAddressChange = this.onAddressChange.bind(this);
+    this.checkStateMatch = this.checkStateMatch.bind(this);
     this.centerState = this.centerState.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
   }
@@ -92,9 +85,10 @@ class Home extends Component {
       Geocoder.geocode({ address: nextProps.search }, (results, status) => {
         // if exists, recenter to searched location
         if (status === 'OK') {
-          this.onSearchChange(this.getRegion(
-            results[0].address_components,
-          ));
+          const adminRegion = this.getRegion(results[0].address_components);
+          if (this.checkStateMatch(Object.keys(this.props.locations[0].states), adminRegion)) {
+            this.onSearchChange(adminRegion);
+          }
         }
       });
     }
@@ -103,11 +97,9 @@ class Home extends Component {
   // get initial location's region (state) as string from results of
   // google maps geocode data, for example "Massachusetts"
   getRegion = (addressComponents) => {
-    console.log(addressComponents);
     for (let i = 0; i < addressComponents.length; i += 1) {
       // admin area level 1 means state
       if (addressComponents[i].types[0] === 'administrative_area_level_1') {
-        console.log(addressComponents[i].long_name);
         return addressComponents[i].long_name;
       }
     }
@@ -120,13 +112,20 @@ class Home extends Component {
     this.setState({ initialRegion: region });
   }
 
-  // checks for invalid initial searched address
+  // for invalid initial searched address
   onBadAddress() {
     this.setState({ badAddress: true });
   }
 
   onAddressChange() {
     this.setState({ badAddress: false });
+  }
+
+  // check if matching region exists accordion section, return true if there's a match
+  checkStateMatch(regions, region) {
+    const match = regions.includes(region);
+    this.setState({ noMatch: !match });
+    return match;
   }
 
   handleToggle() {
@@ -146,14 +145,22 @@ class Home extends Component {
     render() {
       const searchAddress = (this.props.search === '*' || this.props.search === 'mylocation')
         ? null : this.props.search;
+
+      let warningMessage = null;
+
+      if (this.state.badAddress) {
+        warningMessage = 'We cannot seem to find the address you entered! Please make sure it is valid. ';
+      } else if (this.state.noMatch) {
+        warningMessage = 'No resource centers seem to be found around you in our database. ';
+      }
+
       return (
         <>
           <BurgerMenu />
           <NavBar />
           <SearchBar styles={searchStyle} address={searchAddress} />
           {
-            this.state.badAddress ? <WarningMessage />
-              : <div style={title}>  Bi Spot: Find a group near you.</div>
+            warningMessage ? <WarningMessage message={warningMessage} /> : null
           }
           <div style={fullpage}>
             <div />
@@ -174,6 +181,7 @@ class Home extends Component {
                   onInitialCenter={this.onSearchChange}
                   onBadAddress={this.onBadAddress}
                   onAddressChange={this.onAddressChange}
+                  checkStateMatch={this.checkStateMatch}
                   setZoom={this.setMapZoom}
                 />
               </div>

@@ -264,9 +264,10 @@ class MapContainer extends React.Component {
               // });
               // createInfoWindow(map, maps, currentMarker, myContainer.props.search, null);
               // set initial region in home.js
-              myContainer.props.onInitialCenter(myContainer.getRegion(
-                results[0].address_components,
-              ));
+              const adminRegion = myContainer.getRegion(results[0].address_components);
+              if (myContainer.props.checkStateMatch(Object.keys(myContainer.props.locations[0].states), adminRegion)) {
+                myContainer.props.onInitialCenter(adminRegion);
+              }
             }
           } else { // if doesn't exist, center to US
             myContainer.props.onBadAddress(); // show warning message

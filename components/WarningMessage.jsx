@@ -6,6 +6,14 @@ const warningTitle = {
   fontWeight: 'bold',
 };
 
+const title = {
+  fontWeight: 'bold',
+  textAlign: 'center',
+  fontSize: 40,
+  fontFamily: 'sans-serif',
+  marginTop: '30px',
+  color: '#F293C1',
+};
 
 const innerContainter = {
   flexDirection: 'column',
@@ -31,12 +39,13 @@ const contactLink = {
   textDecoration: 'none',
 };
 
-const WarningMessage = () => (
+const WarningMessage = ({ message }) => (
   <div style={innerContainter}>
     <div style={warningTitle}>Oh No!</div>
     <div style={warningMessageContent}>
-                No resource centers seem to be found around you in our database. Make sure its address is valid.
-                If you belong to a group that you would like to have listed here, please
+      { message }
+        <br/><br />
+        If you belong to a group that you would like to have listed here, please
       {' '}
       <a href="mailto: brc@biresource.org" style={contactLink}>drop us an email</a>
       {' '}

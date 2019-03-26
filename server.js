@@ -1,6 +1,7 @@
 const express = require("express");
 const next = require("next");
-const config = require('dotenv').config()
+const config = require('dotenv').config();
+var nodemailer = require('nodemailer');
 
 //set up mongodb
 //mongoClient.connect has to be called for each request? bc it's asynchronous
@@ -58,6 +59,34 @@ app.prepare()
                     }
                 });
             });
+        });
+
+        server.post('/sendEmail', function(req, res) {
+
+            let transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: 'brcjumbocode2018@gmail.com',
+                    pass: 'BRC@2018'
+                }
+            });
+
+            let mailOptions = {
+                from: 'brcjumbocode2018@gmail.com',
+                to: 'jqyang1998@gmail.com',
+                subject: 'brc contact us',
+                // text: req.body.body
+                text: 'testing...1 2 3'
+            };
+
+            transporter.sendMail(mailOptions, function(error, info) {
+                if (error)
+                console.log(error);
+                else
+                console.log('Email sent: ' + info.response);
+            });
+
+            res.send();
         });
 
         server.get("*", (req, res) => {
