@@ -111,8 +111,6 @@ class MapContainer extends React.Component {
   }
 
   renderMarkers(map, maps) {
-    console.log('ihere1');
-
     const myContainer = this;
     this.state.maps = maps;
     this.state.map = map;
@@ -228,7 +226,6 @@ class MapContainer extends React.Component {
     this.markers = windows;
     // Check if in "view all centers" mode
     if (this.props.search !== '*' && this.props.search !== '') {
-      console.log('ihereall');
       if (this.props.search === 'mylocation') {
         if (!myContainer.state.clicked) {
           navigator.geolocation.getCurrentPosition(
@@ -253,8 +250,6 @@ class MapContainer extends React.Component {
           );
         }
       } else {
-        console.log('ihere2');
-
         // get lat/lng of search query
         Geocoder.geocode({ address: this.props.search }, (results, status) => {
           // if exists, recenter to searched location
@@ -286,8 +281,6 @@ class MapContainer extends React.Component {
       // Set center as United States
       map.setCenter(new maps.LatLng(41.850033, -87.6500523));
       this.props.setZoom(ZoomScale.country_zoom);
-    } else {
-      console.log('ihere3');
     }
     this.getNewCenter(map, maps);
   }
