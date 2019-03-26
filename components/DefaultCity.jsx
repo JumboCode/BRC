@@ -2,6 +2,7 @@ import React from 'react';
 import Router from 'next/router';
 
 const buttonStyle = {
+  marginTop: '7px',
   backgroundColor: '#C9C9C9',
   color: 'white',
   borderRadius: '6px',
@@ -13,6 +14,7 @@ const buttonStyle = {
 };
 
 const myLocationStyle = {
+  marginTop: '7px',
   backgroundColor: '#F293C1',
   color: 'white',
   borderRadius: '6px',
@@ -24,7 +26,10 @@ const myLocationStyle = {
 };
 
 const areaStyle = {
-  marginTop: '13px',
+  display: 'block',
+  margin: 'auto',
+  marginTop: '10px',
+  marginBottom: '10px',
 };
 
 class DefaultCity extends React.Component {
