@@ -202,7 +202,7 @@ class MapContainer extends React.Component {
     // get lat/lng of all resources, add markers for each resource
     const locationData = this.props.locations[0].states;
     let windows = {};
-    const infoWindows = Object.keys(locationData).map((region) => {
+    Object.keys(locationData).map((region) => {
       return Object.keys(locationData[region]).map((resource) => {
         const resourceInfo = locationData[region][resource];
         if (locationData[region][resource].lat != undefined
@@ -231,7 +231,7 @@ class MapContainer extends React.Component {
               const currentMarker = new maps.Marker({
                 position: { lat: position.coords.latitude, lng: position.coords.longitude },
                 map,
-                icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png',
+                icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
               });
               const infoWindow = createInfoWindow(map, maps, currentMarker, 'Your location', null);
               infoWindow.open(map, currentMarker);
@@ -246,12 +246,12 @@ class MapContainer extends React.Component {
             // if one of the listed resources wasn't clicked yet
             if (!myContainer.state.clicked) {
               map.setCenter(results[0].geometry.location);
-              const currentMarker = new maps.Marker({
-                position: results[0].geometry.location,
-                map,
-                icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png',
-              });
-              createInfoWindow(map, maps, currentMarker, myContainer.props.search, null);
+              // const currentMarker = new maps.Marker({
+              //   position: results[0].geometry.location,
+              //   map,
+              //   icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+              // });
+              // createInfoWindow(map, maps, currentMarker, myContainer.props.search, null);
               // set initial region in home.js
               myContainer.props.onInitialCenter(myContainer.getRegion(
                 results[0].address_components,
