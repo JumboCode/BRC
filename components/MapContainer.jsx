@@ -56,8 +56,6 @@ class MapContainer extends React.Component {
     }
 
     if (this.props.group !== prevProps.group) {
-      console.log(this.markers);
-      console.log(prevProps);
       if (prevProps.group !== null) {
         const prevWindow = this.markers[prevProps.group][1];
         prevWindow.close();
