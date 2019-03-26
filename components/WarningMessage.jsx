@@ -25,7 +25,7 @@ const warningMessageContent = {
 };
 
 const contactLink = {
-  fontSize: '21px',
+  fontSize: '16px',
   color: '#F293C1',
   fontWeight: 'bold',
   textDecoration: 'none',

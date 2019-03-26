@@ -120,19 +120,37 @@ class MapContainer extends React.Component {
     function createInfoWindow(myMap, myMaps, marker, title, info) {
       const titleString = (title === null || title === 'undefined') ? 'loading...' : title;
       const cont = document.createElement('div');
-      let expanded = false;
+      // let expanded = false;
 
       // Styles for infoWindow
+<<<<<<< HEAD
       const titleStyle = 'color:#F293C1;cursor:pointer;height:100%;text-decoration:underline;padding:';
       const expandedStyle = 'color:#F293C1;height:100%;padding-bottom:12px;';
+=======
+      // const titleStyle = 'color:#F293C1;cursor:pointer;height:100%;text-decoration:underline;padding:';
+      // const expandedStyle = 'color:#F293C1;cursor:pointer;height:100%;padding-bottom:12px;';
+      const expandedStyle = 'color:#F293C1;height:100%;padding-bottom:12px;padding-right:5px;';
+>>>>>>> def526f408a622f32b62f6779ee2f0dc014bd02a
       const expandedTitleStyle = 'font-weight:bold;text-decoration:none;font-size:15px;';
       const expandedDetailStyle = 'color:grey;font-style:italic;';
       const linkStyle = 'color:#F293C1;';
 
-      cont.style.cssText = (info !== null && (typeof (info.Website) !== 'undefined'))
-        ? titleStyle : 'color:#grey;';
-      cont.innerHTML = `<div>${titleString}</div>`;
+      cont.style.cssText = 'color:#grey;';
 
+      // cont.style.cssText = (info !== null && (typeof (info.Website) !== 'undefined'))
+      //   ? titleStyle : 'color:#grey;';
+
+      cont.innerHTML = `<div>${titleString}</div>`;
+      if (info !== null && (typeof (info.Website) !== 'undefined')) {
+        cont.style.cssText = expandedStyle;
+        cont.innerHTML = `
+          <div style=${expandedTitleStyle}>${titleString}</div>
+          <p style=${expandedDetailStyle}>${info.Location}</p>
+          <a id='link' style=${linkStyle} href=${info.Website} target='_blank'>View Website</a>
+          `;
+      }
+
+<<<<<<< HEAD
       if (info !== null && (typeof (info.Website) !== 'undefined')) {
         cont.style.cssText = expandedStyle;
         cont.innerHTML = `
@@ -176,6 +194,42 @@ class MapContainer extends React.Component {
       //   }
       // });
 
+=======
+      // cont.addEventListener('click', () => {
+      //   if (info !== null && (typeof (info.Website) !== 'undefined')) {
+      //     if (!expanded) {
+      //       cont.style.cssText = expandedStyle;
+      //       cont.innerHTML = `
+      //         <div style=${expandedTitleStyle}>${titleString}</div>
+      //         <p style=${expandedDetailStyle}>${info.Location}</p>
+      //         <a id='link' style=${linkStyle} href=${info.Website} target='_blank'>View Website</a>
+      //         `;
+      //       expanded = true;
+      //       const link = document.getElementById('link');
+      //       if (link) link.addEventListener('click', (e) => { e.stopImmediatePropagation(); });
+      //     } else {
+      //       cont.innerHTML = `<div>${titleString}</div>`;
+      //       expanded = false;
+      //       cont.style.cssText = titleStyle;
+      //     }
+      //   }
+      // });
+
+      // cont.addEventListener('mouseenter', () => {
+      //   if (info !== null && (typeof (info.Website) !== 'undefined') && !expanded) {
+      //     cont.style.cssText = expandedStyle;
+      //     cont.innerHTML = `
+      //       <div style=${expandedTitleStyle}>${titleString}</div>
+      //       <p style=${expandedDetailStyle}>${info.Location}</p>
+      //       <a id='link' style=${linkStyle} href=${info.Website} target='_blank'>View Website</a>
+      //       `;
+      //     expanded = true;
+      //     const link = document.getElementById('link');
+      //     if (link) link.addEventListener('click', (e) => { e.stopImmediatePropagation(); });
+      //   }
+      // });
+
+>>>>>>> def526f408a622f32b62f6779ee2f0dc014bd02a
       // cont.addEventListener('mouseleave', () => {
       //   if (info !== null && (typeof (info.Website) !== 'undefined')) {
       //     cont.innerHTML = `<div>${titleString}</div>`;
@@ -233,8 +287,13 @@ class MapContainer extends React.Component {
                 map,
                 icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
               });
-              const infoWindow = createInfoWindow(map, maps, currentMarker, 'Your location', null);
-              infoWindow.open(map, currentMarker);
+              const currWindow = createInfoWindow(map, maps, currentMarker, 'Your location', null);
+              currWindow.open(map, currentMarker);
+              // set initial region in home.js
+              // myContainer.props.onInitialCenter(myContainer.getRegion(
+              //   position[0].address_components,
+              // ));
+              /* NEED TO GEOCODE FOR SET INTIIAL CENTER */
             }, error => console.log(`Navigator.geolocation failed${error}`),
           );
         }
@@ -291,6 +350,5 @@ class MapContainer extends React.Component {
     );
   }
 }
-
 
 export default MapContainer;

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import fetch from 'isomorphic-fetch';
 import getConfig from 'next/config';
 import {
-  InfoBar, MapContainer, PopupContents, NavBar, SearchBar, BurgerMenu, WarningMessage, Footer,
+  InfoBar, MapContainer, NavBar, SearchBar, BurgerMenu, WarningMessage, Footer,
 } from '../components';
 import ZoomScale from '../static/ZoomScale';
 
@@ -122,7 +122,8 @@ class Home extends Component {
     }
 
     render() {
-      const searchAddress = this.props.search === '*' ? null : this.props.search;
+      const searchAddress = (this.props.search === '*' || this.props.search === 'mylocation')
+        ? null : this.props.search;
       return (
         <>
           <BurgerMenu />
