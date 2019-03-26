@@ -238,11 +238,14 @@ class MapContainer extends React.Component {
               });
               const currWindow = createInfoWindow(map, maps, currentMarker, 'Your location', null);
               currWindow.open(map, currentMarker);
-              // set initial region in home.js
-              // myContainer.props.onInitialCenter(myContainer.getRegion(
-              //   position[0].address_components,
-              // ));
-              /* NEED TO GEOCODE FOR SET INTIIAL CENTER */
+              // Set current position in InfoBar/Accordion
+              Geocoder.geocode({ location: { lat: position.coords.latitude, lng: position.coords.longitude } }, (results, status) => {
+                if (status === 'OK') {
+                  myContainer.props.onInitialCenter(myContainer.getRegion(
+                    results[0].address_components,
+                  ));
+                }
+              });
             }, error => console.log(`Navigator.geolocation failed${error}`),
           );
         }
