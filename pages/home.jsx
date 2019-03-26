@@ -95,8 +95,6 @@ class Home extends Component {
           this.onSearchChange(this.getRegion(
             results[0].address_components,
           ));
-        } else { // if doesn't exist, center to US
-          this.onBadAddress(); // show warning message
         }
       });
     }
@@ -105,9 +103,11 @@ class Home extends Component {
   // get initial location's region (state) as string from results of
   // google maps geocode data, for example "Massachusetts"
   getRegion = (addressComponents) => {
+    console.log(addressComponents);
     for (let i = 0; i < addressComponents.length; i += 1) {
       // admin area level 1 means state
       if (addressComponents[i].types[0] === 'administrative_area_level_1') {
+        console.log(addressComponents[i].long_name);
         return addressComponents[i].long_name;
       }
     }

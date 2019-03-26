@@ -60,7 +60,6 @@ class InfoBar extends Component {
   }
 
   render() {
-    console.log("dups?");
     const stateInitials = this.getLetterFilters();
     const sections = [];
 
@@ -102,7 +101,6 @@ class InfoBar extends Component {
         }
       }
     });
-    console.log(sections);
     return (
       <div style={info}>
         <LetterSelectBar
