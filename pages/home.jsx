@@ -39,6 +39,9 @@ const searchStyle = {
   alignItems: 'left',
 };
 
+const chicagoLat = 41.850033;
+const chicagoLng = -87.6500523;
+
 class Home extends Component {
   // get list of locations as prop
   static async getInitialProps(props) {
@@ -52,12 +55,14 @@ class Home extends Component {
 
   constructor(props) {
     super(props);
+    const startLat = props.search === '*' ? chicagoLat : null;
+    const startLng = props.search === '*' ? chicagoLng : null;
     this.state = {
-      centeredOn: null,
+      centeredOn: { lat: startLat, lng: startLng, region: null },
       centeredGroup: null,
       initialRegion: '',
       show: false,
-      zoom: ZoomScale.middle_zoom,
+      zoom: props.search === '*' ? ZoomScale.country_zoom : ZoomScale.middle_zoom,
       badAddress: false,
       noMatch: false,
     };
@@ -77,20 +82,28 @@ class Home extends Component {
   componentWillReceiveProps(nextProps) {
     // You don't have to do this check first, but it can help prevent an unneeded render
     if (nextProps.search !== this.props.search) {
-      this.setState({
-        centeredOn: { lat: null, lng: null, region: nextProps.search },
-        zoom: ZoomScale.middle_zoom,
-      });
-      const Geocoder = new google.maps.Geocoder();
-      Geocoder.geocode({ address: nextProps.search }, (results, status) => {
-        // if exists, recenter to searched location
-        if (status === 'OK') {
-          const adminRegion = this.getRegion(results[0].address_components);
-          if (this.checkStateMatch(Object.keys(this.props.locations[0].states), adminRegion)) {
-            this.onSearchChange(adminRegion);
+      if (nextProps.search === '*') {
+        // Set center to US and don't display error message
+        this.setState({
+          centeredOn: { lat: chicagoLat, lng: chicagoLng, region: null },
+          zoom: ZoomScale.country_zoom,
+        });
+      } else {
+        this.setState({
+          centeredOn: { lat: null, lng: null, region: nextProps.search },
+          zoom: ZoomScale.middle_zoom,
+        });
+        const Geocoder = new google.maps.Geocoder();
+        Geocoder.geocode({ address: nextProps.search }, (results, status) => {
+          // if exists, recenter to searched location
+          if (status === 'OK') {
+            const adminRegion = this.getRegion(results[0].address_components);
+            if (this.checkStateMatch(Object.keys(this.props.locations[0].states), adminRegion)) {
+              this.onSearchChange(adminRegion);
+            }
           }
-        }
-      });
+        });
+      }
     }
   }
 
@@ -133,76 +146,76 @@ class Home extends Component {
     this.setState({ show: !currShow });
   }
 
-    // region is of the format {lat: null, lng: null, region: string}
-    centerState = (region) => {
-      this.setState({ centeredOn: region, zoom: ZoomScale.state_zoom });
+  // region is of the format {lat: null, lng: null, region: string}
+  centerState = (region) => {
+    this.setState({ centeredOn: region, zoom: ZoomScale.state_zoom });
+  }
+
+  setMapZoom = (zoom) => {
+    this.setState({ zoom });
+  }
+
+  render() {
+    const searchAddress = (this.props.search === '*' || this.props.search === 'mylocation')
+      ? null : this.props.search;
+
+    let warningMessage;
+    if (typeof (this.props.search) === 'undefined') {
+      warningMessage = null;
+    } else if (this.state.badAddress) {
+      warningMessage = 'We cannot seem to find the address you entered! Please make sure it is valid. ';
+    } else if (this.state.noMatch) {
+      warningMessage = 'No resource centers seem to be found around you in our database. ';
     }
 
-    setMapZoom = (zoom) => {
-      this.setState({ zoom });
-    }
-
-    render() {
-      const searchAddress = (this.props.search === '*' || this.props.search === 'mylocation')
-        ? null : this.props.search;
-
-      let warningMessage;
-      if (typeof (this.props.search) === 'undefined') {
-        warningMessage = null;
-      } else if (this.state.badAddress) {
-        warningMessage = 'We cannot seem to find the address you entered! Please make sure it is valid. ';
-      } else if (this.state.noMatch) {
-        warningMessage = 'No resource centers seem to be found around you in our database. ';
-      }
-
-      return (
-        <>
-          <BurgerMenu />
-          <NavBar />
-          <SearchBar styles={searchStyle} address={searchAddress} />
-          {
-            warningMessage ? <WarningMessage message={warningMessage} /> : null
-          }
-          <div style={fullpage}>
-            <div />
-            <div style={mainContainer}>
-              <InfoBar
-                locationData={this.props.locations[0].states}
-                centerState={this.centerState}
-                onResourceClick={this.onResourceClicked}
-                initialRegion={this.state.initialRegion}
+    return (
+      <>
+        <BurgerMenu />
+        <NavBar />
+        <SearchBar styles={searchStyle} address={searchAddress} />
+        {
+          warningMessage ? <WarningMessage message={warningMessage} /> : null
+        }
+        <div style={fullpage}>
+          <div />
+          <div style={mainContainer}>
+            <InfoBar
+              locationData={this.props.locations[0].states}
+              centerState={this.centerState}
+              onResourceClick={this.onResourceClicked}
+              initialRegion={this.state.initialRegion}
+            />
+            <div style={map}>
+              <MapContainer
+                search={this.props.search}
+                locations={this.props.locations}
+                centeredOn={this.state.centeredOn}
+                group={this.state.centeredGroup}
+                zoom={this.state.zoom}
+                onInitialCenter={this.onSearchChange}
+                onBadAddress={this.onBadAddress}
+                onAddressChange={this.onAddressChange}
+                checkStateMatch={this.checkStateMatch}
+                setZoom={this.setMapZoom}
               />
-              <div style={map}>
-                <MapContainer
-                  search={this.props.search}
-                  locations={this.props.locations}
-                  centeredOn={this.state.centeredOn}
-                  group={this.state.centeredGroup}
-                  zoom={this.state.zoom}
-                  onInitialCenter={this.onSearchChange}
-                  onBadAddress={this.onBadAddress}
-                  onAddressChange={this.onAddressChange}
-                  checkStateMatch={this.checkStateMatch}
-                  setZoom={this.setMapZoom}
-                />
-              </div>
             </div>
-            {/* Pop up component for on label click */}
-            {/* <Popup
-                        trigger={<button className="button"> Open Modal </button>}
-                        modal={true}
-                        closeOnDocumentClick={true}
-                        position={'top center'}
-                    >
-                        { close => (
-                            <PopupContents info={popupTest} />
-                        )}
-                    </Popup> */}
           </div>
-          <Footer />
-        </>
-      );
-    }
+          {/* Pop up component for on label click */}
+          {/* <Popup
+                      trigger={<button className="button"> Open Modal </button>}
+                      modal={true}
+                      closeOnDocumentClick={true}
+                      position={'top center'}
+                  >
+                      { close => (
+                          <PopupContents info={popupTest} />
+                      )}
+                  </Popup> */}
+        </div>
+        <Footer />
+      </>
+    );
+  }
 }
 
 export default Home;

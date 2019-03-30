@@ -28,9 +28,7 @@ class MapContainer extends React.Component {
         lat: 42.348591,
         lng: -71.073051,
       },
-      zoom: ZoomScale.middle_zoom,
-      // markers: [],
-      // infowindows: [],
+      queryCenter: null,
       map: null,
       maps: null,
       clicked: false, // true when map has recentered to any resource
@@ -41,16 +39,23 @@ class MapContainer extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.centeredOn !== this.props.centeredOn) {
       if (this.props.centeredOn === null) return;
-      if (this.state.maps != null) {
-        if (this.props.centeredOn.lat === null && this.props.centeredOn.lng === null) {
+
+      const { lat, lng, region } = this.props.centeredOn;
+      if (this.state.maps !== null && this.state.map !== null) {
+        if (lat === null && lng === null && region !== null) {
           const Geocoder = new this.state.maps.Geocoder();
           Geocoder.geocode({ address: this.props.centeredOn.region }, (results, status) => {
+            console.log(this.props.centeredOn);
             if (status === 'OK') {
               this.props.onAddressChange();
             } else {
+              console.log("Geocode in map container failed");
               this.props.onBadAddress();
             }
           });
+        } else if (lat !== null && lng !== null) {
+          this.props.onAddressChange();
+          this.state.map.setCenter({ lat, lng });
         }
       }
     }
@@ -70,7 +75,7 @@ class MapContainer extends React.Component {
     if (this.props.centeredOn != null) {
       if (maps != null) {
         this.state.clicked = true;
-        if (this.props.centeredOn.lat === null && this.props.centeredOn.lng === null) {
+        if (this.props.centeredOn.lat === null && this.props.centeredOn.lng === null && this.props.centeredOn.region !== null) {
           const Geocoder = new maps.Geocoder();
           Geocoder.geocode({ address: this.props.centeredOn.region }, (results, status) => {
             if (status === 'OK') {
@@ -79,12 +84,13 @@ class MapContainer extends React.Component {
               console.log(`Geocode was not successful for the following reason: ${status}`);
             }
           });
-        } else {
+        } else if (this.props.centeredOn.lat !== null && this.props.centeredOn.lng !== null) {
           map.setCenter(new maps.LatLng(
             this.props.centeredOn.lat, this.props.centeredOn.lng,
           ));
+        } else {
+          map.setCenter(this.state.queryCenter);
         }
-        return this.props.position;
       }
     }
     return this.state.defaultCenter;
@@ -145,48 +151,6 @@ class MapContainer extends React.Component {
           `;
       }
 
-      // cont.addEventListener('click', () => {
-      //   if (info !== null && (typeof (info.Website) !== 'undefined')) {
-      //     if (!expanded) {
-      //       cont.style.cssText = expandedStyle;
-      //       cont.innerHTML = `
-      //         <div style=${expandedTitleStyle}>${titleString}</div>
-      //         <p style=${expandedDetailStyle}>${info.Location}</p>
-      //         <a id='link' style=${linkStyle} href=${info.Website} target='_blank'>View Website</a>
-      //         `;
-      //       expanded = true;
-      //       const link = document.getElementById('link');
-      //       if (link) link.addEventListener('click', (e) => { e.stopImmediatePropagation(); });
-      //     } else {
-      //       cont.innerHTML = `<div>${titleString}</div>`;
-      //       expanded = false;
-      //       cont.style.cssText = titleStyle;
-      //     }
-      //   }
-      // });
-
-      // cont.addEventListener('mouseenter', () => {
-      //   if (info !== null && (typeof (info.Website) !== 'undefined') && !expanded) {
-      //     cont.style.cssText = expandedStyle;
-      //     cont.innerHTML = `
-      //       <div style=${expandedTitleStyle}>${titleString}</div>
-      //       <p style=${expandedDetailStyle}>${info.Location}</p>
-      //       <a id='link' style=${linkStyle} href=${info.Website} target='_blank'>View Website</a>
-      //       `;
-      //     expanded = true;
-      //     const link = document.getElementById('link');
-      //     if (link) link.addEventListener('click', (e) => { e.stopImmediatePropagation(); });
-      //   }
-      // });
-
-      // cont.addEventListener('mouseleave', () => {
-      //   if (info !== null && (typeof (info.Website) !== 'undefined')) {
-      //     cont.innerHTML = `<div>${titleString}</div>`;
-      //     expanded = false;
-      //     cont.style.cssText = titleStyle;
-      //   }
-      // });
-
       const infoBubble = new myMaps.InfoWindow({
         content: cont,
       });
@@ -225,12 +189,12 @@ class MapContainer extends React.Component {
     });
     this.markers = windows;
     // Check if in "view all centers" mode
-    if (this.props.search !== '*' && this.props.search !== '') {
+    if (this.props.search !== '*') {
       if (this.props.search === 'mylocation') {
         if (!myContainer.state.clicked) {
           navigator.geolocation.getCurrentPosition(
             (position) => {
-              map.setCenter({ lat: position.coords.latitude, lng: position.coords.longitude });
+              myContainer.setState({ queryCenter: position.coords });
               const currentMarker = new maps.Marker({
                 position: { lat: position.coords.latitude, lng: position.coords.longitude },
                 map,
@@ -256,7 +220,8 @@ class MapContainer extends React.Component {
           if (status === 'OK') {
             // if one of the listed resources wasn't clicked yet
             if (!myContainer.state.clicked) {
-              map.setCenter(results[0].geometry.location);
+              console.log(results[0].geometry.location);
+              myContainer.setState({ queryCenter: results[0].geometry.location });
               // const currentMarker = new maps.Marker({
               //   position: results[0].geometry.location,
               //   map,
@@ -277,12 +242,11 @@ class MapContainer extends React.Component {
           }
         });
       }
-    } else if (this.props.search !== '') {
-      // Set center as United States
+    } else {
+      // Set center as United States (latlng for chicago)
       map.setCenter(new maps.LatLng(41.850033, -87.6500523));
       this.props.setZoom(ZoomScale.country_zoom);
     }
-    this.getNewCenter(map, maps);
   }
 
   render() {
@@ -292,7 +256,7 @@ class MapContainer extends React.Component {
         <GoogleMap
           bootstrapURLKeys={{ key: publicRuntimeConfig.MAP_KEY }}
           defaultCenter={this.state.defaultCenter}
-          defaultZoom={this.state.zoom}
+          defaultZoom={this.props.zoom}
           zoom={this.props.zoom}
           onGoogleApiLoaded={({ map, maps }) => this.renderMarkers(map, maps)}
           onChildMouseEnter={this.onChildMouseEnter}
