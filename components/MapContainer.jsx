@@ -42,7 +42,7 @@ class MapContainer extends React.Component {
       maps: null,
       centeredOn: null, // position to recenter to
       clicked: false, // true when map has recentered to any resource
-      closest: { "distance": null, "groupInfo": {}}
+      // closest: { "distance": null, "groupInfo": {}}
     };
   }
   // this may only occur once the the api loads, which only occurs once, despite any changes to the props,etc
@@ -50,7 +50,6 @@ class MapContainer extends React.Component {
   // map is our actual map
 
   renderMarkers(map, maps) {
-    console.log("Point 3");
     
     const MapContainer = this;
     this.state.maps = maps;
@@ -107,7 +106,6 @@ class MapContainer extends React.Component {
     }
     // Check if it's in "view all centers" mode
     if (this.props.search !== '*') {
-      console.log("Point 1");
       // get lat/lng of search query
       Geocoder.geocode({ address: this.props.search }, (results, status) => {
         // if exists, recenter to searched location
@@ -123,13 +121,14 @@ class MapContainer extends React.Component {
             createInfoWindow(map, maps, currentMarker, MapContainer.props.search);
             // set initial region in home.js
             MapContainer.props.onInitialCenter(MapContainer.getRegion(results[0].address_components));
+            console.log("Initial Center:")
+            console.log(MapContainer.props.onInitialCenter);
           }
           // sets the props for the closest resource center
-          // old parameter 1: MapContainer.props.centeredOn
-          console.log("Calling nearest...\n")
-          console.log(locationData);
-          MapContainer.props.closest = MapContainer.nearest(results[0].geometry.location, locationData);
-          console.log(this.props.closest["distance"]);
+          // MapContainer.state.closest = MapContainer.nearest(results[0].geometry.location, locationData);
+          // console.log(MapContainer.state.closest);
+          console.log("Setting Closest Resource:");
+          MapContainer.props.closestResource(MapContainer.nearest(results[0].geometry.location, locationData));
         }
         // if doesn't exist, recenter to user's location
         else {
@@ -192,7 +191,7 @@ class MapContainer extends React.Component {
       let bestDist = 40030174;  // the circumference of the Earth; any resource will be closer (hopefully)
       // console.log(groups[0].states[0]);
       let bestLoc = null
-      console.log("After initial setup");
+      // console.log("After initial setup");
 
       const locationData = this.props.locations[0].states;
       // for (const region in groups) {
@@ -200,11 +199,11 @@ class MapContainer extends React.Component {
         if (locationData.hasOwnProperty(outerKey)) {
           // for (const resource in groups[region]) {
           Object.keys(groups[outerKey]).map((innerKey) => {
-            console.log("Checkpoint B");
+            // console.log("Checkpoint B");
             let lat2 = groups[outerKey][innerKey].lat;
             let lng2 = groups[outerKey][innerKey].lng;
             if (lat2 != undefined && lng2 != undefined) {
-              console.log("Checkpoint C");
+              // console.log("Checkpoint C");
 
               let y = lat2 - lat1;
               let dLat = y * Math.PI / 180;
@@ -226,8 +225,9 @@ class MapContainer extends React.Component {
         }
       });
 
-      this.props.closest = { "distance": bestDist, "groupInfo": bestLoc };
-      console.log("Finished!");
+      return { "distance": bestDist, "groupInfo": bestLoc };
+      // MapContainer.props.closest =
+      // console.log("Finished!");
     }
 
     // create new google maps lat/lng object with passed in position

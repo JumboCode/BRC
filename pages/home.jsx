@@ -68,11 +68,13 @@ class Home extends Component {
       initialRegion: '',
       show: false,
       zoom: ZoomScale.middle_zoom,
+      nearResource: null
     };
     this.onResourceClicked = this.onResourceClicked.bind(this);
     this.onInitialCenter = this.onInitialCenter.bind(this);
     this.centerState = this.centerState.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
+    this.closestResource = this.closestResource.bind(this);
   }
 
   // position is of the format {lat: lat, lng: lng}
@@ -91,8 +93,13 @@ class Home extends Component {
   // set initial location's region as string (used in MapContainer)
   // lets corresponding accordion section know to start opened
   onInitialCenter(region) {
-    console.log(region);
+    // console.log(region);
     this.setState({ initialRegion: region });
+  }
+
+  closestResource(resource) {
+    console.log(resource);
+    this.setState({ nearResource: resource });
   }
 
   handleToggle() {
@@ -119,6 +126,7 @@ class Home extends Component {
                 centerState={this.centerState}
                 onResourceClick={this.onResourceClicked}
                 initialRegion={this.state.initialRegion}
+                closestResource={this.state.nearResource}
               />
               <div style={map}>
                 <MapContainer
@@ -127,6 +135,7 @@ class Home extends Component {
                   centeredOn={this.state.centeredOn}
                   zoom={this.state.zoom}
                   onInitialCenter={this.onInitialCenter}
+                  closestResource={this.closestResource}
                 />
               </div>
             </div>
