@@ -19,6 +19,9 @@ import ZoomScale from '../static/ZoomScale';
 
 const { publicRuntimeConfig } = getConfig();
 
+const chicagoLat = 41.850033;
+const chicagoLng = -87.6500523;
+
 class MapContainer extends React.Component {
   constructor(props) {
     super(props);
@@ -237,14 +240,14 @@ class MapContainer extends React.Component {
           } else { // if doesn't exist, center to US
             myContainer.props.onBadAddress(); // show warning message
             // Set center as United States
-            map.setCenter(new maps.LatLng(41.850033, -87.6500523));
+            map.setCenter(new maps.LatLng(chicagoLat, chicagoLng));
             this.props.setZoom(ZoomScale.country_zoom);
           }
         });
       }
     } else {
       // Set center as United States (latlng for chicago)
-      map.setCenter(new maps.LatLng(41.850033, -87.6500523));
+      map.setCenter(new maps.LatLng(chicagoLat, chicagoLng));
       this.props.setZoom(ZoomScale.country_zoom);
     }
   }
