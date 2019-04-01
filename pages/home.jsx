@@ -124,8 +124,8 @@ class Home extends Component {
     const R = 3958.756;
     const lat1 = location.lat();
     const lng1 = location.lng();
-    // bestDist = the circumference of the Earth; any resource will be closer
-    let bestDist = 40030174;
+    // bestDist: the circumference of the Earth; any resource will be closer
+    let bestDist = 24901;
     let bestLoc = null;
 
     Object.keys(groups).map((outerKey) => {
