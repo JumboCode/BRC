@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react';
 
 const warningTitle = {
@@ -37,23 +38,45 @@ const contactLink = {
   color: '#F293C1',
   fontWeight: 'bold',
   textDecoration: 'none',
+  cursor: 'pointer',
 };
 
-const WarningMessage = ({ message }) => (
+const WarningMessage = ({ message, suggestion, centerSuggestion }) => (
   <div style={innerContainter}>
     <div style={warningTitle}>Oh No!</div>
     <div style={warningMessageContent}>
       { message }
-        <br/><br />
-        If you belong to a group that you would like to have listed here, please
+      <br />
+      <br />
+      If you belong to a group that you would like to have listed here, please
       {' '}
       <a href="mailto: brc@biresource.org" style={contactLink}>drop us an email</a>
       {' '}
       at brc@biresource.org with information about your group and the URL or email contact to use.
       <br />
-      {' '}
-      <br />
-                Here is the list of all the resource centers we currently have:
+      { suggestion
+        ? (
+          <div>
+            <p>
+              The group closest to you in our database is the following:
+            </p>
+            <p>
+              <span
+                style={contactLink}
+                onClick={() => centerSuggestion(suggestion.group)}
+                onKeyDown={centerSuggestion}
+              >
+                {suggestion.group}
+              </span>
+              &nbsp;&nbsp;&nbsp;
+              {suggestion.dist}
+              {' '}
+              miles away from you.
+            </p>
+          </div>
+        )
+        : 'Here is the list of all the resource centers we currently have:'
+      }
     </div>
   </div>
 );

@@ -229,8 +229,8 @@ class MapContainer extends React.Component {
               if (myContainer.props.checkStateMatch(Object.keys(myContainer.props.locations[0].states), adminRegion)) {
                 myContainer.props.onInitialCenter(adminRegion);
               } else {
-                const { nearestDist, nearestGroup } = this.props.nearest(results[0].geometry.location, this.props.locations[0].states);
-                this.props.closestResource(nearestDist, nearestGroup);
+                const nearestInfo = this.props.nearest(results[0].geometry.location, this.props.locations[0].states);
+                this.props.closestResource(nearestInfo.distance, nearestInfo.group);
               }
             }
           } else { // if doesn't exist, center to US

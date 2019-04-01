@@ -83,7 +83,6 @@ class Home extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("will receive props");
     // You don't have to do this check first, but it can help prevent an unneeded render
     if (nextProps.search !== this.props.search) {
       if (nextProps.search === '*') {
@@ -105,8 +104,8 @@ class Home extends Component {
             if (this.checkStateMatch(Object.keys(this.props.locations[0].states), adminRegion)) {
               this.onSearchChange(adminRegion);
             } else {
-              const { nearestDist, nearestGroup } = this.nearest(results[0].geometry.location, this.props.locations[0].states);
-              this.closestResource(nearestDist, nearestGroup);
+              const nearestInfo = this.nearest(results[0].geometry.location, this.props.locations[0].states);
+              this.closestResource(nearestInfo.distance, nearestInfo.group);
             }
           } else {
             console.log(`Geocode was not successful for the following reason: ${status}`);
@@ -151,7 +150,7 @@ class Home extends Component {
         }
       });
     });
-    return { distance: Math.round(bestDist * 10) / 10, groupInfo: bestLoc };
+    return { distance: Math.round(bestDist * 10) / 10, group: bestLoc };
   }
 
   // get initial location's region (state) as string from results of
@@ -166,6 +165,10 @@ class Home extends Component {
     return undefined;
   }
 
+  updateGroup = (groupName) => {
+    this.setState({ centeredGroup: groupName });
+  }
+
   // set initial location's region as string (used in MapContainer)
   // lets corresponding accordion section know to start opened
   onInitialCenter(region) {
@@ -173,6 +176,7 @@ class Home extends Component {
   }
 
   closestResource(dist, resource) {
+    console.log(dist, resource, "closest");
     this.setState({ nearbyDist: dist, nearbyResource: resource });
   }
  
@@ -215,12 +219,15 @@ class Home extends Component {
       ? null : this.props.search;
 
     let warningMessage;
+    let suggestedGroup = null;
     if (typeof (this.props.search) === 'undefined') {
       warningMessage = null;
     } else if (this.state.badAddress) {
       warningMessage = 'We cannot seem to find the address you entered! Please make sure it is valid. ';
     } else if (this.state.noMatch) {
       warningMessage = 'No resource centers seem to be found around you in our database. ';
+      suggestedGroup = { dist: this.state.nearbyDist, group: this.state.nearbyResource };
+      console.log(suggestedGroup);
     }
 
     return (
@@ -229,7 +236,15 @@ class Home extends Component {
         <NavBar />
         <SearchBar styles={searchStyle} address={searchAddress} />
         {
-          warningMessage ? <WarningMessage message={warningMessage} suggestion={{ dist: this.state.nearbyDist, group: this.state.nearbyResource }} /> : null
+          warningMessage
+            ? (
+              <WarningMessage
+                message={warningMessage}
+                suggestion={suggestedGroup}
+                centerSuggestion={this.updateGroup}
+              />
+            )
+            : null
         }
         <div style={fullpage}>
           <div />
