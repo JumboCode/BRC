@@ -5,12 +5,6 @@ import Resource from './Resource';
 // Accept an object "resources"
 // { ResourceName: {Email: s@gmail.com, Website: bi.com, ...}, ResourceName2:{}, ... }
 class Resources extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
-  }
-
     static propTypes = {
       resources: React.PropTypes.object.isRequired,
       region: React.PropTypes.string.isRequired,
@@ -35,9 +29,10 @@ class Resources extends React.Component {
 
         newResources.push(
           <Resource
+            isSelected={resource === this.props.selected}
             name={resource}
             info={resourceInfo}
-            onResourceClicked={this.props.onResourceClick}
+            onResourceClick={this.props.onResourceClick}
           />,
         );
       });
