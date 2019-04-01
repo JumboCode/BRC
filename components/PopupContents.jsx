@@ -33,13 +33,6 @@ class PopupContents extends React.Component {
         <br />
         <br />
         <a href="https://www.cs.tufts.edu/~nr/">View events</a>
-        <br />
-        <br />
-        <div style={images}>
-          <img src={this.props.info.img1} alt="Noah" width="200" height="250" />
-          <img src={this.props.info.img2} alt="Norman" width="200" height="250" />
-          <img src={this.props.info.img3} alt="Megan" width="200" height="250" />
-        </div>
       </div>
     );
   }

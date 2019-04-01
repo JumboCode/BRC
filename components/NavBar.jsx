@@ -1,5 +1,6 @@
+
 import Link from 'next/link';
-import { SearchBar } from '.';
+import React from 'react';
 
 const styles = {
   navBarContainer: {
@@ -14,15 +15,10 @@ const styles = {
   },
 };
 
-const searchStyle = {
-  display: 'flex',
-  flexDirection: 'row',
-};
-
 const NavBar = () => (
   <div style={styles.navBarContainer}>
     <Link href="/">
-      <img alt="Home" src="./static/images/favicon.ico" width="50" height="50" style={styles.homeButton} />
+      <img alt="Home" src="./static/images/bug.png" width="50" height="50" style={styles.homeButton} />
     </Link>
   </div>
 );
