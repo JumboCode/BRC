@@ -98,7 +98,6 @@ class Home extends Component {
   }
 
   closestResource(resource) {
-    console.log(resource);
     this.setState({ nearResource: resource });
   }
 

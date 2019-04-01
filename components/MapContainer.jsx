@@ -42,7 +42,6 @@ class MapContainer extends React.Component {
       maps: null,
       centeredOn: null, // position to recenter to
       clicked: false, // true when map has recentered to any resource
-      // closest: { "distance": null, "groupInfo": {}}
     };
   }
   // this may only occur once the the api loads, which only occurs once, despite any changes to the props,etc
@@ -125,9 +124,6 @@ class MapContainer extends React.Component {
             console.log(MapContainer.props.onInitialCenter);
           }
           // sets the props for the closest resource center
-          // MapContainer.state.closest = MapContainer.nearest(results[0].geometry.location, locationData);
-          // console.log(MapContainer.state.closest);
-          console.log("Setting Closest Resource:");
           MapContainer.props.closestResource(MapContainer.nearest(results[0].geometry.location, locationData));
         }
         // if doesn't exist, recenter to user's location
@@ -149,7 +145,6 @@ class MapContainer extends React.Component {
         }
       });
     } else {
-      console.log("Point 2");
       // If in "view all centers" mode, doesn't show error message
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -186,24 +181,19 @@ class MapContainer extends React.Component {
     nearest = (position, groups) => {
       // R = The Earth's radius, in meters
       const R = 6371000;
-      const lat1 = position.lat();  // this function has (l)attitude ;-P
+      const lat1 = position.lat();
       const lng1 = position.lng();
-      let bestDist = 40030174;  // the circumference of the Earth; any resource will be closer (hopefully)
-      // console.log(groups[0].states[0]);
-      let bestLoc = null
-      // console.log("After initial setup");
+      // bestDist = the circumference of the Earth; any resource will be closer
+      let bestDist = 40030174;
+      let bestLoc = null;
 
       const locationData = this.props.locations[0].states;
-      // for (const region in groups) {
       Object.keys(groups).map((outerKey) => {
         if (locationData.hasOwnProperty(outerKey)) {
-          // for (const resource in groups[region]) {
           Object.keys(groups[outerKey]).map((innerKey) => {
-            // console.log("Checkpoint B");
             let lat2 = groups[outerKey][innerKey].lat;
             let lng2 = groups[outerKey][innerKey].lng;
             if (lat2 != undefined && lng2 != undefined) {
-              // console.log("Checkpoint C");
 
               let y = lat2 - lat1;
               let dLat = y * Math.PI / 180;
@@ -226,8 +216,6 @@ class MapContainer extends React.Component {
       });
 
       return { "distance": bestDist, "groupInfo": bestLoc };
-      // MapContainer.props.closest =
-      // console.log("Finished!");
     }
 
     // create new google maps lat/lng object with passed in position
@@ -263,7 +251,6 @@ class MapContainer extends React.Component {
 
     render() {
       this.getNewCenter(this.state.map, this.state.maps);
-      console.log("Rendering...\n");
       return (
         <div style={{ height: '400px' }}>
           <GoogleMap
