@@ -26,7 +26,7 @@ const styles = {
   },
   searchBtnStyle: {
     backgroundColor: '#F293C1',
-    border: '1px solid grey',
+    border: '1px solid #F1F1F1',
     textDecoration: 'none',
     color: 'white',
     boxShadow: '1px 1px 1px grey',
