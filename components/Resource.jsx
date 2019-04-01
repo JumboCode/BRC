@@ -68,18 +68,15 @@ class Resource extends React.Component {
     onClick() {
       this.props.onResourceClicked({ lat: this.props.info.lat, lng: this.props.info.lng }, this.props.name);
       this.state.isSelected = true;
-      console.log('Clicked resource')
     }
 
     render() {
       let blockDivStyle = divStyle;
       let blockLinkStyle = linkStyle;
       if (this.state.isSelected) {
-        console.log('the state was selected');
         blockDivStyle = selectDivStyle;
         blockLinkStyle = selectLinkStyle;
       }
-      //this.state.isSelected = this.props.isSelected;
       return (
         <div onClick={this.onClick} style={blockDivStyle} onKeyDown={this.onClick}>
           <p style={blockLinkStyle}>{this.props.name}</p>
