@@ -101,6 +101,8 @@ class Home extends Component {
             if (this.checkStateMatch(Object.keys(this.props.locations[0].states), adminRegion)) {
               this.onSearchChange(adminRegion);
             }
+          } else {
+            console.log(`Geocode was not successful for the following reason: ${status}`);
           }
         });
       }
