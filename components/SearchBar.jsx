@@ -22,6 +22,7 @@ const styles = {
     width: '90%',
     border: 'none',
     boxShadow: '1px 1px 1px grey',
+    WebkitBorderShadow: '1px 1px 1px grey',
     paddingLeft: '10px',
   },
   searchBtnStyle: {
@@ -30,12 +31,14 @@ const styles = {
     textDecoration: 'none',
     color: 'white',
     boxShadow: '1px 1px 1px grey',
+    WebkitBorderShadow: '1px 1px 1px grey',
   },
   dropDownStyle: {
     backgroundColor: 'white',
     overflow: 'visible',
     zIndex: '99',
     boxShadow: '1px 1px 1px grey',
+    WebkitBorderShadow: '1px 1px 1px grey',
     width: '60vw',
   },
 };
