@@ -48,11 +48,9 @@ class MapContainer extends React.Component {
         if (lat === null && lng === null && region !== null) {
           const Geocoder = new this.state.maps.Geocoder();
           Geocoder.geocode({ address: this.props.centeredOn.region }, (results, status) => {
-            console.log(this.props.centeredOn);
             if (status === 'OK') {
               this.props.onAddressChange();
             } else {
-              console.log("Geocode in map container failed");
               this.props.onBadAddress();
             }
           });
@@ -223,7 +221,6 @@ class MapContainer extends React.Component {
           if (status === 'OK') {
             // if one of the listed resources wasn't clicked yet
             if (!myContainer.state.clicked) {
-              console.log(results[0].geometry.location);
               myContainer.setState({ queryCenter: results[0].geometry.location });
               // const currentMarker = new maps.Marker({
               //   position: results[0].geometry.location,
