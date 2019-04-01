@@ -50,7 +50,7 @@ class MapContainer extends React.Component {
           Geocoder.geocode({ address: this.props.centeredOn.region }, (results, status) => {
             if (status === 'OK') {
               this.props.onAddressChange();
-            } else {
+            } else if (status === 'ZERO_RESULTS') {
               this.props.onBadAddress();
             }
           });
@@ -73,7 +73,7 @@ class MapContainer extends React.Component {
 
   // create new google maps lat/lng object with passed in position
   getNewCenter = (map, maps) => {
-    if (this.props.centeredOn != null) {
+    if (this.props.centeredOn !== null) {
       if (maps != null) {
         this.state.clicked = true;
         if (this.props.centeredOn.lat === null && this.props.centeredOn.lng === null && this.props.centeredOn.region !== null) {
@@ -169,7 +169,7 @@ class MapContainer extends React.Component {
 
     // get lat/lng of all resources, add markers for each resource
     const locationData = this.props.locations[0].states;
-    let windows = {};
+    const windows = {};
     Object.keys(locationData).map((region) => {
       return Object.keys(locationData[region]).map((resource) => {
         const resourceInfo = locationData[region][resource];
@@ -237,14 +237,16 @@ class MapContainer extends React.Component {
           } else { // if doesn't exist, center to US
             myContainer.props.onBadAddress(); // show warning message
             // Set center as United States
-            map.setCenter(new maps.LatLng(chicagoLat, chicagoLng));
+            myContainer.setState({ queryCenter: new maps.LatLng(chicagoLat, chicagoLng) });
+            // map.setCenter(new maps.LatLng(chicagoLat, chicagoLng));
             this.props.setZoom(ZoomScale.country_zoom);
           }
         });
       }
     } else {
       // Set center as United States (latlng for chicago)
-      map.setCenter(new maps.LatLng(chicagoLat, chicagoLng));
+      myContainer.setState({ queryCenter: new maps.LatLng(chicagoLat, chicagoLng) });
+      // map.setCenter(new maps.LatLng(chicagoLat, chicagoLng));
       this.props.setZoom(ZoomScale.country_zoom);
     }
   }
