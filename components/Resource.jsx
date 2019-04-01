@@ -59,21 +59,17 @@ class Resource extends React.Component {
 
     constructor(props) {
       super(props);
-      this.state = {
-        isSelected: false,
-      };
       this.onClick = this.onClick.bind(this);
     }
 
     onClick() {
-      this.props.onResourceClicked({ lat: this.props.info.lat, lng: this.props.info.lng }, this.props.name);
-      this.state.isSelected = true;
+      this.props.onResourceClick({ lat: this.props.info.lat, lng: this.props.info.lng }, this.props.name);
     }
 
     render() {
       let blockDivStyle = divStyle;
       let blockLinkStyle = linkStyle;
-      if (this.state.isSelected) {
+      if (this.props.isSelected) {
         blockDivStyle = selectDivStyle;
         blockLinkStyle = selectLinkStyle;
       }
