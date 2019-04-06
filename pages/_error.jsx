@@ -31,7 +31,8 @@ export default class Error extends React.Component {
               : 'An error occurred on client, the page you\'re trying to find may not exist or is currently in work'}
           </h2>
           <p>
-Please check your url or
+            Please check your url or
+            {' '}
             <a style={linkStyle} href="../">return to homepage</a>
           </p>
         </div>

@@ -3,15 +3,50 @@ import PlacesAutocomplete from 'react-places-autocomplete';
 import Link from 'next/link';
 import Router from 'next/router';
 
-const entryStyle = {
-  display: 'flex',
-  flexDirection: 'row',
+const styles = {
+  entryStyle: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  searchBoxStyle: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    borderRadius: '30px',
+    width: '60vw',
+  },
+  searchTextStyle: {
+    fontSize: '14px',
+    lineHeight: '35px',
+    width: '90%',
+    border: 'none',
+    boxShadow: '1px 1px 1px grey',
+    WebkitBorderShadow: '1px 1px 1px grey',
+    paddingLeft: '10px',
+  },
+  searchBtnStyle: {
+    backgroundColor: '#F293C1',
+    border: 'none',
+    textDecoration: 'none',
+    color: 'white',
+    boxShadow: '1px 1px 1px grey',
+    WebkitBorderShadow: '1px 1px 1px grey',
+  },
+  dropDownStyle: {
+    backgroundColor: 'white',
+    overflow: 'visible',
+    zIndex: '99',
+    boxShadow: '1px 1px 1px grey',
+    WebkitBorderShadow: '1px 1px 1px grey',
+    width: '60vw',
+  },
 };
 
 class SearchBar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { address: '' };
+    this.state = { address: this.props.address ? this.props.address : '' };
   }
 
   handleChange = (address) => {
@@ -20,6 +55,7 @@ class SearchBar extends React.Component {
 
   handleSelect = (address) => {
     this.setState({ address });
+    this.forceUpdate();
   };
 
   // Allows enter key triggering search
@@ -34,6 +70,12 @@ class SearchBar extends React.Component {
   }
 
   render() {
+    let pathname = '/home';
+    if (this.state.address === '' && this.props.onLanding) {
+      pathname = '/';
+    }
+    const query = this.state.address !== '' ? { search: this.state.address } : null;
+    const placeholderText = this.props.address && this.state.address !== '' ? this.props.address : 'Try: street address, city name...';
     return (
       <PlacesAutocomplete
         value={this.state.address}
@@ -44,27 +86,23 @@ class SearchBar extends React.Component {
           getInputProps, suggestions, getSuggestionItemProps, loading,
         }) => (
           <div style={this.props.styles}>
-            <div style={entryStyle}>
-              <form>
-                <input
-                  {...getInputProps({
-                    placeholder: 'Search Places ...',
-                    className: 'location-search-input',
-                    onKeyDown: e => this.onKeyPress(e, suggestions),
-                  })}
-                />
-              </form>
-              <form>
-                <div>
-                  <Link href={{ pathname: '/home', query: { search: this.state.address } }}>
-                    <button>Search</button>
-                  </Link>
-                </div>
-              </form>
+            <div style={styles.searchBoxStyle}>
+              <input
+                style={styles.searchTextStyle}
+                {...getInputProps({
+                  placeholder: placeholderText,
+                  className: 'location-search-input',
+                  onKeyDown: e => this.onKeyPress(e, suggestions),
+                })}
+              />
+              <Link href={{ pathname, query }}>
+                <button style={styles.searchBtnStyle} type="submit">Search</button>
+              </Link>
             </div>
-            <div className="autocomplete-dropdown-container" style={{ overflow: 'visible' }}>
+            <div style={styles.dropDownStyle} className="autocomplete-dropdown-container">
               {loading && <div>Loading...</div>}
               {suggestions.map((suggestion) => {
+                // This section to be edited
                 const className = suggestion.active
                   ? 'suggestion-item--active'
                   : 'suggestion-item';
@@ -79,7 +117,11 @@ class SearchBar extends React.Component {
                       style,
                     })}
                   >
-                    <span>{suggestion.description}</span>
+                    <Link href={{ pathname: '/home', query: { search: suggestion.description } }}>
+                      <div style={{ margin: '10px', borderBottom: '1px dotted grey' }}>
+                        {suggestion.description}
+                      </div>
+                    </Link>
                   </div>
                 );
               })}
