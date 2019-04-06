@@ -1,6 +1,7 @@
 import React from 'react';
 
 const titleStyle = {
+  fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
   display: 'flex',
   alignItems: 'center',
   border: '1px solid #CCCCCC',
@@ -33,6 +34,7 @@ const openArrow = {
 };
 
 const stateStyle = {
+  fontStyle: '-apple-system, BlinkMacSystemFont, sans-serif',
   cursor: 'pointer',
 };
 

@@ -11,6 +11,7 @@ const info = {
   height: '90vh',
   overflow: 'auto',
   width: '90vh',
+  fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
 };
 
 const scroll = {
@@ -23,7 +24,7 @@ const footer = {
   color: '#707070',
   lineHeight: '18px',
   paddingTop: '20px',
-  fontFamily: 'sans-serif', // find out if a different font is needed
+  fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif', // find out if a different font is needed
   fontSize: '13px',
 };
 

@@ -6,7 +6,7 @@ const LetterSelectBarStyle = {
   flexDirection: 'row wrap',
   justifyContent: 'center',
   fontSize: '18px',
-  fontFamily: 'sans-serif', // find out if a different font is needed
+  fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif', // find out if a different font is needed
 };
 
 const LetterStyle = {

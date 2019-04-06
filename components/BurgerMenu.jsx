@@ -48,6 +48,7 @@ const burger = {
     textDecoration: 'none',
     display: 'inline-block',
     paddingTop: '0.8em',
+    fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
   },
   bmOverlay: {
     background: 'rgba(0, 0, 0, 0.1)',

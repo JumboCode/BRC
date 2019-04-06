@@ -10,7 +10,7 @@ const title = {
   fontWeight: 'bold',
   textAlign: 'center',
   fontSize: 40,
-  fontFamily: 'sans-serif',
+  fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
   marginTop: '30px',
   color: '#F293C1',
 };
