@@ -79,6 +79,7 @@ class InfoBar extends Component {
                 region={state}
                 resources={stateResources}
                 onResourceClick={this.onResourceClick}
+                nearbyResource={this.props.nearbyResource}
               />
             </AccordionSection>,
           );

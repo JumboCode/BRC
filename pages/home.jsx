@@ -256,7 +256,7 @@ class Home extends Component {
               centerState={this.centerState}
               onResourceClick={this.onResourceClicked}
               initialRegion={this.state.initialRegion}
-              closestResource={this.state.nearResource}
+              nearbyResource={this.state.nearbyResource}
             />
             <div style={map}>
               <MapContainer
