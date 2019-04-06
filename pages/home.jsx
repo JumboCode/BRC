@@ -105,7 +105,7 @@ class Home extends Component {
               this.onSearchChange(adminRegion);
             } else {
               const nearestInfo = this.nearest(results[0].geometry.location, this.props.locations[0].states);
-              this.closestResource(nearestInfo.distance, nearestInfo.group);
+              this.closestResource(nearestInfo.distance, nearestInfo.group, nearestInfo.region);
             }
           } else {
             console.log(`Geocode was not successful for the following reason: ${status}`);
@@ -126,6 +126,7 @@ class Home extends Component {
     // bestDist: the circumference of the Earth; any resource will be closer
     let bestDist = 24901;
     let bestLoc = null;
+    let bestRegion = null;
 
     Object.keys(groups).map((outerKey) => {
       Object.keys(groups[outerKey]).map((innerKey) => {
@@ -146,11 +147,14 @@ class Home extends Component {
           if (d < bestDist) {
             bestDist = d;
             bestLoc = innerKey;
+            bestRegion = outerKey;
           }
         }
       });
     });
-    return { distance: Math.round(bestDist * 10) / 10, group: bestLoc };
+    return { distance: Math.round(bestDist * 10) / 10,
+             group: bestLoc,
+             region: bestRegion };
   }
 
   // get initial location's region (state) as string from results of
@@ -175,9 +179,8 @@ class Home extends Component {
     this.setState({ initialRegion: region });
   }
 
-  closestResource(dist, resource) {
-    console.log(dist, resource, "closest");
-    this.setState({ nearbyDist: dist, nearbyResource: resource });
+  closestResource(dist, resource, region) {
+    this.setState({ nearbyDist: dist, nearbyResource: resource, initialRegion: region });
   }
  
   onSearchChange = (region) => {
@@ -227,7 +230,6 @@ class Home extends Component {
     } else if (this.state.noMatch) {
       warningMessage = 'No resource centers seem to be found around you in our database. ';
       suggestedGroup = { dist: this.state.nearbyDist, group: this.state.nearbyResource };
-      console.log(suggestedGroup);
     }
 
     return (
