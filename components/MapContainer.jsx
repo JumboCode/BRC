@@ -230,7 +230,7 @@ class MapContainer extends React.Component {
                 myContainer.props.onInitialCenter(adminRegion);
               } else {
                 const nearestInfo = this.props.nearest(results[0].geometry.location, this.props.locations[0].states);
-                this.props.closestResource(nearestInfo.distance, nearestInfo.group, nearestInfo.region);
+                this.props.closestResource(nearestInfo.distance, nearestInfo.group, nearestInfo.region, nearestInfo.position);
               }
             }
           } else { // if doesn't exist, center to US

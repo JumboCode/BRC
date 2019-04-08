@@ -33,7 +33,6 @@ class Resources extends React.Component {
             name={resource}
             info={resourceInfo}
             onResourceClick={this.props.onResourceClick}
-            isClosest={resource == this.props.nearbyResource}
           />,
         );
       });

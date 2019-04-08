@@ -59,9 +59,6 @@ class Resource extends React.Component {
 
     constructor(props) {
       super(props);
-      this.state = {
-        startClicked: false,
-      };
       this.onClick = this.onClick.bind(this);
     }
 
@@ -75,10 +72,6 @@ class Resource extends React.Component {
       if (this.props.isSelected) {
         blockDivStyle = selectDivStyle;
         blockLinkStyle = selectLinkStyle;
-      }
-      if (this.props.isClosest && !this.state.startClicked) {
-        this.setState( {startClicked: true } );
-        this.onClick();
       }
       return (
         <div onClick={this.onClick} style={blockDivStyle} onKeyDown={this.onClick}>
