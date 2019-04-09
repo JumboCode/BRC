@@ -1,5 +1,12 @@
 // const webpack = require('webpack');
 // require('dotenv').config()
+const withFonts = require('next-fonts');
+module.exports = withFonts({
+  enableSvg: true,
+  webpack(config, options) {
+    return config;
+  }
+});
 
 const { parsed: localEnv } = require('dotenv').config();
 const webpack = require('webpack');

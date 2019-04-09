@@ -24,6 +24,7 @@ const styles = {
     boxShadow: '1px 1px 1px grey',
     WebkitBorderShadow: '1px 1px 1px grey',
     paddingLeft: '10px',
+    fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
   },
   searchBtnStyle: {
     backgroundColor: '#F293C1',
@@ -31,6 +32,7 @@ const styles = {
     textDecoration: 'none',
     color: 'white',
     boxShadow: '1px 1px 1px grey',
+    fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
     WebkitBorderShadow: '1px 1px 1px grey',
   },
   dropDownStyle: {
@@ -40,6 +42,7 @@ const styles = {
     boxShadow: '1px 1px 1px grey',
     WebkitBorderShadow: '1px 1px 1px grey',
     width: '60vw',
+    fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
   },
 };
 

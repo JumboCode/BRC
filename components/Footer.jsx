@@ -5,7 +5,7 @@ const footerStyle = {
   textAlign: 'center',
   height: '50px',
   paddingTop: '20px',
-  fontFamily: 'sans-serif', // find out if a different font is needed
+  fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif', // find out if a different font is needed
   fontSize: '13px',
 };
 
