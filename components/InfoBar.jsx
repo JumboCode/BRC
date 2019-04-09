@@ -29,15 +29,10 @@ const footer = {
 };
 
 class InfoBar extends Component {
-  state = {
-    date: new Date(),
-  }
-
-  onChange = date => this.setState({ Date })
-
   constructor(props) {
     super(props);
     this.state = {
+      selectedGroup: null,
       filterLetter: 'all',
     };
     this.onLetterClicked = this.onLetterClicked.bind(this);
@@ -60,6 +55,11 @@ class InfoBar extends Component {
     return Object.keys(noDuplicates);
   }
 
+  onResourceClick = (position, groupName) => {
+    this.setState({ selectedGroup: groupName });
+    this.props.onResourceClick(position, groupName);
+  }
+
   render() {
     const stateInitials = this.getLetterFilters();
     const sections = [];
@@ -76,9 +76,10 @@ class InfoBar extends Component {
               startOpen
             >
               <Resources
+                selected={this.state.selectedGroup}
                 region={state}
                 resources={stateResources}
-                onResourceClick={this.props.onResourceClick}
+                onResourceClick={this.onResourceClick}
               />
             </AccordionSection>,
           );
@@ -92,9 +93,10 @@ class InfoBar extends Component {
               startOpen={false}
             >
               <Resources
+                selected={this.state.selectedGroup}
                 region={state}
                 resources={stateResources}
-                onResourceClick={this.props.onResourceClick}
+                onResourceClick={this.onResourceClick}
               />
             </AccordionSection>,
           );

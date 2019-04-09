@@ -62,6 +62,8 @@ class Home extends Component {
       centeredGroup: null,
       initialRegion: '',
       show: false,
+      nearbyDist: null,
+      nearbyResource: null,
       zoom: props.search === '*' ? ZoomScale.country_zoom : ZoomScale.middle_zoom,
       badAddress: false,
       noMatch: false,
@@ -72,6 +74,7 @@ class Home extends Component {
     this.checkStateMatch = this.checkStateMatch.bind(this);
     this.centerState = this.centerState.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
+    this.closestResource = this.closestResource.bind(this);
   }
 
   // position is of the format {lat: lat, lng: lng}
@@ -100,11 +103,54 @@ class Home extends Component {
             const adminRegion = this.getRegion(results[0].address_components);
             if (this.checkStateMatch(Object.keys(this.props.locations[0].states), adminRegion)) {
               this.onSearchChange(adminRegion);
+            } else {
+              const nearestInfo = this.nearest(results[0].geometry.location, this.props.locations[0].states);
+              this.closestResource(nearestInfo.distance, nearestInfo.group);
             }
+          } else {
+            console.log(`Geocode was not successful for the following reason: ${status}`);
           }
         });
       }
     }
+  }
+
+  /* find the nearest center by linear distance
+      Arguments: position, groups
+      return value: distance (miles), group_info */
+  nearest = (location, groups) => {
+    // R = The Earth's radius, in meters
+    const R = 3958.756;
+    const lat1 = location.lat();
+    const lng1 = location.lng();
+    // bestDist: the circumference of the Earth; any resource will be closer
+    let bestDist = 24901;
+    let bestLoc = null;
+
+    Object.keys(groups).map((outerKey) => {
+      Object.keys(groups[outerKey]).map((innerKey) => {
+        const lat2 = groups[outerKey][innerKey].lat;
+        const lng2 = groups[outerKey][innerKey].lng;
+        if (lat2 !== undefined && lng2 !== undefined) {
+          const y = lat2 - lat1;
+          const dLat = y * Math.PI / 180;
+          const x = lng2 - lng1;
+          const dLng = x * Math.PI / 180;
+
+          const a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+            + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180)
+            * Math.sin(dLng / 2) * Math.sin(dLng / 2);
+          const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+          const d = R * c;
+
+          if (d < bestDist) {
+            bestDist = d;
+            bestLoc = innerKey;
+          }
+        }
+      });
+    });
+    return { distance: Math.round(bestDist * 10) / 10, group: bestLoc };
   }
 
   // get initial location's region (state) as string from results of
@@ -119,8 +165,21 @@ class Home extends Component {
     return undefined;
   }
 
+  updateGroup = (groupName) => {
+    this.setState({ centeredGroup: groupName });
+  }
+
   // set initial location's region as string (used in MapContainer)
   // lets corresponding accordion section know to start opened
+  onInitialCenter(region) {
+    this.setState({ initialRegion: region });
+  }
+
+  closestResource(dist, resource) {
+    console.log(dist, resource, "closest");
+    this.setState({ nearbyDist: dist, nearbyResource: resource });
+  }
+ 
   onSearchChange = (region) => {
     this.setState({ initialRegion: region });
   }
@@ -160,12 +219,15 @@ class Home extends Component {
       ? null : this.props.search;
 
     let warningMessage;
+    let suggestedGroup = null;
     if (typeof (this.props.search) === 'undefined') {
       warningMessage = null;
     } else if (this.state.badAddress) {
       warningMessage = 'We cannot seem to find the address you entered! Please make sure it is valid. ';
     } else if (this.state.noMatch) {
       warningMessage = 'No resource centers seem to be found around you in our database. ';
+      suggestedGroup = { dist: this.state.nearbyDist, group: this.state.nearbyResource };
+      console.log(suggestedGroup);
     }
 
     return (
@@ -174,7 +236,15 @@ class Home extends Component {
         <NavBar />
         <SearchBar styles={searchStyle} address={searchAddress} />
         {
-          warningMessage ? <WarningMessage message={warningMessage} /> : null
+          warningMessage
+            ? (
+              <WarningMessage
+                message={warningMessage}
+                suggestion={suggestedGroup}
+                centerSuggestion={this.updateGroup}
+              />
+            )
+            : null
         }
         <div style={fullpage}>
           <div />
@@ -184,6 +254,7 @@ class Home extends Component {
               centerState={this.centerState}
               onResourceClick={this.onResourceClicked}
               initialRegion={this.state.initialRegion}
+              closestResource={this.state.nearResource}
             />
             <div style={map}>
               <MapContainer
@@ -197,20 +268,11 @@ class Home extends Component {
                 onAddressChange={this.onAddressChange}
                 checkStateMatch={this.checkStateMatch}
                 setZoom={this.setMapZoom}
+                closestResource={this.closestResource}
+                nearest={this.nearest}
               />
             </div>
           </div>
-          {/* Pop up component for on label click */}
-          {/* <Popup
-                      trigger={<button className="button"> Open Modal </button>}
-                      modal={true}
-                      closeOnDocumentClick={true}
-                      position={'top center'}
-                  >
-                      { close => (
-                          <PopupContents info={popupTest} />
-                      )}
-                  </Popup> */}
         </div>
         <Footer />
       </>

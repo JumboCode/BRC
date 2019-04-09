@@ -22,6 +22,7 @@ const styles = {
     width: '90%',
     border: 'none',
     boxShadow: '1px 1px 1px grey',
+    WebkitBorderShadow: '1px 1px 1px grey',
     paddingLeft: '10px',
     fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
   },
@@ -32,12 +33,14 @@ const styles = {
     color: 'white',
     boxShadow: '1px 1px 1px grey',
     fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
+    WebkitBorderShadow: '1px 1px 1px grey',
   },
   dropDownStyle: {
     backgroundColor: 'white',
     overflow: 'visible',
     zIndex: '99',
     boxShadow: '1px 1px 1px grey',
+    WebkitBorderShadow: '1px 1px 1px grey',
     width: '60vw',
     fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
   },
@@ -55,6 +58,7 @@ class SearchBar extends React.Component {
 
   handleSelect = (address) => {
     this.setState({ address });
+    this.forceUpdate();
   };
 
   // Allows enter key triggering search
