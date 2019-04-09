@@ -173,11 +173,6 @@ class Home extends Component {
     return undefined;
   }
 
-  updateGroup = (position, groupName) => {
-    this.setState({ centeredGroup: groupName });
-    this.onResourceClicked(position, groupName);
-  }
-
   // set initial location's region as string (used in MapContainer)
   // lets corresponding accordion section know to start opened
   onInitialCenter(region) {
@@ -253,7 +248,7 @@ class Home extends Component {
               <WarningMessage
                 message={warningMessage}
                 suggestion={suggestedGroup}
-                centerSuggestion={this.updateGroup}
+                centerSuggestion={this.onResourceClicked}
               />
             )
             : null
@@ -266,6 +261,7 @@ class Home extends Component {
               centerState={this.centerState}
               onResourceClick={this.onResourceClicked}
               initialRegion={this.state.initialRegion}
+              selectedGroup={this.state.centeredGroup}
             />
             <div style={map}>
               <MapContainer

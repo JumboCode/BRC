@@ -32,7 +32,6 @@ class InfoBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedGroup: null,
       filterLetter: 'all',
     };
     this.onLetterClicked = this.onLetterClicked.bind(this);
@@ -56,7 +55,6 @@ class InfoBar extends Component {
   }
 
   onResourceClick = (position, groupName) => {
-    this.setState({ selectedGroup: groupName });
     this.props.onResourceClick(position, groupName);
   }
 
@@ -76,7 +74,7 @@ class InfoBar extends Component {
               startOpen
             >
               <Resources
-                selected={this.state.selectedGroup}
+                selected={this.props.selectedGroup}
                 region={state}
                 resources={stateResources}
                 onResourceClick={this.onResourceClick}
@@ -93,7 +91,7 @@ class InfoBar extends Component {
               startOpen={false}
             >
               <Resources
-                selected={this.state.selectedGroup}
+                selected={this.props.selectedGroup}
                 region={state}
                 resources={stateResources}
                 onResourceClick={this.onResourceClick}
