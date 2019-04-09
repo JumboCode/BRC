@@ -63,7 +63,7 @@ const WarningMessage = ({ message, suggestion, centerSuggestion }) => (
             <p>
               <span
                 style={contactLink}
-                onClick={() => centerSuggestion(suggestion.group)}
+                onClick={() => centerSuggestion(suggestion.position, suggestion.group)}
                 onKeyDown={centerSuggestion}
               >
                 {suggestion.group}
