@@ -11,6 +11,7 @@ const info = {
   height: '90vh',
   overflow: 'auto',
   width: '90vh',
+  fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
 };
 
 const scroll = {
@@ -23,7 +24,7 @@ const footer = {
   color: '#707070',
   lineHeight: '18px',
   paddingTop: '20px',
-  fontFamily: 'sans-serif', // find out if a different font is needed
+  fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif', // find out if a different font is needed
   fontSize: '13px',
 };
 
@@ -31,7 +32,6 @@ class InfoBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedGroup: null,
       filterLetter: 'all',
     };
     this.onLetterClicked = this.onLetterClicked.bind(this);
@@ -55,7 +55,6 @@ class InfoBar extends Component {
   }
 
   onResourceClick = (position, groupName) => {
-    this.setState({ selectedGroup: groupName });
     this.props.onResourceClick(position, groupName);
   }
 
@@ -75,7 +74,7 @@ class InfoBar extends Component {
               startOpen
             >
               <Resources
-                selected={this.state.selectedGroup}
+                selected={this.props.selectedGroup}
                 region={state}
                 resources={stateResources}
                 onResourceClick={this.onResourceClick}
@@ -92,7 +91,7 @@ class InfoBar extends Component {
               startOpen={false}
             >
               <Resources
-                selected={this.state.selectedGroup}
+                selected={this.props.selectedGroup}
                 region={state}
                 resources={stateResources}
                 onResourceClick={this.onResourceClick}

@@ -64,6 +64,7 @@ class Home extends Component {
       show: false,
       nearbyDist: null,
       nearbyResource: null,
+      nearbyPosition: null,
       zoom: props.search === '*' ? ZoomScale.country_zoom : ZoomScale.middle_zoom,
       badAddress: false,
       noMatch: false,
@@ -105,7 +106,7 @@ class Home extends Component {
               this.onSearchChange(adminRegion);
             } else {
               const nearestInfo = this.nearest(results[0].geometry.location, this.props.locations[0].states);
-              this.closestResource(nearestInfo.distance, nearestInfo.group);
+              this.closestResource(nearestInfo.distance, nearestInfo.group, nearestInfo.region, nearestInfo.position);
             }
           } else {
             console.log(`Geocode was not successful for the following reason: ${status}`);
@@ -126,6 +127,8 @@ class Home extends Component {
     // bestDist: the circumference of the Earth; any resource will be closer
     let bestDist = 24901;
     let bestLoc = null;
+    let bestRegion = null;
+    let bestPos = null;
 
     Object.keys(groups).map((outerKey) => {
       Object.keys(groups[outerKey]).map((innerKey) => {
@@ -146,11 +149,16 @@ class Home extends Component {
           if (d < bestDist) {
             bestDist = d;
             bestLoc = innerKey;
+            bestRegion = outerKey;
+            bestPos = {lat: lat2, lng: lng2};
           }
         }
       });
     });
-    return { distance: Math.round(bestDist * 10) / 10, group: bestLoc };
+    return { distance: Math.round(bestDist * 10) / 10,
+             group: bestLoc,
+             region: bestRegion,
+             position: bestPos };
   }
 
   // get initial location's region (state) as string from results of
@@ -165,19 +173,17 @@ class Home extends Component {
     return undefined;
   }
 
-  updateGroup = (groupName) => {
-    this.setState({ centeredGroup: groupName });
-  }
-
   // set initial location's region as string (used in MapContainer)
   // lets corresponding accordion section know to start opened
   onInitialCenter(region) {
     this.setState({ initialRegion: region });
   }
 
-  closestResource(dist, resource) {
-    console.log(dist, resource, "closest");
-    this.setState({ nearbyDist: dist, nearbyResource: resource });
+  closestResource(dist, resource, region, position) {
+    this.setState({ nearbyDist: dist,
+                    nearbyResource: resource,
+                    initialRegion: region,
+                    nearbyPosition: position });
   }
  
   onSearchChange = (region) => {
@@ -226,8 +232,9 @@ class Home extends Component {
       warningMessage = 'We cannot seem to find the address you entered! Please make sure it is valid. ';
     } else if (this.state.noMatch) {
       warningMessage = 'No resource centers seem to be found around you in our database. ';
-      suggestedGroup = { dist: this.state.nearbyDist, group: this.state.nearbyResource };
-      console.log(suggestedGroup);
+      suggestedGroup = { dist: this.state.nearbyDist,
+                         group: this.state.nearbyResource,
+                         position: this.state.nearbyPosition };
     }
 
     return (
@@ -241,7 +248,7 @@ class Home extends Component {
               <WarningMessage
                 message={warningMessage}
                 suggestion={suggestedGroup}
-                centerSuggestion={this.updateGroup}
+                centerSuggestion={this.onResourceClicked}
               />
             )
             : null
@@ -254,7 +261,7 @@ class Home extends Component {
               centerState={this.centerState}
               onResourceClick={this.onResourceClicked}
               initialRegion={this.state.initialRegion}
-              closestResource={this.state.nearResource}
+              selectedGroup={this.state.centeredGroup}
             />
             <div style={map}>
               <MapContainer

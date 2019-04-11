@@ -11,6 +11,7 @@ const buttonStyle = {
   padding: '6px 18px',
   marginRight: '13px',
   cursor: 'pointer',
+  fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
 };
 
 const myLocationStyle = {
@@ -23,6 +24,7 @@ const myLocationStyle = {
   padding: '6px 18px',
   marginRight: '13px',
   cursor: 'pointer',
+  fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
 };
 
 const areaStyle = {
@@ -30,6 +32,7 @@ const areaStyle = {
   margin: 'auto',
   marginTop: '10px',
   marginBottom: '10px',
+  fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
 };
 
 class DefaultCity extends React.Component {

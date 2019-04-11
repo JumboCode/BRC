@@ -5,7 +5,7 @@ const divStyle = {
   backgroundColor: '#FFFFFF',
   paddingLeft: '7px',
   paddingBottom: '0.3px',
-  fontFamily: 'sans-serif',
+  fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
 };
 
 const selectDivStyle = {
@@ -14,7 +14,7 @@ const selectDivStyle = {
   boxSizing: 'border-box',
   paddingLeft: '7px',
   paddingBottom: '0.3px',
-  fontFamily: 'sans-serif',
+  fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
 };
 
 const linkStyle = {
@@ -23,6 +23,7 @@ const linkStyle = {
   fontSize: '14px',
   cursor: 'pointer',
   paddingLeft: '7px',
+  fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
 };
 
 const selectLinkStyle = {
@@ -31,6 +32,7 @@ const selectLinkStyle = {
   fontSize: '14px',
   cursor: 'pointer',
   paddingLeft: '7px',
+  fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
 };
 
 // An individual resource along with associated data such as website,etc
