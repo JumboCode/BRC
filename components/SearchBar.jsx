@@ -27,12 +27,10 @@ const styles = {
   },
   searchBtnStyle: {
     backgroundColor: '#F293C1',
-    border: '1px solid #F1F1F1',
     textDecoration: 'none',
     color: 'white',
     boxShadow: '1px 1px 1px grey',
     fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
-    WebkitBorderShadow: '1px 1px 1px grey',
   },
   dropDownStyle: {
     backgroundColor: 'white',
