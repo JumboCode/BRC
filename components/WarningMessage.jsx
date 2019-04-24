@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react';
+import Link from 'next/link';
 
 const warningTitle = {
   color: '#F293C1',
@@ -50,7 +51,11 @@ const WarningMessage = ({ message, suggestion, centerSuggestion }) => (
       <br />
       If you belong to a group that you would like to have listed here, please
       {' '}
-      <a href="mailto: brc@biresource.org" style={contactLink}>drop us an email</a>
+      <Link href={{ pathname: '/suggestion' }}><span style={contactLink}>drop us the details</span></Link>
+      {' '}
+      or
+      {' '}
+      <a href="mailto: brc@biresource.org" style={contactLink}>send us an email</a>
       {' '}
       at brc@biresource.org with information about your group and the URL or email contact to use.
       <br />

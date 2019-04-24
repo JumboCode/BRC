@@ -12,8 +12,16 @@ const headerStyle = {
   fontweight: 'bold',
   alignment: 'left',
   paddingLeft: '40px',
-  paddingBottom: '35px',
   paddingTop: '20px',
+};
+
+const subHeaderStyle = {
+  fontFamily: 'sans-serif',
+  color: '#F293C1',
+  alignment: 'left',
+  paddingLeft: '80px',
+  paddingBottom: '35px',
+  paddingTop: '15px',
 
 };
 
@@ -106,7 +114,7 @@ const buttonPadding = {
 const buttonStyle = {
   backgroundColor: '#F293C1',
   borderRadius: '30px',
-  width: '15%',
+  width: '100px',
   height: '45px',
   margin: '2px',
   outline: 'none',
@@ -127,29 +135,35 @@ class Suggestion extends Component {
   constructor(props) {
     super(props);
     this.appURL = publicRuntimeConfig.APP_URL || 'http://localhost:3000';
-    this.state = { ad2: '' }
+    this.state = { ad2: '' };
   }
 
-  getData = () => {
+  getData = (event) => {
+    event.preventDefault();
+
     const data = {};
     const address = `${this.state.ad1} ${this.state.ad2}, ${this.state.city}, ${this.state.state} ${this.state.zip}`;
     console.log(this.state);
+
     const Geocoder = new google.maps.Geocoder();
     Geocoder.geocode({ address }, (results, status) => {
       // if exists, recenter to searched location
       if (status === 'OK') {
-        console.log(results);
         data.Location = results[0].formatted_address;
         data.Website = this.state.website;
         if (this.state.email) {
           data.Email = this.state.email;
         }
-        if (this.state.facebook) {
-          data.Facebook = this.state.facebook;
+        if (this.state.phone) {
+          data.phone = this.state.phone;
         }
-        console.log(data);
-        const orgInfo = JSON.stringify({ [this.state.name]: data });
+        const orgInfo = { [this.state.name]: data };
         console.log(orgInfo);
+
+        fetch('/sendEmail', {
+          method: 'post',
+          body: orgInfo,
+        });
       } else {
         console.log(`Geocode was not successful for the following reason: ${status}`);
       }
@@ -169,7 +183,10 @@ class Suggestion extends Component {
         <NavBar />
         <div>
           <div style={headerStyle}>
-          Suggest a local resource center:
+            Suggest a local group
+          </div>
+          <div style={subHeaderStyle}>
+            — that deals specifically with a bi/pan/fluid idenity
           </div>
           <form style={formStyle}>
             <label>
@@ -177,7 +194,7 @@ class Suggestion extends Component {
                 Organization name
                 <div style={astStyle}>*</div>
               </div>
-              <input onChange={this.onDataEntry} type="text" name="name" placeholder=" i.e. Bisexual Resource Center" style={boxStyle} />
+              <input onChange={this.onDataEntry} type="text" name="name" placeholder="i.e. Bisexual Resource Center" style={boxStyle} />
               <br />
               <br />
               <br />
@@ -186,10 +203,10 @@ class Suggestion extends Component {
                 {' '}
                 <div style={astStyle}>*</div>
               </div>
-              <input onChange={this.onDataEntry} type="text" placeholder=" Address Line 1" name="ad1" style={boxStyle} />
+              <input onChange={this.onDataEntry} type="text" placeholder="Address Line 1" name="ad1" style={boxStyle} />
               <br />
               <div style={spaceStyle} />
-              <input onChange={this.onDataEntry} type="text" placeholder=" Address Line 2" name="ad2" style={boxStyle} />
+              <input onChange={this.onDataEntry} type="text" placeholder="Address Line 2" name="ad2" style={boxStyle} />
               <br />
               <div style={spaceStyle} />
               <input onChange={this.onDataEntry} type="text" placeholder=" City" name="city" style={cityStyle} />
@@ -250,7 +267,7 @@ class Suggestion extends Component {
               <br />
               <br />
               <div style={categoryStyle}>
-                Website
+                Website/Facebook/Meetup
                 <div style={astStyle}>*</div>
               </div>
               <input onChange={this.onDataEntry} type="text" name="website" placeholder=" Paste URL here" style={boxStyle} />
@@ -258,16 +275,16 @@ class Suggestion extends Component {
               <br />
               <br />
               <div style={categoryStyle}>
-              E-mail address
+                E-mail address
               </div>
-              <input onChange={this.onDataEntry} type="text" name="email" placeholder=" Insert E-mail address of resource center" style={boxStyle} />
+              <input onChange={this.onDataEntry} type="text" name="email" placeholder=" Enter E-mail contact to use" style={boxStyle} />
               <br />
               <br />
               <br />
               <div style={categoryStyle}>
-              Facebook
+              Phone number
               </div>
-              <input onChange={this.onDataEntry} type="text" name="facebook" placeholder=" Insert URL link to Facebook profile" style={boxStyle} />
+              <input onChange={this.onDataEntry} type="text" name="phone" placeholder=" Enter phone number if available" style={boxStyle} />
               <br />
               <br />
               <br />
