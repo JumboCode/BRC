@@ -1,26 +1,27 @@
 import React, { Component } from 'react';
 import fetch from 'isomorphic-fetch';
 import getConfig from 'next/config';
+import { BurgerMenu, NavBar } from '../components';
 
 const { publicRuntimeConfig } = getConfig();
 
 const headerStyle = {
-fontFamily: 'sans-serif',
-color: '#F293C1',
-fontSize: '40px',
-fontweight: 'bold',
-alignment: 'left',
-paddingLeft: '40px',
-paddingBottom: '35px',
-paddingTop: '20px'
+  fontFamily: 'sans-serif',
+  color: '#F293C1',
+  fontSize: '40px',
+  fontweight: 'bold',
+  alignment: 'left',
+  paddingLeft: '40px',
+  paddingBottom: '35px',
+  paddingTop: '20px',
 
 };
 
 const boxStyle = {
-  borderStyle: "solid",
-  borderColor: "#F293C1",
-  borderWidth: "3px",
-  borderRadius: "30px",
+  borderStyle: 'solid',
+  borderColor: '#F293C1',
+  borderWidth: '3px',
+  borderRadius: '30px',
   width: '35%',
   height: '35px',
   margin: '2px',
@@ -28,14 +29,14 @@ const boxStyle = {
   paddingLeft: '20px',
   fontSize: '15px',
   fontWeight: 'lighter',
-  paddingRight: '4px'
+  paddingRight: '4px',
 };
 
 const cityStyle = {
-  borderStyle: "solid",
-  borderColor: "#F293C1",
-  borderWidth: "3px",
-  borderRadius: "30px",
+  borderStyle: 'solid',
+  borderColor: '#F293C1',
+  borderWidth: '3px',
+  borderRadius: '30px',
   width: '17%',
   height: '35px',
   margin: '2px',
@@ -43,14 +44,14 @@ const cityStyle = {
   paddingLeft: '20px',
   fontSize: '15px',
   fontWeight: 'lighter',
-  paddingRight: '4px'
+  paddingRight: '4px',
 };
 
 const subStyle = {
-  borderStyle: "solid",
-  borderColor: "#F293C1",
-  borderWidth: "3px",
-  borderRadius: "30px",
+  borderStyle: 'solid',
+  borderColor: '#F293C1',
+  borderWidth: '3px',
+  borderRadius: '30px',
   width: '7%',
   height: '35px',
   margin: '2px',
@@ -59,14 +60,14 @@ const subStyle = {
   fontSize: '15px',
   fontWeight: 'lighter',
   paddingRight: '4px',
-  backgroundColor: '#FFFFFF'
+  backgroundColor: '#FFFFFF',
 };
 
 const selectStyle = {
-  borderStyle: "solid",
-  borderColor: "#F293C1",
-  borderWidth: "3px",
-  borderRadius: "30px",
+  borderStyle: 'solid',
+  borderColor: '#F293C1',
+  borderWidth: '3px',
+  borderRadius: '30px',
   width: '8%',
   height: '42px',
   margin: '2px',
@@ -77,113 +78,126 @@ const selectStyle = {
   paddingRight: '4px',
   backgroundColor: '#FFFFFF',
   boxShadow: '#FFFFFF',
-  left: '0'
+  left: '0',
 };
 
 const categoryStyle = {
-	fontFamily: 'sans-serif',
-	color: '#707070',
-	paddingLeft: '15px',
-	paddingBottom: '3px',
-	fontSize: '20px',
-	fontWeight: 'lighter',
-	width: '100%'
+  fontFamily: 'sans-serif',
+  color: '#707070',
+  paddingLeft: '15px',
+  paddingBottom: '3px',
+  fontSize: '20px',
+  fontWeight: 'lighter',
+  width: '100%',
 };
 
 const formStyle = {
-	paddingLeft: '35px'
+  paddingLeft: '35px',
 };
 
 const spaceStyle = {
-	paddingBottom: '3px'
+  paddingBottom: '3px',
 };
 
 const buttonPadding = {
-	paddingLeft: '320px'
+  paddingLeft: '320px',
 };
 
 const buttonStyle = {
-	backgroundColor: '#F293C1',
- 	borderRadius: "30px",
- 	width: '15%',
-  	height: '45px',
-  	margin: '2px',
-  	outline: 'none',
-  	fontFamily: 'sans-serif',
-	color: 'white',
-	fontSize: '18px',
-	fontWeight: 'lighter',
-	paddingLeft: '0px'
+  backgroundColor: '#F293C1',
+  borderRadius: '30px',
+  width: '15%',
+  height: '45px',
+  margin: '2px',
+  outline: 'none',
+  fontFamily: 'sans-serif',
+  color: 'white',
+  fontSize: '18px',
+  fontWeight: 'lighter',
+  paddingLeft: '0px',
 };
 
 const astStyle = {
-	color: "#F293C1",
-	display: 'inline-block',
-	paddingLeft: '340px'
-}
-
-const optionStyle = {
-	backgroundColor: '#FFFFFF'
-}
+  color: '#F293C1',
+  display: 'inline-block',
+  paddingLeft: '10px',
+};
 
 class Suggestion extends Component {
-  static async getInitialProps(props) {
-    const appURL = publicRuntimeConfig.APP_URL || 'http://localhost:3000'
-    const { search } = props.query;
-    return { search };
+  constructor(props) {
+    super(props);
+    this.appURL = publicRuntimeConfig.APP_URL || 'http://localhost:3000';
+    this.state = { ad2: '' }
   }
 
-  getData(){
-    ad1 = document.getElementById("ad1").value;
-    ad2 = document.getElementById("ad2").value;
-    city = document.getElementById("city").value;
-    state = document.getElementById("state").value;
-    zip = document.getElementById("zip").value;
-    website = document.getElementById("website").value;
-    email = document.getElementById("email").value;
-    fb = document.getElementById("fb").value;
-  
-    console.log(fb);
-  
-    var data = {};
-    data.ad1 = ad1;
-    data.ad2 = ad2;
-    data.city = city;
-    data.state = state;
-    data.zip = zip;
-    data.website = website;
-    data.email = email;
-  
-    request = new XMLHttpRequest();
-    request.open("POST", "/sendEmail", true);
-    var jsonData = JSON.stringify(data);
-    request.send(jsonData);
+  getData = () => {
+    const data = {};
+    const address = `${this.state.ad1} ${this.state.ad2}, ${this.state.city}, ${this.state.state} ${this.state.zip}`;
+    console.log(this.state);
+    const Geocoder = new google.maps.Geocoder();
+    Geocoder.geocode({ address }, (results, status) => {
+      // if exists, recenter to searched location
+      if (status === 'OK') {
+        console.log(results);
+        data.Location = results[0].formatted_address;
+        data.Website = this.state.website;
+        if (this.state.email) {
+          data.Email = this.state.email;
+        }
+        if (this.state.facebook) {
+          data.Facebook = this.state.facebook;
+        }
+        console.log(data);
+        const orgInfo = JSON.stringify({ [this.state.name]: data });
+        console.log(orgInfo);
+      } else {
+        console.log(`Geocode was not successful for the following reason: ${status}`);
+      }
+    });
+  }
+
+  onDataEntry = ({ target: { name, value, type } }) => {
+    if (type !== 'checkbox') {
+      this.setState({ [name]: value !== undefined ? value.trim() : '' });
+    }
   }
 
   render() {
     return (
       <>
-        <div >
-        <div style={headerStyle} >
+        <BurgerMenu />
+        <NavBar />
+        <div>
+          <div style={headerStyle}>
           Suggest a local resource center:
-        </div>
-        <form style={formStyle}>
-            <label >
-            <div style={categoryStyle} >
-              Location <div style={astStyle}>*</div>
-            </div>
-              <input type="text" placeholder=" Address Line 1" id="ad1" style={boxStyle} />
+          </div>
+          <form style={formStyle}>
+            <label>
+              <div style={categoryStyle}>
+                Organization name
+                <div style={astStyle}>*</div>
+              </div>
+              <input onChange={this.onDataEntry} type="text" name="name" placeholder=" i.e. Bisexual Resource Center" style={boxStyle} />
               <br />
-              <div style={spaceStyle}/>
-              <input type="text" placeholder=" Address Line 2" id="ad2" style={boxStyle} />
               <br />
-              <div style={spaceStyle}/>
-              <input type="text" placeholder=" City" id="city" style={cityStyle} />
-              <select id="state" style={selectStyle}>
+              <br />
+              <div style={categoryStyle}>
+              Location
+                {' '}
+                <div style={astStyle}>*</div>
+              </div>
+              <input onChange={this.onDataEntry} type="text" placeholder=" Address Line 1" name="ad1" style={boxStyle} />
+              <br />
+              <div style={spaceStyle} />
+              <input onChange={this.onDataEntry} type="text" placeholder=" Address Line 2" name="ad2" style={boxStyle} />
+              <br />
+              <div style={spaceStyle} />
+              <input onChange={this.onDataEntry} type="text" placeholder=" City" name="city" style={cityStyle} />
+              <select onChange={this.onDataEntry} name="state" style={selectStyle}>
                 <option value="AL">AL</option>
                 <option value="AK">AK</option>
                 <option value="AR">AR</option>
-                <option value="AZ">AZ</option> 
+                <option value="AZ">AZ</option>
                 <option value="CA">CA</option>
                 <option value="CO">CO</option>
                 <option value="CT">CT</option>
@@ -191,7 +205,7 @@ class Suggestion extends Component {
                 <option value="FL">FL</option>
                 <option value="GA">GA</option>
                 <option value="HI">HI</option>
-                <option value="ID">ID</option>
+                <option value="name">name</option>
                 <option value="IL">IL</option>
                 <option value="IN">IN</option>
                 <option value="IA">IA</option>
@@ -230,36 +244,37 @@ class Suggestion extends Component {
                 <option value="WV">WV</option>
                 <option value="WI">WI</option>
                 <option value="WY">WY</option>
-            </select>
-              <input type="text" placeholder=" ZIP" id="zip" style={subStyle} />
+              </select>
+              <input onChange={this.onDataEntry} type="text" placeholder=" ZIP" name="zip" style={subStyle} />
               <br />
               <br />
               <br />
-              <div style={categoryStyle} >
-              Website <div style={astStyle}>*</div>
+              <div style={categoryStyle}>
+                Website
+                <div style={astStyle}>*</div>
               </div>
-              <input type="text" id="website" placeholder=" Paste URL here" style={boxStyle} />
+              <input onChange={this.onDataEntry} type="text" name="website" placeholder=" Paste URL here" style={boxStyle} />
               <br />
               <br />
               <br />
-              <div style={categoryStyle} >
+              <div style={categoryStyle}>
               E-mail address
               </div>
-              <input type="text" id="email" placeholder=" Insert E-mail address of resource center" style={boxStyle} />
+              <input onChange={this.onDataEntry} type="text" name="email" placeholder=" Insert E-mail address of resource center" style={boxStyle} />
               <br />
               <br />
               <br />
-              <div style={categoryStyle} >
+              <div style={categoryStyle}>
               Facebook
               </div>
-              <input type="text" id="fb" placeholder=" Insert URL link to Facebook profile" style={boxStyle} />
+              <input onChange={this.onDataEntry} type="text" name="facebook" placeholder=" Insert URL link to Facebook profile" style={boxStyle} />
               <br />
               <br />
               <br />
               <div style={buttonPadding}>
-              <button style={buttonStyle} type="button">
-              SUBMIT
-              </button>
+                <button style={buttonStyle} type="button" onClick={this.getData}>
+                SUBMIT
+                </button>
               </div>
             </label>
           </form>

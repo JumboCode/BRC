@@ -57,6 +57,9 @@ const burger = {
 
 const BurgerMenu = () => (
   <Menu right width={280} styles={burger}>
+      <div id="home" className="menu-item">
+      <Link href={{ pathname: '/' }}><a style={styles.link}>Home</a></Link>
+    </div>
     <div id="resources" className="menu-item">
       <Link href={{ pathname: '/home', query: { search: '*', data: 'locations' } }}><a style={styles.link}>List of Bi Groups</a></Link>
     </div>
