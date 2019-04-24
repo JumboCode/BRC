@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import fetch from 'isomorphic-fetch';
+import axios from 'axios';
 import getConfig from 'next/config';
 import { BurgerMenu, NavBar } from '../components';
 
@@ -19,7 +20,7 @@ const subHeaderStyle = {
   fontFamily: 'sans-serif',
   color: '#F293C1',
   alignment: 'left',
-  paddingLeft: '80px',
+  paddingLeft: '60px',
   paddingBottom: '35px',
   paddingTop: '15px',
 
@@ -30,7 +31,7 @@ const boxStyle = {
   borderColor: '#F293C1',
   borderWidth: '3px',
   borderRadius: '30px',
-  width: '35%',
+  width: '230px',
   height: '35px',
   margin: '2px',
   outline: 'none',
@@ -45,7 +46,7 @@ const cityStyle = {
   borderColor: '#F293C1',
   borderWidth: '3px',
   borderRadius: '30px',
-  width: '17%',
+  width: '100px',
   height: '35px',
   margin: '2px',
   outline: 'none',
@@ -60,7 +61,7 @@ const subStyle = {
   borderColor: '#F293C1',
   borderWidth: '3px',
   borderRadius: '30px',
-  width: '7%',
+  width: '50px',
   height: '35px',
   margin: '2px',
   outline: 'none',
@@ -76,7 +77,7 @@ const selectStyle = {
   borderColor: '#F293C1',
   borderWidth: '3px',
   borderRadius: '30px',
-  width: '8%',
+  width: '100px',
   height: '42px',
   margin: '2px',
   outline: 'none',
@@ -100,7 +101,7 @@ const categoryStyle = {
 };
 
 const formStyle = {
-  paddingLeft: '35px',
+  paddingLeft: '5%',
 };
 
 const spaceStyle = {
@@ -108,7 +109,7 @@ const spaceStyle = {
 };
 
 const buttonPadding = {
-  paddingLeft: '320px',
+  paddingLeft: '5%',
 };
 
 const buttonStyle = {
@@ -149,20 +150,19 @@ class Suggestion extends Component {
     Geocoder.geocode({ address }, (results, status) => {
       // if exists, recenter to searched location
       if (status === 'OK') {
+        data.State = this.state.state.charAt(0).toUpperCase() + this.state.state.slice(1);
         data.Location = results[0].formatted_address;
         data.Website = this.state.website;
+        data.Name = this.state.name;
         if (this.state.email) {
           data.Email = this.state.email;
         }
         if (this.state.phone) {
-          data.phone = this.state.phone;
+          data.Phone = this.state.phone;
         }
-        const orgInfo = { [this.state.name]: data };
-        console.log(orgInfo);
 
-        fetch('/sendEmail', {
-          method: 'post',
-          body: orgInfo,
+        axios.post('/sendEmail', {
+          group: data,
         });
       } else {
         console.log(`Geocode was not successful for the following reason: ${status}`);
@@ -179,9 +179,9 @@ class Suggestion extends Component {
   render() {
     return (
       <>
-        <BurgerMenu />
         <NavBar />
-        <div>
+        <BurgerMenu />
+        <div style={{ justifyContent: 'center' }}>
           <div style={headerStyle}>
             Suggest a local group
           </div>
@@ -211,56 +211,63 @@ class Suggestion extends Component {
               <div style={spaceStyle} />
               <input onChange={this.onDataEntry} type="text" placeholder=" City" name="city" style={cityStyle} />
               <select onChange={this.onDataEntry} name="state" style={selectStyle}>
-                <option value="AL">AL</option>
-                <option value="AK">AK</option>
-                <option value="AR">AR</option>
-                <option value="AZ">AZ</option>
-                <option value="CA">CA</option>
-                <option value="CO">CO</option>
-                <option value="CT">CT</option>
-                <option value="DE">DE</option>
-                <option value="FL">FL</option>
-                <option value="GA">GA</option>
-                <option value="HI">HI</option>
-                <option value="name">name</option>
-                <option value="IL">IL</option>
-                <option value="IN">IN</option>
-                <option value="IA">IA</option>
-                <option value="KS">KS</option>
-                <option value="KY">KY</option>
-                <option value="LA">LA</option>
-                <option value="ME">ME</option>
-                <option value="MD">MD</option>
-                <option value="MA">MA</option>
-                <option value="MI">MI</option>
-                <option value="MN">MN</option>
-                <option value="MS">MS</option>
-                <option value="MO">MO</option>
-                <option value="MT">MT</option>
-                <option value="NE">NE</option>
-                <option value="NV">NV</option>
-                <option value="NH">NH</option>
-                <option value="NJ">NJ</option>
-                <option value="NM">NM</option>
-                <option value="NY">NY</option>
-                <option value="NC">NC</option>
-                <option value="ND">ND</option>
-                <option value="OH">OH</option>
-                <option value="OK">OK</option>
-                <option value="OR">OR</option>
-                <option value="PA">PA</option>
-                <option value="RI">RI</option>
-                <option value="SC">SC</option>
-                <option value="SD">SD</option>
-                <option value="TN">TN</option>
-                <option value="TX">TX</option>
-                <option value="UT">UT</option>
-                <option value="VT">VT</option>
-                <option value="VA">VA</option>
-                <option value="WA">WA</option>
-                <option value="WV">WV</option>
-                <option value="WI">WI</option>
-                <option value="WY">WY</option>
+                <option value="alabama">Alabama</option>
+                <option value="alaska">Alaska</option>
+                <option value="american samoa">American Samoa</option>
+                <option value="arizona">Arizona</option>
+                <option value="arkansas">Arkansas</option>
+                <option value="california">California</option>
+                <option value="colorado">Colorado</option>
+                <option value="connecticut">Connecticut</option>
+                <option value="delaware">Delaware</option>
+                <option value="dc">DC</option>
+                <option value="florida">Florida</option>
+                <option value="georgia">Georgia</option>
+                <option value="guam">Guam</option>
+                <option value="hawaii">Hawaii</option>
+                <option value="idaho">Idaho</option>
+                <option value="illinois">Illinois</option>
+                <option value="indiana">Indiana</option>
+                <option value="iowa">Iowa</option>
+                <option value="kansas">Kansas</option>
+                <option value="kentucky">Kentucky</option>
+                <option value="louisiana">Louisiana</option>
+                <option value="maine">Maine</option>
+                <option value="maryland">Maryland</option>
+                <option value="massachusetts">Massachusetts</option>
+                <option value="michigan">Michigan</option>
+                <option value="minnesota">Minnesota</option>
+                <option value="minor outlying islands">Minor Outlying Islands</option>
+                <option value="mississippi">Mississippi</option>
+                <option value="missouri">Missouri</option>
+                <option value="montana">Montana</option>
+                <option value="nebraska">Nebraska</option>
+                <option value="nevada">Nevada</option>
+                <option value="new hampshire">New Hampshire</option>
+                <option value="new jersey">New Jersey</option>
+                <option value="new mexico">New Mexico</option>
+                <option value="new york">New York</option>
+                <option value="north carolina">North Carolina</option>
+                <option value="north dakota">North Dakota</option>
+                <option value="northern mariana islands">Northern Mariana Islands</option>
+                <option value="ohio">Ohio</option>
+                <option value="oklahoma">Oklahoma</option>
+                <option value="oregon">Oregon</option>
+                <option value="pennsylvania">Pennsylvania</option>
+                <option value="puerto rico">Puerto Rico</option>
+                <option value="rhode island">Rhode Island</option>
+                <option value="south carolina">South Carolina</option>
+                <option value="south dakota">South Dakota</option>
+                <option value="tennessee">Tennessee</option>
+                <option value="texas">Texas</option>
+                <option value="u.s. virgin islands">U.S. Virgin Islands</option>
+                <option value="utah">Utah</option>
+                <option value="vermont">Vermont</option>
+                <option value="virginia">Virginia</option>
+                <option value="washington">Washington</option>
+                <option value="west virginia">West Virginia</option>
+                <option value="wisconsin">Wisconsin</option>
+                <option value="wyoming">Wyoming</option>
               </select>
               <input onChange={this.onDataEntry} type="text" placeholder=" ZIP" name="zip" style={subStyle} />
               <br />
