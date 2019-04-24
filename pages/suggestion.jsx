@@ -12,7 +12,7 @@ const headerStyle = {
   fontSize: '40px',
   fontweight: 'bold',
   alignment: 'left',
-  paddingLeft: '40px',
+  paddingLeft: '6%',
   paddingTop: '20px',
 };
 
@@ -20,7 +20,7 @@ const subHeaderStyle = {
   fontFamily: 'sans-serif',
   color: '#F293C1',
   alignment: 'left',
-  paddingLeft: '60px',
+  paddingLeft: '8%',
   paddingBottom: '35px',
   paddingTop: '15px',
 
@@ -109,7 +109,7 @@ const spaceStyle = {
 };
 
 const buttonPadding = {
-  paddingLeft: '5%',
+  paddingLeft: '2%',
 };
 
 const buttonStyle = {
@@ -136,22 +136,67 @@ class Suggestion extends Component {
   constructor(props) {
     super(props);
     this.appURL = publicRuntimeConfig.APP_URL || 'http://localhost:3000';
-    this.state = { ad2: '' };
+    this.state = { name: '', ad2: '', ad1: '', city: '', state: '', zip: '', website: '' };
+    this.fields = { name: 'Organization name', ad2: 'Address line 2', ad1: 'Address line 1', city: 'City', state: 'State', zip: 'Zip', website: 'Website' };
+  }
+
+  validateEmail = (email) => {
+    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+  }
+
+  validateEntry = (name, val) => {
+    let error;
+    switch (name) {
+      case 'email':
+        if (!(val.trim() === '' || this.validateEmail(val))) {
+          document.getElementsByName('email')[0].style['border-color'] = 'red';
+          error = 'Please enter a valid email.';
+        } else {
+          document.getElementsByName('email')[0].style['border-color'] = '#F293C1';
+        }
+        break;
+      case 'name': case 'ad1': case 'website': case 'city': case 'state': case 'zip':
+        if (val.trim() === '') {
+          error = `${this.fields[name]} cannot be left empty!`;
+          document.getElementsByName(name)[0].style['border-color'] = 'red';
+        } else {
+          document.getElementsByName(name)[0].style['border-color'] = '#F293C1';
+        }
+        break;
+      default:
+        return undefined;
+    }
+    console.log(error);
+    return error;
   }
 
   getData = (event) => {
     event.preventDefault();
 
+
     const data = {};
     const address = `${this.state.ad1} ${this.state.ad2}, ${this.state.city}, ${this.state.state} ${this.state.zip}`;
     console.log(this.state);
 
+    const errorMsg = Object.keys(this.state).reduce((errors, name) => {
+      console.log(name, this.state.name);
+      const err = this.validateEntry(name, this.state[name]);
+      if (err) errors.push(err);
+      console.log(err);
+      return errors;
+    }, []);
+    console.log(errorMsg);
+    return;
     const Geocoder = new google.maps.Geocoder();
     Geocoder.geocode({ address }, (results, status) => {
+      console.log(results);
       // if exists, recenter to searched location
       if (status === 'OK') {
         data.State = this.state.state.charAt(0).toUpperCase() + this.state.state.slice(1);
         data.Location = results[0].formatted_address;
+        data.lat = results[0].geometry.location.lat();
+        data.lng = results[0].geometry.location.lng();
         data.Website = this.state.website;
         data.Name = this.state.name;
         if (this.state.email) {
@@ -165,15 +210,16 @@ class Suggestion extends Component {
           group: data,
         });
       } else {
+
         console.log(`Geocode was not successful for the following reason: ${status}`);
       }
     });
   }
 
-  onDataEntry = ({ target: { name, value, type } }) => {
-    if (type !== 'checkbox') {
-      this.setState({ [name]: value !== undefined ? value.trim() : '' });
-    }
+  onDataEntry = ({ target: { name, value } }) => {
+    const val = value.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+    this.validateEntry(name, val);
+    this.setState({ [name]: val.trim() });
   }
 
   render() {
@@ -277,21 +323,21 @@ class Suggestion extends Component {
                 Website/Facebook/Meetup
                 <div style={astStyle}>*</div>
               </div>
-              <input onChange={this.onDataEntry} type="text" name="website" placeholder=" Paste URL here" style={boxStyle} />
+              <input onChange={this.onDataEntry} type="text" name="website" placeholder="Paste URL here" style={boxStyle} />
               <br />
               <br />
               <br />
               <div style={categoryStyle}>
                 E-mail address
               </div>
-              <input onChange={this.onDataEntry} type="text" name="email" placeholder=" Enter E-mail contact to use" style={boxStyle} />
+              <input onChange={this.onDataEntry} type="text" name="email" placeholder="Enter E-mail contact to use" style={boxStyle} />
               <br />
               <br />
               <br />
               <div style={categoryStyle}>
               Phone number
               </div>
-              <input onChange={this.onDataEntry} type="text" name="phone" placeholder=" Enter phone number if available" style={boxStyle} />
+              <input onChange={this.onDataEntry} type="text" name="phone" placeholder="Enter phone number if available" style={boxStyle} />
               <br />
               <br />
               <br />

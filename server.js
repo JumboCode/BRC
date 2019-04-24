@@ -83,7 +83,7 @@ app.prepare()
       }
       text += `Group website: ${groupInfo.Website}\n`;
 
-      text += `\nBelow is the group information in json format that can be add directly under ${groupInfo.State} in the database: \n`;
+      text += `\nBelow is the group information in json format that can be add directly under '${groupInfo.State}' in the database: \n`;
       delete groupInfo.State;
       delete groupInfo.Name;
       text += JSON.stringify({ [groupName]: groupInfo });
