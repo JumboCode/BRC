@@ -2,8 +2,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import getConfig from 'next/config';
+import Router from 'next/router';
 import { BurgerMenu, NavBar } from '../components';
-import { array } from 'prop-types';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -211,9 +211,11 @@ class Suggestion extends Component {
         if (this.state.phone) {
           data.Phone = this.state.phone;
         }
-
         axios.post(`${appURL}/sendEmail`, {
           group: data,
+        }).then(() => {
+          alert('Thank you! We will review the information and add to our database.');
+          Router.push('/');
         });
       } else {
         alert(`We cannot spot the address you entered on Google Map. Will you double check for us: \n\n${address}`);
