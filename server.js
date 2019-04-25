@@ -2,7 +2,7 @@
 const express = require('express');
 const next = require('next');
 const config = require('dotenv').config();
-const nodemailer = require('nodemailer');
+const sgMail = require('@sendgrid/mail');
 const bodyParser = require('body-parser');
 // set up mongodb
 // mongoClient.connect has to be called for each request? bc it's asynchronous
@@ -64,14 +64,6 @@ app.prepare()
     // eslint-disable-next-line prefer-arrow-callback
     server.post('/sendEmail', (req, res) => {
       const groupInfo = req.body.group;
-      const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: process.env.EMAIL,
-          pass: process.env.EMAIL_PW,
-        },
-      });
-
       const groupName = groupInfo.Name;
 
       let text = 'A new group has been suggested to be added to the list of US groups: \n';
@@ -88,17 +80,14 @@ app.prepare()
       delete groupInfo.Name;
       text += JSON.stringify({ [groupName]: groupInfo });
 
-      const mailOptions = {
+      sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+      const msg = {
         from: process.env.EMAIL,
-        to: 'stephxuzy96@gmail.com',
+        to: process.env.DESTINATION_EMAIL,
         subject: 'Find a Bi Group: group recommendation',
         text,
       };
-
-      transporter.sendMail(mailOptions, (error, info) => {
-        if (error) console.log(error);
-        else console.log(`Email sent: ${info.response}`);
-      });
+      sgMail.send(msg).then(sent => console.log(sent));
 
       res.send();
     });

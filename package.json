@@ -13,6 +13,7 @@
 	"author": "",
 	"dependencies": {
 		"@material-ui/core": "^3.1.1",
+		"@sendgrid/mail": "^6.3.1",
 		"axios": "^0.18.0",
 		"babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
 		"body-parser": "^1.18.3",
@@ -26,7 +27,6 @@
 		"mongodb": "^3.1.8",
 		"next": "^6.1.2",
 		"next-fonts": "^0.17.0",
-		"nodemailer": "^5.1.1",
 		"prop-types": "^15.6.2",
 		"react": "^16.8.6",
 		"react-burger-menu": "^2.5.4",
