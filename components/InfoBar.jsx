@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import merge from 'lodash';
+import Link from 'next/link';
 import {
   Accordion, AccordionSection, Resources, LetterSelectBar,
 } from '.';
@@ -115,6 +115,12 @@ class InfoBar extends Component {
           </Accordion>
         </div>
         <div style={footer}>
+          If you belong to a group that you would like to have listed here, please
+          {' '}
+          <Link href={{ pathname: '/suggestion' }}><span style={{ textDecoration: 'underline', color: '#F293C1', cursor: 'pointer' }}>drop us the details</span></Link>
+          .
+          <br />
+          <br />
           If you are interested in starting your own bi+ group, check out our free resource here:
           {' '}
           <a
