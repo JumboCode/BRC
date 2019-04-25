@@ -27,6 +27,7 @@
 		"mongodb": "^3.1.8",
 		"next": "^6.1.2",
 		"next-fonts": "^0.17.0",
+		"nodemailer": "^6.1.1",
 		"prop-types": "^15.6.2",
 		"react": "^16.8.6",
 		"react-burger-menu": "^2.5.4",
