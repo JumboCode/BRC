@@ -2,7 +2,8 @@
 const express = require('express');
 const next = require('next');
 const config = require('dotenv').config();
-const nodemailer = require('nodemailer');
+// const nodemailer = require('nodemailer');
+const sgMail = require('@sendgrid/mail');
 const bodyParser = require('body-parser');
 // set up mongodb
 // mongoClient.connect has to be called for each request? bc it's asynchronous
@@ -61,18 +62,18 @@ app.prepare()
       });
     });
 
-    // eslint-disable-next-line prefer-arrow-callback
+    // // eslint-disable-next-line prefer-arrow-callback
     server.post('/sendEmail', (req, res) => {
       const groupInfo = req.body.group;
-      const transporter = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
-        port: 465,
-        secure: true, // use SSL
-        auth: {
-          user: process.env.EMAIL,
-          pass: process.env.EMAIL_PW,
-        },
-      });
+      //   const transporter = nodemailer.createTransport({
+      //     host: 'smtp.gmail.com',
+      //     port: 465,
+      //     secure: true, // use SSL
+      //     auth: {
+      //       user: process.env.EMAIL,
+      //       pass: process.env.EMAIL_PW,
+      //     },
+      //   });
 
       const groupName = groupInfo.Name;
 
@@ -90,17 +91,26 @@ app.prepare()
       delete groupInfo.Name;
       text += JSON.stringify({ [groupName]: groupInfo });
 
-      const mailOptions = {
-        from: process.env.EMAIL,
+      sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+      const msg = {
         to: process.env.DESTINATION_EMAIL,
+        from: process.env.EMAIL,
         subject: 'Find a Bi Group: group recommendation',
         text,
       };
+      sgMail.send(msg);
 
-      transporter.sendMail(mailOptions, (error, info) => {
-        if (error) console.log(error);
-        else console.log(`Email sent: ${info.response}`);
-      });
+      // const mailOptions = {
+      //   from: process.env.EMAIL,
+      //   to: process.env.DESTINATION_EMAIL,
+      //   subject: 'Find a Bi Group: group recommendation',
+      //   text,
+      // };
+
+      // transporter.sendMail(mailOptions, (error, info) => {
+      //   if (error) console.log(error);
+      //   else console.log(`Email sent: ${info.response}`);
+      // });
 
       res.send();
     });
