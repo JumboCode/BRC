@@ -159,7 +159,7 @@ class Suggestion extends Component {
           document.getElementsByName('email')[0].style['border-color'] = '#F293C1';
         }
         break;
-      case 'name': case 'ad1': case 'website': case 'city': case 'state': case 'zip':
+      case 'name': case 'website': case 'city': case 'state': case 'zip':
         if (val.trim() === '') {
           error = `${this.fields[name]} cannot be left empty.`;
           document.getElementsByName(name)[0].style['border-color'] = 'red';

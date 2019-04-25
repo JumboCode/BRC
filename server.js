@@ -78,17 +78,18 @@ app.prepare()
       const groupName = groupInfo.Name;
 
       let text = 'A new group has been suggested to be added to the list of US groups: \n';
-      text += `Group name: ${groupInfo.Name}\n`;
-      text += `Group location: ${groupInfo.Location}\n`;
-      text += `Contact email: ${groupInfo.Email}\n`;
+      text += `\nGroup name: ${groupInfo.Name}\n`;
+      text += `\nGroup location: ${groupInfo.Location}\n`;
+      text += `\nContact email: ${groupInfo.Email}\n`;
       if (groupInfo.Phone) {
-        text += `Contact phone: ${groupInfo.Phone}\n`;
+        text += `\nContact phone: ${groupInfo.Phone}\n`;
       }
-      text += `Group website: ${groupInfo.Website}\n`;
+      text += `\nGroup website: ${groupInfo.Website}\n`;
 
       text += `\nBelow is the group information in json format that can be add directly under '${groupInfo.State}' in the database: \n`;
       delete groupInfo.State;
       delete groupInfo.Name;
+      text += '\n';
       text += JSON.stringify({ [groupName]: groupInfo });
 
       sgMail.setApiKey(process.env.SENDGRID_API_KEY);
