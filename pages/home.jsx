@@ -150,15 +150,17 @@ class Home extends Component {
             bestDist = d;
             bestLoc = innerKey;
             bestRegion = outerKey;
-            bestPos = {lat: lat2, lng: lng2};
+            bestPos = { lat: lat2, lng: lng2 };
           }
         }
       });
     });
-    return { distance: Math.round(bestDist * 10) / 10,
-             group: bestLoc,
-             region: bestRegion,
-             position: bestPos };
+    return {
+      distance: Math.round(bestDist * 10) / 10,
+      group: bestLoc,
+      region: bestRegion,
+      position: bestPos,
+    };
   }
 
   // get initial location's region (state) as string from results of
@@ -180,12 +182,14 @@ class Home extends Component {
   }
 
   closestResource(dist, resource, region, position) {
-    this.setState({ nearbyDist: dist,
-                    nearbyResource: resource,
-                    initialRegion: region,
-                    nearbyPosition: position });
+    this.setState({
+      nearbyDist: dist,
+      nearbyResource: resource,
+      initialRegion: region,
+      nearbyPosition: position,
+    });
   }
- 
+
   onSearchChange = (region) => {
     this.setState({ initialRegion: region });
   }
@@ -232,9 +236,11 @@ class Home extends Component {
       warningMessage = 'We cannot seem to find the address you entered! Please make sure it is valid. ';
     } else if (this.state.noMatch) {
       warningMessage = 'No resource centers seem to be found around you in our database. ';
-      suggestedGroup = { dist: this.state.nearbyDist,
-                         group: this.state.nearbyResource,
-                         position: this.state.nearbyPosition };
+      suggestedGroup = {
+        dist: this.state.nearbyDist,
+        group: this.state.nearbyResource,
+        position: this.state.nearbyPosition,
+      };
     }
 
     return (

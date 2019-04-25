@@ -166,24 +166,22 @@ class MapContainer extends React.Component {
     // get lat/lng of all resources, add markers for each resource
     const locationData = this.props.locations[0].states;
     const windows = {};
-    Object.keys(locationData).map((region) => {
-      return Object.keys(locationData[region]).map((resource) => {
-        const resourceInfo = locationData[region][resource];
-        if (locationData[region][resource].lat != undefined
+    Object.keys(locationData).map(region => Object.keys(locationData[region]).map((resource) => {
+      const resourceInfo = locationData[region][resource];
+      if (locationData[region][resource].lat != undefined
                     && locationData[region][resource].lng != undefined) {
-          const currentMarker = new maps.Marker({
-            position: {
-              lat: locationData[region][resource].lat,
-              lng: locationData[region][resource].lng,
-            },
-            map,
-            icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png',
-          });
-          const currentWindow = createInfoWindow(map, maps, currentMarker, resource, resourceInfo);
-          windows[resource] = [currentMarker, currentWindow];
-        }
-      });
-    });
+        const currentMarker = new maps.Marker({
+          position: {
+            lat: locationData[region][resource].lat,
+            lng: locationData[region][resource].lng,
+          },
+          map,
+          icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png',
+        });
+        const currentWindow = createInfoWindow(map, maps, currentMarker, resource, resourceInfo);
+        windows[resource] = [currentMarker, currentWindow];
+      }
+    }));
     this.markers = windows;
     // Check if in "view all centers" mode
     if (this.props.search !== '*') {
