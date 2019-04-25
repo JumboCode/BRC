@@ -1,8 +1,9 @@
+/* eslint-disable no-alert */
 import React, { Component } from 'react';
-import fetch from 'isomorphic-fetch';
 import axios from 'axios';
 import getConfig from 'next/config';
 import { BurgerMenu, NavBar } from '../components';
+import { array } from 'prop-types';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -132,10 +133,12 @@ const astStyle = {
   paddingLeft: '10px',
 };
 
+const appURL = publicRuntimeConfig.APP_URL || 'http://localhost:3000';
+
 class Suggestion extends Component {
   constructor(props) {
     super(props);
-    this.appURL = publicRuntimeConfig.APP_URL || 'http://localhost:3000';
+    this.content = [];
     this.state = { name: '', ad2: '', ad1: '', city: '', state: '', zip: '', website: '' };
     this.fields = { name: 'Organization name', ad2: 'Address line 2', ad1: 'Address line 1', city: 'City', state: 'State', zip: 'Zip', website: 'Website' };
   }
@@ -158,7 +161,7 @@ class Suggestion extends Component {
         break;
       case 'name': case 'ad1': case 'website': case 'city': case 'state': case 'zip':
         if (val.trim() === '') {
-          error = `${this.fields[name]} cannot be left empty!`;
+          error = `${this.fields[name]} cannot be left empty.`;
           document.getElementsByName(name)[0].style['border-color'] = 'red';
         } else {
           document.getElementsByName(name)[0].style['border-color'] = '#F293C1';
@@ -174,7 +177,6 @@ class Suggestion extends Component {
   getData = (event) => {
     event.preventDefault();
 
-
     const data = {};
     const address = `${this.state.ad1} ${this.state.ad2}, ${this.state.city}, ${this.state.state} ${this.state.zip}`;
     console.log(this.state);
@@ -186,8 +188,12 @@ class Suggestion extends Component {
       console.log(err);
       return errors;
     }, []);
-    console.log(errorMsg);
-    return;
+    if (errorMsg && errorMsg.length) {
+      console.log(errorMsg);
+      const alertMsg = errorMsg.join('\n');
+      alert(`Whoops! We cannot proceess your entries: \n\n${alertMsg}`);
+      return;
+    }
     const Geocoder = new google.maps.Geocoder();
     Geocoder.geocode({ address }, (results, status) => {
       console.log(results);
@@ -206,12 +212,11 @@ class Suggestion extends Component {
           data.Phone = this.state.phone;
         }
 
-        axios.post('/sendEmail', {
+        axios.post(`${appURL}/sendEmail`, {
           group: data,
         });
       } else {
-
-        console.log(`Geocode was not successful for the following reason: ${status}`);
+        alert(`We cannot spot the address you entered on Google Map. Will you double check for us: \n\n${address}`);
       }
     });
   }
@@ -223,6 +228,7 @@ class Suggestion extends Component {
   }
 
   render() {
+
     return (
       <>
         <NavBar />
@@ -241,7 +247,6 @@ class Suggestion extends Component {
                 <div style={astStyle}>*</div>
               </div>
               <input onChange={this.onDataEntry} type="text" name="name" placeholder="i.e. Bisexual Resource Center" style={boxStyle} />
-              <br />
               <br />
               <br />
               <div style={categoryStyle}>
@@ -318,13 +323,11 @@ class Suggestion extends Component {
               <input onChange={this.onDataEntry} type="text" placeholder=" ZIP" name="zip" style={subStyle} />
               <br />
               <br />
-              <br />
               <div style={categoryStyle}>
                 Website/Facebook/Meetup
                 <div style={astStyle}>*</div>
               </div>
               <input onChange={this.onDataEntry} type="text" name="website" placeholder="Paste URL here" style={boxStyle} />
-              <br />
               <br />
               <br />
               <div style={categoryStyle}>
@@ -333,17 +336,15 @@ class Suggestion extends Component {
               <input onChange={this.onDataEntry} type="text" name="email" placeholder="Enter E-mail contact to use" style={boxStyle} />
               <br />
               <br />
-              <br />
               <div style={categoryStyle}>
               Phone number
               </div>
               <input onChange={this.onDataEntry} type="text" name="phone" placeholder="Enter phone number if available" style={boxStyle} />
               <br />
               <br />
-              <br />
               <div style={buttonPadding}>
                 <button style={buttonStyle} type="button" onClick={this.getData}>
-                SUBMIT
+                  SUBMIT
                 </button>
               </div>
             </label>

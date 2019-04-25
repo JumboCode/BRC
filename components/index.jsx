@@ -1,5 +1,4 @@
 import InfoBar from './InfoBar';
-import PopupContents from './PopupContents';
 import NavBar from './NavBar';
 import SearchBar from './SearchBar';
 import MapContainer from './MapContainer';
@@ -17,7 +16,6 @@ import DefaultCity from './DefaultCity';
 
 export {
   InfoBar,
-  PopupContents,
   NavBar,
   SearchBar,
   MapContainer,
